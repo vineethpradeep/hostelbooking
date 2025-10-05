@@ -12,7 +12,7 @@
           <div class="tn-right">
             <div class="top-social">
               <a *ngFor="let social of socials" [href]="social.url">
-                <i [class]="social.icon"></i>
+                <i [class]="social.icon" aria-hidden="true"></i>
               </a>
             </div>
           </div>
