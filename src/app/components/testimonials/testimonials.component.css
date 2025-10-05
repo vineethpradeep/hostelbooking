@@ -1,0 +1,103 @@
+.testimonial-section {
+    background: #f9f9f9;
+}
+
+.testimonial-section .section-title {
+    margin-bottom: 30px;
+}
+
+.testimonial-slider.owl-carousel .owl-item img {
+    width: auto;
+    margin: 0 auto;
+}
+
+.testimonial-slider.owl-carousel .owl-nav button {
+    height: 44px;
+    width: 44px;
+    border: 1px solid #ebebeb;
+    font-size: 24px;
+    color: #707079;
+    background: #ffffff;
+    line-height: 48px;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    left: -190px;
+    top: 50%;
+    -webkit-transform: translateY(-6px);
+    -ms-transform: translateY(-6px);
+    transform: translateY(-6px);
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.testimonial-slider.owl-carousel .owl-nav button:hover {
+    border-color: #19191a;
+    color: #19191a;
+}
+
+.testimonial-slider.owl-carousel .owl-nav button.owl-next {
+    left: auto;
+    right: -190px;
+}
+
+.testimonial-slider .ts-item {
+    text-align: center;
+}
+
+.testimonial-slider .ts-item p {
+    font-size: 20px;
+    color: #707079;
+    line-height: 30px;
+    margin-bottom: 50px;
+}
+
+.testimonial-slider .ts-item .ti-author {
+    margin-bottom: 60px;
+}
+
+.testimonial-slider .ts-item .ti-author .rating {
+    display: inline-block;
+}
+
+.testimonial-slider .ts-item .ti-author .rating i {
+    color: #f5b917;
+    font-size: 16px;
+}
+
+.testimonial-slider .ts-item .ti-author h5 {
+    font-size: 20px;
+    color: #19191a;
+    display: inline-block;
+}
+
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .testimonial-slider.owl-carousel .owl-nav button {
+        left: -150px;
+    }
+
+    .testimonial-slider.owl-carousel .owl-nav button.owl-next {
+        right: -150px;
+    }
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .testimonial-slider.owl-carousel .owl-nav button {
+        left: -30px;
+    }
+
+    .testimonial-slider.owl-carousel .owl-nav button.owl-next {
+        right: -30px;
+    }
+
+}
+
+
+@media only screen and (max-width: 767px) {
+    .testimonial-slider.owl-carousel .owl-nav {
+        display: none;
+    }
+}

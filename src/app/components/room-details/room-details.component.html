@@ -1,0 +1,149 @@
+<app-breadcrumb
+  [title]="'Rooms'"
+  [paths]="[
+    { label: 'Home', url: '/' },
+    { label: 'Rooms', url: '/rooms' }
+  ]"
+></app-breadcrumb>
+
+<section class="room-details-section spad" *ngIf="room">
+  <div class="container">
+    <div class="row">
+      <!-- Left Content -->
+      <div class="col-lg-8">
+        <div class="room-details-item">
+          <img [src]="room.image" [alt]="room.name" />
+          <div class="rd-text">
+            <div class="rd-title">
+              <h3>{{ room.name }}</h3>
+              <div class="rdt-right">
+                <div class="rating">
+                  <ng-container *ngFor="let _ of stars.fullStars">
+                    <i class="fa fa-star"></i>
+                  </ng-container>
+                  <i *ngIf="stars.halfStar" class="fa fa-star-half-alt"></i>
+                  <ng-container *ngFor="let _ of stars.emptyStars">
+                    <i class="fa fa-star-o"></i>
+                  </ng-container>
+                </div>
+                <a href="#">Booking Now</a>
+              </div>
+            </div>
+            <h2>{{ room.price }} ₹<span>/Pernight</span></h2>
+            <table>
+              <tbody>
+                <tr>
+                  <td class="r-o">Size:</td>
+                  <td>{{ room.size }}</td>
+                </tr>
+                <tr>
+                  <td class="r-o">Capacity:</td>
+                  <td>{{ room.capacity }}</td>
+                </tr>
+                <tr>
+                  <td class="r-o">Bed:</td>
+                  <td>{{ room.bed }}</td>
+                </tr>
+                <tr>
+                  <td class="r-o">Services:</td>
+                  <td>{{ room.services.join(", ") }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="f-para">
+              {{ room?.description || "Lorem ipsum dolor sit amet..." }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Reviews -->
+        <div class="rd-reviews">
+          <h4>Reviews</h4>
+          <div
+            class="review-item"
+            *ngFor="let review of room.reviews; let i = index"
+          >
+            <div class="ri-pic">
+              <img [src]="review.avatar" [alt]="review.name" />
+            </div>
+            <div class="ri-text">
+              <span>{{ review.date }}</span>
+              <div class="rating">
+                <ng-container *ngFor="let _ of reviewStars[i].fullStars">
+                  <i class="icon_star"></i>
+                </ng-container>
+                <i
+                  *ngIf="reviewStars[i].halfStar"
+                  class="icon_star-half_alt"
+                ></i>
+                <ng-container *ngFor="let _ of reviewStars[i].emptyStars">
+                  <i class="icon_star empty"></i>
+                </ng-container>
+              </div>
+              <h5>{{ review.name }}</h5>
+              <p>{{ review.text }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-add">
+          <h4>Add Review</h4>
+          <form
+            class="ra-form"
+            (ngSubmit)="submitReview()"
+            #reviewForm="ngForm"
+          >
+            <div class="row">
+              <div class="col-lg-6">
+                <input
+                  type="text"
+                  placeholder="Name*"
+                  [(ngModel)]="newReview.name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="col-lg-6">
+                <input
+                  type="email"
+                  placeholder="Email*"
+                  [(ngModel)]="newReview.email"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="col-lg-12">
+                <div>
+                  <h5>Your Rating:</h5>
+                  <select [(ngModel)]="newReview.rating" name="rating" required>
+                    <option [value]="1">1</option>
+                    <option [value]="2">2</option>
+                    <option [value]="3">3</option>
+                    <option [value]="4">4</option>
+                    <option [value]="5">5</option>
+                  </select>
+                </div>
+                <textarea
+                  placeholder="Your Review"
+                  [(ngModel)]="newReview.text"
+                  name="text"
+                  required
+                ></textarea>
+                <button type="submit" [disabled]="reviewForm.invalid">
+                  Submit Now
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="room-booking">
+          <h3>Your Reservation</h3>
+          <app-booking-form></app-booking-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

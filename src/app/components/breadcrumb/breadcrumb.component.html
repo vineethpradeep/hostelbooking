@@ -1,0 +1,20 @@
+<div class="breadcrumb-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-text">
+          <h2>{{ title }}</h2>
+          <div class="bt-option">
+            <ng-container *ngFor="let path of paths; let last = last">
+              <a *ngIf="!last && path.url" [routerLink]="path.url">
+                {{ path.label }}
+              </a>
+              <span *ngIf="!last && !path.url">{{ path.label }}</span>
+              <span *ngIf="last">{{ path.label }}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

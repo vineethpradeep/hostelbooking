@@ -1,0 +1,40 @@
+<section class="hp-room-section">
+  <div class="container-fluid">
+    <div class="hp-room-items">
+      <div class="row">
+        <div class="col-lg-3 col-md-6" *ngFor="let room of rooms">
+          <div
+            class="hp-room-item"
+            [ngStyle]="{ 'background-image': 'url(' + room.img + ')' }"
+          >
+            <div class="hr-text">
+              <h3>{{ room.title }}</h3>
+              <h2>{{ room.price }} &#8377; <span>/ Pernight</span></h2>
+              <table>
+                <tbody>
+                  <tr>
+                    <td class="r-o">Size:</td>
+                    <td>{{ room.size }}</td>
+                  </tr>
+                  <tr>
+                    <td class="r-o">Capacity:</td>
+                    <td>{{ room.capacity }}</td>
+                  </tr>
+                  <tr>
+                    <td class="r-o">Bed:</td>
+                    <td>{{ room.bed }}</td>
+                  </tr>
+                  <tr>
+                    <td class="r-o">Services:</td>
+                    <td>{{ room.services }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <a href="#" class="primary-btn">More Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

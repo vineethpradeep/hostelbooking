@@ -1,0 +1,36 @@
+<div class="booking-form">
+  <h3>Booking Your Hostel</h3>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="check-date">
+      <label for="checkIn">Check In</label>
+      <input id="checkIn" type="date" formControlName="checkIn" />
+    </div>
+
+    <div class="check-date">
+      <label for="checkOut">Check Out</label>
+      <input id="checkOut" type="date" formControlName="checkOut" />
+    </div>
+
+    <div class="select-option">
+      <label for="guest">Guests</label>
+      <select id="guest" formControlName="guest">
+        <option value="1">1 Guest</option>
+        <option value="2">2 Guests</option>
+        <option value="3">3 Guests</option>
+        <option value="4">4 Guests</option>
+      </select>
+    </div>
+
+    <div class="select-option">
+      <label for="room">Room Type</label>
+      <select id="room" formControlName="room">
+        <option value="single">Single Room</option>
+        <option value="double">Double Room</option>
+        <option value="family">Family Room</option>
+        <option value="dorm">Dormitory</option>
+      </select>
+    </div>
+
+    <button type="submit" class="primary-btn">Check Availability</button>
+  </form>
+</div>

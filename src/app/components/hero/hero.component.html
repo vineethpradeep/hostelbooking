@@ -1,0 +1,28 @@
+<section class="hero-section">
+  <owl-carousel-o [options]="customOptions">
+    <ng-template carouselSlide *ngFor="let slide of slides">
+      <div
+        class="hs-item"
+        [ngStyle]="{ 'background-image': 'url(' + slide.img + ')' }"
+      >
+        <div class="container hero-content">
+          <div class="row hero-row">
+            <div class="col-lg-6 hero-text-col">
+              <div class="hero-text">
+                <h1>Hostel Like a Home Stay</h1>
+                <p>
+                  Experience the epitome of comfort and elegance at Hostel,
+                  where every stay is a memorable one.
+                </p>
+                <a href="#" class="primary-btn">Discover Now</a>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1 booking-col">
+              <app-booking-form></app-booking-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </owl-carousel-o>
+</section>

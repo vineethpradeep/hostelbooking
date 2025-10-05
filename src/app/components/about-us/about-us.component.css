@@ -1,0 +1,25 @@
+.about-text {
+    text-align: center;
+    padding: 0 35px;
+}
+
+.about-text p {
+    color: #595960;
+    font-weight: 500;
+}
+
+.about-text p.f-para {
+    margin-bottom: 10px;
+}
+
+.about-text p.s-para {
+    margin-bottom: 35px;
+}
+
+.about-text .about-btn {
+    color: #19191a;
+}
+
+.about-pic img {
+    min-width: 100%;
+}
