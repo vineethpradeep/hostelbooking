@@ -22,7 +22,7 @@ export class HeaderComponent {
   menuOpen = false;
 
   phone = '+1234567890';
-  email = 'info@example.com';
+  email = 'info@hostelbooking.com';
 
   socials = [
     { icon: 'fa fa-facebook', url: '#' },
