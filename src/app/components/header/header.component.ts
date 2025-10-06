@@ -31,18 +31,9 @@ export class HeaderComponent {
   ];
 
   menu: MenuItem[] = [
-    { label: 'Home', url: '/', active: true },
+    { label: 'Home', url: '/', active: false },
     { label: 'Rooms', url: '/rooms', active: false },
-    { label: 'Facilities', url: '/facilities', active: false },
-    // {
-    //   label: 'Services',
-    //   url: '/services',
-    //   active: false,
-    //   children: [
-    //     { label: 'Laundry', url: '/services/laundry', active: false },
-    //     { label: 'Catering', url: '/services/catering', active: false },
-    //   ],
-    // },
+    { label: 'Facilities', url: '/facilities', active: false },   
     { label: 'About', url: '/about', active: false },
     { label: 'Contact', url: '/contact', active: false },
   ];

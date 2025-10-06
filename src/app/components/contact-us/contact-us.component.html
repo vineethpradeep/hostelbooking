@@ -1,0 +1,66 @@
+<!-- src/app/pages/contact-us/contact-us.component.html -->
+<section class="contact">
+  <div class="container">
+    <div class="grid">
+      <!-- Left: Info -->
+      <div class="info">
+        <h1>Contact Us</h1>
+        <p>Have questions or need help with a booking? We’re happy to assist.</p>
+
+        <ul class="info-list" aria-label="Contact information">
+          <li><strong>Address:</strong> 123 Hotel Street, Chennai, India</li>
+          <li><strong>Phone:</strong> +91 98765 43210</li>
+          <li><strong>Email:</strong> supporthotelbooking.com </li>
+        </ul>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="form-card">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate aria-label="Contact form">
+          <div class="field">
+            <label for="name">Your Name *</label>
+            <input id="name" type="text" formControlName="name" placeholder="Enter your name" />
+            <!-- <small class="error" *ngIf="f.name.touched && f.name.invalid">
+              <span *ngIf="f.name.errors?.['required']">Name is required.</span>
+              <span *ngIf="f.name.errors?.['minlength']">At least 2 characters.</span>
+            </small> -->
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address *</label>
+            <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
+            <!-- <small class="error" *ngIf="f.email.touched && f.email.invalid">
+              <span *ngIf="f.email.errors?.['required']">Email is required.</span>
+              <span *ngIf="f.email.errors?.['email']">Enter a valid email.</span>
+            </small> -->
+          </div>
+
+          <div class="field">
+            <label for="subject">Subject</label>
+            <input id="subject" type="text" formControlName="subject" placeholder="Subject (optional)" />
+          </div>
+
+          <div class="field">
+            <label for="message">Message *</label>
+            <textarea id="message" rows="6" formControlName="message" placeholder="Write your message"></textarea>
+            <!-- <small class="error" *ngIf="f.message.touched && f.message.invalid">
+              <span *ngIf="f.message.errors?.['required']">Message is required.</span>
+              <span *ngIf="f.message.errors?.['minlength']">At least 10 characters.</span>
+            </small> -->
+          </div>
+
+          <button type="submit" [disabled]="form.invalid || submitting" class="btn">
+            {{ submitting ? 'Sending…' : 'Send Message' }}
+          </button>
+
+          <p class="success" *ngIf="submitSuccess" aria-live="polite">
+            ✅ Thanks! Your message has been sent.
+          </p>
+          <p class="error" *ngIf="submitError" aria-live="assertive">
+            {{ submitError }}
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

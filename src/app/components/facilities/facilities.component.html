@@ -1,0 +1,15 @@
+<!-- src/app/pages/facilities/facilities.component.html -->
+<section class="facilities">
+  <div class="container">
+    <h1>Our Facilities</h1>
+    <p class="subtitle">We provide world-class amenities to make your stay comfortable.</p>
+
+    <div class="grid">
+      <div class="card" *ngFor="let f of facilities">
+        <div class="icon">{{ f.icon }}</div>
+        <h3>{{ f.title }}</h3>
+        <p>{{ f.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
