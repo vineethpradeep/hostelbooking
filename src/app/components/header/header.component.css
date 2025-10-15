@@ -1,4 +1,4 @@
-.header-section {
+/* .header-section {
     width: 100%;
     position: relative;
     z-index: 999;
@@ -47,4 +47,34 @@
         transform: translateY(0);
         opacity: 1;
     }
+} */
+
+
+
+
+.header-section {
+    width: 100%;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+.header-section.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.top-nav {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.logo img {
+    max-height: 50px;
+}
+
+.tn-right button {
+    min-width: 100px;
 }

@@ -12,23 +12,33 @@ import { MenuComponent } from '../menu/menu.component';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  isLandingPage = false;
+  // isLandingPage = false;
+  // isSticky = false;
+
+  // constructor(private router: Router, private el: ElementRef) {
+  //   this.router.events
+  //     .pipe(filter((e) => e instanceof NavigationEnd))
+  //     .subscribe((e: any) => {
+  //       this.isLandingPage =
+  //         e.urlAfterRedirects === '/' || e.urlAfterRedirects === '/home';
+  //       this.isSticky = false;
+  //     });
+  // }
+
+  // @HostListener('window:scroll', [])
+  // onWindowScroll() {
+  //   if (this.isLandingPage) return;
+
+  //   const headerHeight = this.el.nativeElement.offsetHeight;
+  //   this.isSticky = window.scrollY > headerHeight;
+  // }
+
   isSticky = false;
 
-  constructor(private router: Router, private el: ElementRef) {
-    this.router.events
-      .pipe(filter((e) => e instanceof NavigationEnd))
-      .subscribe((e: any) => {
-        this.isLandingPage =
-          e.urlAfterRedirects === '/' || e.urlAfterRedirects === '/home';
-        this.isSticky = false;
-      });
-  }
+  constructor(private el: ElementRef) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    if (this.isLandingPage) return;
-
     const headerHeight = this.el.nativeElement.offsetHeight;
     this.isSticky = window.scrollY > headerHeight;
   }
