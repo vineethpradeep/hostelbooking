@@ -9,6 +9,7 @@ import { TestimonialsComponent } from '../testimonials/testimonials.component';
 import { LandingMenuComponent } from '../landing-menu/landing-menu.component';
 import { FacilitiesComponent } from '../facilities/facilities.component';
 import { StatsCounterComponent } from '../stats-counter/stats-counter.component';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-landing',
@@ -21,7 +22,7 @@ import { StatsCounterComponent } from '../stats-counter/stats-counter.component'
     ServicesComponent,
     FeaturedRoomsComponent,
     TestimonialsComponent,
-    LandingMenuComponent,
+    MenuComponent,
     FacilitiesComponent,
     StatsCounterComponent,
   ],
