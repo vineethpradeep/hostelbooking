@@ -27,7 +27,7 @@ export class FeaturedRoomsComponent {
       propertyType: '1 Bed',
       capacity: 'Max 1 Person',
       features: 'Attached Bathroom, AC, Study Table, Wardrobe',
-      services: 'Book Now',
+      services: 'View Details',
     },
     {
       img: 'assets/img/room-bg-2.jpg',
@@ -36,7 +36,7 @@ export class FeaturedRoomsComponent {
       propertyType: '2 Beds',
       capacity: 'Max 2 Persons',
       features: 'Shared Bathroom, AC, Study Tables, Wardrobes',
-      services: 'Book Now',
+      services: 'View Details',
     },
     {
       img: 'assets/img/room-bg-3.jpg',
@@ -45,7 +45,7 @@ export class FeaturedRoomsComponent {
       propertyType: '3 Beds',
       capacity: 'Max 3 Persons',
       features: 'Shared Bathroom, Fan, Study Tables, Wardrobes',
-      services: 'Book Now',
+      services: 'View Details',
     },
     {
       img: 'assets/img/room-bg-4.jpg',
@@ -54,7 +54,7 @@ export class FeaturedRoomsComponent {
       propertyType: '4 Beds',
       capacity: 'Max 4 Persons',
       features: 'Shared Bathroom, Fan, Study Tables, Wardrobes',
-      services: 'Book Now',
+      services: 'View Details',
     },
   ];
 }
