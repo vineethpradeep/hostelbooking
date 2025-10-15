@@ -20,7 +20,7 @@
   </div>
 </header> -->
 
-<header class="header-section" [class.sticky]="isSticky">
+<!-- <header class="header-section" [class.sticky]="isSticky">
   <div class="top-nav py-2">
     <div class="container">
       <div class="d-flex align-items-center justify-content-between w-100">
@@ -42,4 +42,97 @@
       </div>
     </div>
   </div>
+</header> -->
+
+<header class="header-section" [class.sticky]="isSticky">
+  <div class="top-nav py-2">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-6 col-md-3 logo">
+          <a routerLink="/">
+            <img src="assets/img/logo.png" alt="Logo" class="img-fluid" />
+          </a>
+        </div>
+        <div class="col-6 d-md-none text-end">
+          <div class="canvas-open" (click)="toggleMenu()">
+            <i class="bi bi-list"></i>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+          <div class="menu-item">
+            <div class="nav-menu" [class.active]="menuOpen">
+              <div
+                class="menu-close d-md-none text-end mb-4"
+                (click)="toggleMenu()"
+              >
+                <i class="bi bi-x-lg fs-4"></i>
+              </div>
+              <nav class="mainmenu">
+                <ul
+                  class="list-unstyled mb-0 d-md-flex flex-md-row justify-content-md-center gap-md-4"
+                >
+                  <li
+                    *ngFor="let item of menu"
+                    [class.active]="item.active"
+                    [class.has-children]="hasChildren(item)"
+                    class="mb-3 mb-md-0 position-relative menu-link"
+                  >
+                    <a
+                      [routerLink]="hasChildren(item) ? null : item.url"
+                      (click)="toggleDropdown(item, $event)"
+                      href="javascript:void(0)"
+                      class="text-decoration-none text-dark"
+                    >
+                      {{ item.label }}
+                      <i
+                        *ngIf="hasChildren(item)"
+                        class="bi bi-chevron-down ms-1"
+                      ></i>
+                    </a>
+
+                    <ul
+                      class="dropdown list-unstyled"
+                      *ngIf="hasChildren(item) && item.open"
+                    >
+                      <li *ngFor="let child of item.children">
+                        <a
+                          [routerLink]="child.url"
+                          class="text-decoration-none text-dark"
+                        >
+                          {{ child.label }}
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <div class="mobile-login d-md-none mt-4">
+                  <button
+                    class="btn btn-outline-secondary login-btn w-100"
+                    routerLink="/login"
+                  >
+                    Login
+                  </button>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-12 col-md-3 text-md-end mt-3 mt-md-0 tn-right d-none d-md-block"
+        >
+          <button
+            class="btn btn-outline-secondary login-btn"
+            routerLink="/login"
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="offcanvas-overlay"
+    [class.active]="menuOpen"
+    (click)="toggleMenu()"
+  ></div>
 </header>

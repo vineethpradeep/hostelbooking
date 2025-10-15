@@ -32,7 +32,8 @@ export class HeroComponent implements OnInit {
     items: 1,
     nav: false,
     autoplayHoverPause: true,
-    autoHeight: true,
+    autoHeight: false,
+    animateOut: 'fadeOut',
   };
 
   constructor(private fb: FormBuilder) {}

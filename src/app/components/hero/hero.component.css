@@ -1,58 +1,76 @@
 .hero-section {
     position: relative;
     width: 100%;
+    overflow: hidden;
 }
 
-.hs-item {
-    position: relative;
+.hero-bg-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    min-height: 600px;
-    display: flex;
-    align-items: center;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-bg {
+    width: 100%;
+    height: 100vh;
     background-size: cover;
     background-position: center;
 }
 
-.hero-content {
+.hero-overlay {
     position: relative;
     z-index: 2;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    width: 100%;
+}
+
+.hero-text {
+    padding: 20px 0;
 }
 
 .hero-text h1 {
     font-size: 60px;
     line-height: 70px;
-    color: #fff;
+    font-weight: 700;
     margin-bottom: 20px;
 }
 
 .hero-text p {
     font-size: 16px;
-    color: #fff;
     line-height: 24px;
     margin-bottom: 30px;
 }
 
 .primary-btn {
     padding: 12px 30px;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color, #2575fc);
     color: #fff;
     border-radius: 4px;
     font-weight: 600;
     text-decoration: none;
     display: inline-block;
-    transition: 0.3s;
+    transition: background-color 0.3s ease;
 }
 
 .primary-btn:hover {
-    background-color: var(--primary-highlight);
+    background-color: var(--primary-highlight, #1a5edb);
 }
 
-/* Hero slider dots */
 .owl-dots {
     position: absolute;
     bottom: 20px;
     width: 100%;
     text-align: center;
+    z-index: 3;
 }
 
 .owl-dots button {
@@ -78,7 +96,12 @@
     flex-wrap: wrap;
 }
 
-/* Responsive Adjustments */
+.hero-text-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 @media (max-width: 1200px) {
     .hero-text h1 {
         font-size: 48px;
@@ -87,7 +110,7 @@
 }
 
 @media (max-width: 992px) {
-    .hs-item {
+    .hero-overlay {
         min-height: 500px;
     }
 
@@ -98,7 +121,7 @@
 }
 
 @media (max-width: 768px) {
-    .hs-item {
+    .hero-overlay {
         min-height: 450px;
     }
 
@@ -121,25 +144,14 @@
         width: 100%;
         max-width: 100%;
         margin: 0 auto 20px auto;
-        /* spacing between heading and form */
     }
 
     .booking-col {
         order: 2;
-        /* ensures form is below hero text */
     }
 
     .hero-text-col {
         order: 1;
-    }
-
-    .hero-text h1 {
-        font-size: 32px;
-        line-height: 40px;
-    }
-
-    .hero-text p {
-        font-size: 14px;
     }
 
     .primary-btn {
@@ -149,7 +161,7 @@
 }
 
 @media (max-width: 576px) {
-    .hs-item {
+    .hero-overlay {
         min-height: 400px;
     }
 
