@@ -1,37 +1,37 @@
-<section class="hp-room-section">
-  <div class="container-fluid">
-    <div class="hp-room-items">
-      <div class="row">
-        <div class="col-lg-3 col-md-6" *ngFor="let room of rooms">
+<section class="hp-room-section py-5">
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+      <div class="col-lg-3 col-md-6 col-sm-10" *ngFor="let room of rooms">
+        <div class="room-card border-0 rounded-4 overflow-hidden shadow-sm">
           <div
-            class="hp-room-item"
+            class="room-image position-relative"
             [ngStyle]="{ 'background-image': 'url(' + room.img + ')' }"
           >
-            <div class="hr-text">
-              <h3>{{ room.title }}</h3>
-              <h2>{{ room.price }} &#8377; <span>/ Month</span></h2>
-              <table>
-                <tbody>
-                  <tr>
-                    <td class="r-o">Size:</td>
-                    <td>{{ room.size }}</td>
-                  </tr>
-                  <tr>
-                    <td class="r-o">Capacity:</td>
-                    <td>{{ room.capacity }}</td>
-                  </tr>
-                  <tr>
-                    <td class="r-o">Bed:</td>
-                    <td>{{ room.bed }}</td>
-                  </tr>
-                  <tr>
-                    <td class="r-o">Services:</td>
-                    <td>{{ room.services }}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <a href="#" class="primary-btn">More Details</a>
+            <div class="overlay">
+              <button class="btn btn-light px-4 py-2 rounded-pill fw-semibold">
+                {{ room.services }}
+              </button>
             </div>
+          </div>
+          <div class="room-content p-4 text-center">
+            <h4 class="room-title fw-bold mb-1">{{ room.title }}</h4>
+            <p class="room-type text-muted mb-2">{{ room.propertyType }}</p>
+
+            <h3 class="room-price text-primary fw-bold mb-4">
+              ₹{{ room.price | number
+              }}<span class="fs-6 text-muted">/month</span>
+            </h3>
+
+            <ul class="list-unstyled text-start features-list mb-0">
+              <li>
+                <i class="bi bi-person-fill text-gray me-2"></i>
+                {{ room.capacity }}
+              </li>
+              <li *ngFor="let feature of room.features.split(',')">
+                <i class="bi bi-check-circle-fill text-gray me-2"></i>
+                {{ feature.trim() }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
