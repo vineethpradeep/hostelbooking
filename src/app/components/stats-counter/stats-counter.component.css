@@ -1,0 +1,42 @@
+.stats-counter-section {
+    background: transparent;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(24, 24, 24, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(24, 24, 24, 0.10);
+}
+
+.stat-value {
+    font-size: 2.25rem;
+    line-height: 1;
+}
+
+@media (min-width: 992px) {
+    .stat-value {
+        font-size: 2.75rem;
+    }
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.stat-card {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.stats-counter-section .stat-card {
+    opacity: 1;
+    transform: translateY(0);
+}

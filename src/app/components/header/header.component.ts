@@ -1,64 +1,35 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ElementRef } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
-interface MenuItem {
-  label: string;
-  url: string;
-  active: boolean;
-  children?: MenuItem[];
-  open?: boolean;
-}
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, MenuComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  isLandingPage = false;
   isSticky = false;
-  menuOpen = false;
 
-  phone = '+1234567890';
-  email = 'info@hostelbooking.com';
-
-  socials = [
-    { icon: 'fa fa-facebook', url: '#' },
-    { icon: 'fa fa-twitter', url: '#' },
-    { icon: 'fa fa-instagram', url: '#' },
-  ];
-
-  menu: MenuItem[] = [
-    { label: 'Home', url: '/', active: false },
-    { label: 'Rooms', url: '/rooms', active: false },
-    { label: 'Facilities', url: '/facilities', active: false },   
-    { label: 'About', url: '/about', active: false },
-    { label: 'Contact', url: '/contact', active: false },
-  ];
-
-  ngOnInit() {
-    this.menu.forEach((item) => {
-      if (item.children) {
-        item.open = false;
-      }
-    });
-  }
-
-  toggleDropdown(item: MenuItem, event: Event) {
-    if (item.children) {
-      event.preventDefault();
-      item.open = !item.open;
-    }
-  }
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+  constructor(private router: Router, private el: ElementRef) {
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe((e: any) => {
+        this.isLandingPage =
+          e.urlAfterRedirects === '/' || e.urlAfterRedirects === '/home';
+        this.isSticky = false;
+      });
   }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.isSticky = window.scrollY > 100;
+    if (this.isLandingPage) return;
+
+    const headerHeight = this.el.nativeElement.offsetHeight;
+    this.isSticky = window.scrollY > headerHeight;
   }
 }

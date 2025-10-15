@@ -40,8 +40,8 @@
 }
 
 .footer-section .footer-text .ft-about .fa-social a:hover {
-    background: #dfa974;
-    border-color: #dfa974;
+    background: var(--primary-color);
+    border-color: var(--primary-highlight);
 }
 
 .footer-section .footer-text .ft-contact {
@@ -50,7 +50,7 @@
 
 .footer-section .footer-text .ft-contact h6 {
     font-size: 14px;
-    color: #dfa974;
+    color: var(--font-primary-color);
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 3px;
@@ -67,7 +67,7 @@
 
 .footer-section .footer-text .ft-newslatter h6 {
     font-size: 14px;
-    color: #dfa974;
+    color: var(--font-primary-color);
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 3px;
@@ -100,7 +100,7 @@
     right: 0;
     top: 0;
     font-size: 16px;
-    background: #dfa974;
+    background: var(--primary-color);
     color: #ffffff;
     padding: 0 16px;
     height: 50px;

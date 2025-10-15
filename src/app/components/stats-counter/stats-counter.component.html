@@ -1,0 +1,27 @@
+<section class="stats-counter-section pb-8">
+  <div #container class="container" aria-label="Statistics counter">
+    <div class="row g-4 justify-content-center">
+      <div
+        class="col-6 col-md-4"
+        *ngFor="let stat of stats; let i = index"
+        role="group"
+        [attr.aria-labelledby]="'stat-label-' + i"
+      >
+        <div
+          class="stat-card text-center p-4 h-100 d-flex flex-column align-items-center justify-content-center"
+        >
+          <div
+            class="stat-value fs-1 fw-bold text-primary"
+            role="status"
+            aria-live="polite"
+          >
+            0
+          </div>
+          <div class="stat-label mt-2" [id]="'stat-label-' + i">
+            {{ stat.label }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -11,6 +11,7 @@
               </a>
               <span *ngIf="!last && !path.url">{{ path.label }}</span>
               <span *ngIf="last">{{ path.label }}</span>
+              <i *ngIf="!last" class="bi bi-chevron-right mx-1"></i>
             </ng-container>
           </div>
         </div>

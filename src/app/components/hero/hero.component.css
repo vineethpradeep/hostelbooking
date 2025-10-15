@@ -34,7 +34,7 @@
 
 .primary-btn {
     padding: 12px 30px;
-    background-color: #dfa974;
+    background-color: var(--primary-color);
     color: #fff;
     border-radius: 4px;
     font-weight: 600;
@@ -44,7 +44,7 @@
 }
 
 .primary-btn:hover {
-    background-color: #c88b56;
+    background-color: var(--primary-highlight);
 }
 
 /* Hero slider dots */

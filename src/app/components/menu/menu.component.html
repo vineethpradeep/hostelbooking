@@ -1,0 +1,43 @@
+<div class="menu-item">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- Left Menu -->
+      <nav class="mainmenu">
+        <ul class="d-flex list-unstyled mb-0">
+          <li
+            *ngFor="let item of menu"
+            [class.active]="item.active"
+            [class.has-children]="item.children?.length"
+            class="me-4"
+          >
+            <a
+              [routerLink]="!item.children ? item.url : null"
+              (click)="toggleDropdown(item, $event)"
+              href="javascript:void(0)"
+              class="text-decoration-none text-dark"
+            >
+              {{ item.label }}
+              <i *ngIf="item.children" class="bi bi-chevron-down ms-1"></i>
+            </a>
+
+            <ul
+              class="dropdown list-unstyled"
+              *ngIf="item.children && item.open"
+            >
+              <li *ngFor="let child of item.children">
+                <a
+                  [routerLink]="child.url"
+                  class="text-decoration-none text-dark"
+                  >{{ child.label }}</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="nav-right">
+        <i class="bi bi-search fs-5"></i>
+      </div>
+    </div>
+  </div>
+</div>

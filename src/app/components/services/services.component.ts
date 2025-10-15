@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface Service {
+interface Facility {
   icon: string;
   title: string;
   description: string;
@@ -15,24 +15,27 @@ interface Service {
   styleUrls: ['./services.component.css'],
 })
 export class ServicesComponent {
-  services: Service[] = [
+  safeFeatures: Facility[] = [
     {
-      icon: 'flaticon-033-dinner',
-      title: 'Catering Service',
+      icon: 'bi bi-shield-lock',
+      title: 'Safe & Secure',
       description:
-        'Room service is a service provided by a hotel that brings food and beverages to guests in their rooms.',
+        '24/7 security with CCTV surveillance for your peace of mind',
     },
     {
-      icon: 'flaticon-024-towel',
-      title: 'Laundry',
-      description:
-        "Laundry service is a service provided by a hotel that cleans and presses guests' clothing and linens.",
+      icon: 'bi bi-cash-coin',
+      title: 'Affordable Pricing',
+      description: 'Competitive rates with no hidden charges or surprises',
     },
     {
-      icon: 'flaticon-012-cocktail',
-      title: 'Play Room',
-      description:
-        'The playroom is a designated space in a hotel where children can play and engage in supervised activities.',
+      icon: 'bi bi-wifi',
+      title: 'High-Speed WiFi',
+      description: 'Free unlimited high-speed internet in all rooms',
+    },
+    {
+      icon: 'bi bi-clock-history',
+      title: 'Flexible Terms',
+      description: 'Monthly, quarterly, or yearly payment options available',
     },
   ];
 }

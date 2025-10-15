@@ -34,7 +34,7 @@
 
 .booking-form form input:focus,
 .booking-form form select:focus {
-    border-color: #dfa974;
+    border-color: var(--primary-color);
     box-shadow: 0 0 5px rgba(223, 169, 116, 0.5);
     outline: none;
 }
@@ -42,7 +42,7 @@
 .booking-form form button {
     width: 100%;
     padding: 14px 0;
-    background: #dfa974;
+    background: var(--primary-color);
     border: none;
     color: #fff;
     font-weight: 600;

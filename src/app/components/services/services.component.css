@@ -16,7 +16,7 @@
 }
 
 .service-item:hover {
-    background: #dfa974;
+    background: var(--primary-color);
 }
 
 .service-item:hover i {
@@ -33,7 +33,7 @@
 
 .service-item i {
     display: inline-block;
-    color: #dfa974;
+    color: var(--font-primary-color);
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;

@@ -1,65 +1,21 @@
 <header class="header-section" [class.sticky]="isSticky">
   <div class="top-nav">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6">
-          <ul class="tn-left">
-            <li><i class="fa fa-phone"></i> {{ phone }}</li>
-            <li><i class="fa fa-envelope"></i> {{ email }}</li>
-          </ul>
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="logo">
+          <a routerLink="/"
+            ><img src="assets/img/logo.png" alt="Logo" class="img-fluid"
+          /></a>
         </div>
-        <div class="col-lg-6">
-          <div class="tn-right">
-            <div class="top-social">
-              <a *ngFor="let social of socials" [href]="social.url">
-                <i [class]="social.icon" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
+        <div class="tn-right">
+          <button class="btn var(--secondary-color) border" routerLink="/login">
+            Login
+          </button>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="menu-item">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-2">
-          <div class="logo">
-            <a routerLink="/"><img src="assets/img/logo.png" alt="" /></a>
-          </div>
-        </div>
-        <div class="col-lg-10">
-          <div class="nav-menu">
-            <nav class="mainmenu">
-              <ul>
-                <li
-                  *ngFor="let item of menu"
-                  [class.active]="item.active"
-                  [class.has-children]="item.children?.length"
-                >
-                  <a
-                    [routerLink]="!item.children ? item.url : null"
-                    (click)="toggleDropdown(item, $event)"
-                    href="javascript:void(0)"
-                  >
-                    {{ item.label }}
-                    <i *ngIf="item.children" class="fa fa-angle-down"></i>
-                  </a>
-                  <ul class="dropdown" *ngIf="item.children && item.open">
-                    <li *ngFor="let child of item.children">
-                      <a [routerLink]="child.url">{{ child.label }}</a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-            <div class="nav-right search-switch">
-              <i class="icon_search"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div *ngIf="!isLandingPage" class="menu-container" [class.sticky]="isSticky">
+    <app-menu></app-menu>
   </div>
 </header>

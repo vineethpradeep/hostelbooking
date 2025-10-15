@@ -2,8 +2,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface Facility {
-  icon: string;   // could be a CSS class, emoji, or image path
+interface Service {
+  icon: string;
   title: string;
   description: string;
 }
@@ -13,39 +13,45 @@ interface Facility {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './facilities.component.html',
-  styleUrls: ['./facilities.component.scss']
+  styleUrls: ['./facilities.component.css'],
 })
 export class FacilitiesComponent {
-  facilities: Facility[] = [
+  services: Service[] = [
     {
-      icon: '🛏️',
-      title: 'Comfortable Rooms',
-      description: 'Spacious rooms with cozy beds and modern interiors.'
+      icon: 'bi bi-wifi',
+      title: 'High-Speed WiFi',
+      description:
+        'Free unlimited high-speed internet throughout the property.',
     },
     {
-      icon: '📶',
-      title: 'Free Wi-Fi',
-      description: 'High-speed internet available across the property.'
+      icon: 'bi bi-egg-fried',
+      title: 'Meals Included',
+      description:
+        'Nutritious breakfast, lunch, and dinner prepared by professional cooks.',
     },
     {
-      icon: '🍽️',
-      title: 'Restaurant & Café',
-      description: 'Enjoy local and international cuisines at our in-house restaurant.'
+      icon: 'bi bi-shield-lock',
+      title: '24/7 Security',
+      description:
+        'Round-the-clock security with CCTV surveillance and secure access.',
     },
     {
-      icon: '🚗',
-      title: 'Parking Facility',
-      description: 'Secure parking space available for all guests.'
+      icon: 'bi bi-people',
+      title: 'Common Areas',
+      description:
+        'TV lounge, reading room, and recreation area for socializing and relaxation.',
     },
     {
-      icon: '🏊',
-      title: 'Swimming Pool',
-      description: 'Relax and refresh in our outdoor pool.'
+      icon: 'bi bi-bucket',
+      title: 'Housekeeping',
+      description:
+        'Regular cleaning and laundry services to keep your stay comfortable.',
     },
     {
-      icon: '💪',
-      title: 'Fitness Center',
-      description: 'Well-equipped gym to keep up with your fitness routine.'
-    }
+      icon: 'bi bi-lightning-charge',
+      title: 'Power Backup',
+      description:
+        'Uninterrupted power supply with backup generators for 24/7 electricity.',
+    },
   ];
 }

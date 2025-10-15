@@ -43,7 +43,7 @@
 }
 
 .hp-room-items .hp-room-item .hr-text h2 {
-    color: #dfa974;
+    color: var(--font-primary-color);
     font-weight: 700;
     margin-bottom: 50px;
     -webkit-transition: all 0.2s;

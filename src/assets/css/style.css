@@ -1,9 +1,35 @@
+:root {
+    --app-font-family: "Segoe UI Variable Text", "Segoe UI", segoeui, "Helvetica Neue", helvetica, arial, sans-serif;
+}
+
+:root {
+    --primary-color: rgba(0, 120, 212, 1);
+    --primary-highlight: rgba(0, 109, 193, 0.7);
+
+
+    --secondary-color: transparent;
+    --secondary-highlight: rgba(0, 0, 0, 0.7);
+
+    --secondary-border-color: #17253d;
+
+
+    --font-primary-color: var(--primary-color);
+
+}
+
 html,
 body {
     height: 100%;
-    font-family: "Cabin", sans-serif;
+    font-family: var(--app-font-family) !important;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
+    background-color: #fff;
+}
+
+*,
+*::before,
+*::after {
+    font-family: var(--app-font-family) !important;
 }
 
 h1,
@@ -13,7 +39,7 @@ h4,
 h5,
 h6 {
     margin: 0;
-    color: #111111;
+    color: var(--font-primary-color);
     font-weight: 400;
     font-family: "Lora", serif;
 }
@@ -86,6 +112,14 @@ ol {
   Helper CSS
 -----------------------*/
 
+.pb-6 {
+    padding-bottom: 4rem !important;
+}
+
+.pb-8 {
+    padding-bottom: 6rem !important;
+}
+
 .section-title {
     text-align: center;
     margin-bottom: 22px;
@@ -93,7 +127,7 @@ ol {
 
 .section-title span {
     font-size: 14px;
-    color: #dfa974;
+    color: var(--font-primary-color);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -153,7 +187,7 @@ ol {
     bottom: -5px;
     width: 100%;
     height: 2px;
-    background: #dfa974;
+    background: var(--primary-color);
     content: "";
 }
 
@@ -314,19 +348,15 @@ ol {
     display: inline-block;
     font-size: 18px;
     color: #19191a;
-    margin-right: 20px;
+    margin-right: 4px;
     position: relative;
     font-weight: 500;
 }
 
-.breadcrumb-text .bt-option a:after {
-    position: absolute;
-    right: -13px;
-    top: 1px;
-    content: "";
+.breadcrumb-text .bt-option i {
     font-size: 18px;
-    font-family: "FontAwesome";
     color: #aaaab3;
+    vertical-align: middle;
 }
 
 .breadcrumb-text .bt-option span {
@@ -372,7 +402,7 @@ ol {
 }
 
 .about-page-text .ap-services li i {
-    color: #dfa974;
+    color: var(--font-primary-color);
     margin-right: 5px;
 }
 
@@ -524,7 +554,7 @@ ol {
 }
 
 .room-item .ri-text h3 {
-    color: #dfa974;
+    color: var(--font-primary-color);
     font-weight: 700;
     margin-bottom: 14px;
 }
@@ -577,7 +607,7 @@ ol {
 }
 
 .room-pagination a:hover {
-    background: #dfa974;
+    background: var(--primary-color);
     color: #ffffff;
 }
 
@@ -629,12 +659,12 @@ ol {
     font-size: 13px;
     text-transform: uppercase;
     font-weight: 700;
-    background: #dfa974;
+    background: var(--primary-color);
     padding: 14px 28px 13px;
 }
 
 .room-details-item .rd-text h2 {
-    color: #dfa974;
+    color: var(--font-primary-color);
     font-weight: 700;
     margin-bottom: 25px;
 }
@@ -714,7 +744,7 @@ ol {
 
 .rd-reviews .review-item .ri-text span {
     font-size: 12px;
-    color: #dfa974;
+    color: var(--font-primary-color);
     text-transform: uppercase;
     letter-spacing: 3px;
 }
@@ -832,7 +862,7 @@ ol {
     text-transform: uppercase;
     color: #ffffff;
     letter-spacing: 2px;
-    background: #dfa974;
+    background: var(--primary-color);
     border: none;
     padding: 14px 34px 13px;
     display: inline-block;
@@ -872,7 +902,7 @@ ol {
 }
 
 .room-booking form .check-date i {
-    color: #dfa974;
+    color: var(--font-primary-color);
     position: absolute;
     right: 18px;
     bottom: 17px;
@@ -901,8 +931,8 @@ ol {
 }
 
 .room-booking form .select-option .nice-select:after {
-    border-bottom: 2px solid #dfa974;
-    border-right: 2px solid #dfa974;
+    border-bottom: 2px solid var(--primary-color);
+    border-right: 2px solid var(--primary-color);
     height: 10px;
     margin-top: 0;
     right: 20px;
@@ -926,9 +956,9 @@ ol {
     display: block;
     font-size: 14px;
     text-transform: uppercase;
-    border: 1px solid #dfa974;
+    border: 1px solid var(--primary-color);
     border-radius: 2px;
-    color: #dfa974;
+    color: var(--font-primary-color);
     font-weight: 500;
     background: transparent;
     width: 100%;
@@ -971,7 +1001,7 @@ ol {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    background: #dfa974;
+    background: var(--primary-color);
     padding: 3px 10px;
     border-radius: 2px;
 }
@@ -1017,7 +1047,7 @@ ol {
 .bd-hero-text span {
     font-size: 12px;
     color: #ffffff;
-    background: #dfa974;
+    background: var(--primary-color);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -1037,7 +1067,7 @@ ol {
 .bd-hero-text ul li {
     list-style: none;
     font-size: 14px;
-    color: #dfa974;
+    color: var(--font-primary-color);
     margin-right: 35px;
     display: inline-block;
 }
@@ -1135,7 +1165,7 @@ ol {
 
 .blog-details-text .tag-share .tags a:hover {
     color: #ffffff;
-    background: #dfa974;
+    background: var(--primary-color);
 }
 
 .blog-details-text .tag-share .social-share {
@@ -1219,7 +1249,7 @@ ol {
 
 .blog-details-text .comment-option .single-comment-item .sc-text span {
     font-size: 12px;
-    color: #dfa974;
+    color: var(--font-primary-color);
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -1253,9 +1283,9 @@ ol {
 }
 
 .blog-details-text .comment-option .single-comment-item .sc-text a:hover {
-    background: #dfa974;
+    background: var(--primary-color);
     color: #ffffff;
-    border-color: #dfa974;
+    border-color: var(--font-primary-color);
 }
 
 .blog-details-text .leave-comment h4 {
@@ -1278,7 +1308,7 @@ ol {
 }
 
 .blog-details-text .leave-comment .comment-form input:focus {
-    border-color: #dfa974;
+    border-color: var(--font-primary-color);
 }
 
 .blog-details-text .leave-comment .comment-form textarea {
@@ -1298,7 +1328,7 @@ ol {
 }
 
 .blog-details-text .leave-comment .comment-form textarea:focus {
-    border-color: #dfa974;
+    border-color: var(--font-primary-color);
 }
 
 .blog-details-text .leave-comment .comment-form button {
@@ -1307,7 +1337,7 @@ ol {
     text-transform: uppercase;
     color: #ffffff;
     letter-spacing: 2px;
-    background: #dfa974;
+    background: var(--primary-color);
     border: none;
     padding: 14px 42px 13px;
     display: inline-block;
@@ -1430,7 +1460,7 @@ ol {
     text-transform: uppercase;
     color: #ffffff;
     letter-spacing: 2px;
-    background: #dfa974;
+    background: var(--primary-color);
     border: none;
     padding: 14px 34px 13px;
     display: inline-block;

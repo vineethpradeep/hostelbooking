@@ -5,21 +5,33 @@
       <!-- Left: Info -->
       <div class="info">
         <h1>Contact Us</h1>
-        <p>Have questions or need help with a booking? We’re happy to assist.</p>
+        <p>
+          Have questions or need help with a booking? We’re happy to assist.
+        </p>
 
         <ul class="info-list" aria-label="Contact information">
-          <li><strong>Address:</strong> 123 Hotel Street, Chennai, India</li>
-          <li><strong>Phone:</strong> +91 98765 43210</li>
-          <li><strong>Email:</strong> supporthotelbooking.com </li>
+          <li><strong>Address:</strong> 123 MG Road, Bangalore - India</li>
+          <li><strong>Phone:</strong>+91-9876543210</li>
+          <li><strong>Email:</strong> info&#64;karthickpg.com</li>
         </ul>
       </div>
 
       <!-- Right: Form -->
       <div class="form-card">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate aria-label="Contact form">
+        <form
+          [formGroup]="form"
+          (ngSubmit)="onSubmit()"
+          novalidate
+          aria-label="Contact form"
+        >
           <div class="field">
             <label for="name">Your Name *</label>
-            <input id="name" type="text" formControlName="name" placeholder="Enter your name" />
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              placeholder="Enter your name"
+            />
             <!-- <small class="error" *ngIf="f.name.touched && f.name.invalid">
               <span *ngIf="f.name.errors?.['required']">Name is required.</span>
               <span *ngIf="f.name.errors?.['minlength']">At least 2 characters.</span>
@@ -28,7 +40,12 @@
 
           <div class="field">
             <label for="email">Email Address *</label>
-            <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Enter your email"
+            />
             <!-- <small class="error" *ngIf="f.email.touched && f.email.invalid">
               <span *ngIf="f.email.errors?.['required']">Email is required.</span>
               <span *ngIf="f.email.errors?.['email']">Enter a valid email.</span>
@@ -37,20 +54,34 @@
 
           <div class="field">
             <label for="subject">Subject</label>
-            <input id="subject" type="text" formControlName="subject" placeholder="Subject (optional)" />
+            <input
+              id="subject"
+              type="text"
+              formControlName="subject"
+              placeholder="Subject (optional)"
+            />
           </div>
 
           <div class="field">
             <label for="message">Message *</label>
-            <textarea id="message" rows="6" formControlName="message" placeholder="Write your message"></textarea>
+            <textarea
+              id="message"
+              rows="6"
+              formControlName="message"
+              placeholder="Write your message"
+            ></textarea>
             <!-- <small class="error" *ngIf="f.message.touched && f.message.invalid">
               <span *ngIf="f.message.errors?.['required']">Message is required.</span>
               <span *ngIf="f.message.errors?.['minlength']">At least 10 characters.</span>
             </small> -->
           </div>
 
-          <button type="submit" [disabled]="form.invalid || submitting" class="btn">
-            {{ submitting ? 'Sending…' : 'Send Message' }}
+          <button
+            type="submit"
+            [disabled]="form.invalid || submitting"
+            class=""
+          >
+            {{ submitting ? "Sending…" : "Send Message" }}
           </button>
 
           <p class="success" *ngIf="submitSuccess" aria-live="polite">

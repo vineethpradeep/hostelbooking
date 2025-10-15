@@ -25,6 +25,7 @@
               "node_modules/jquery-nice-select/css/nice-select.css",
               "node_modules/jquery-ui-dist/jquery-ui.min.css",
               "node_modules/magnific-popup/dist/magnific-popup.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/assets/css/style.css"
             ],
             "scripts": [
