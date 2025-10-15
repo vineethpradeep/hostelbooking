@@ -78,8 +78,8 @@
                     class="mb-3 mb-md-0 position-relative menu-link"
                   >
                     <a
-                      [routerLink]="hasChildren(item) ? null : item.url"
-                      (click)="toggleDropdown(item, $event)"
+                      [routerLink]="item.url"
+                      (click)="onNavigate()"
                       href="javascript:void(0)"
                       class="text-decoration-none text-dark"
                     >
@@ -97,6 +97,7 @@
                       <li *ngFor="let child of item.children">
                         <a
                           [routerLink]="child.url"
+                          (click)="onNavigate()"
                           class="text-decoration-none text-dark"
                         >
                           {{ child.label }}

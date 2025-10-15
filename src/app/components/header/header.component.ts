@@ -66,7 +66,15 @@ export class HeaderComponent {
   isSticky = false;
   menuOpen = false;
 
-  constructor(private el: ElementRef) {}
+  constructor(private router: Router, private el: ElementRef) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (window.innerWidth < 992) {
+          this.menuOpen = false;
+        }
+      });
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -86,5 +94,11 @@ export class HeaderComponent {
 
   hasChildren(item: MenuItem): boolean {
     return Array.isArray(item.children) && item.children.length > 0;
+  }
+
+  onNavigate(): void {
+    if (window.innerWidth < 992) {
+      this.menuOpen = false;
+    }
   }
 }
