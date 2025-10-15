@@ -1,36 +1,89 @@
 .room-details-item {
-    background: #fff;
+    background: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 1rem;
     overflow: hidden;
-    transition: all 0.3s;
 }
 
-.room-details-item img {
+.room-details-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.room-image {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+}
+
+.room-image img {
     width: 100%;
-    height: 350px;
+    height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-.rd-title h3 {
+.room-details-item:hover .room-image img {
+    transform: scale(1.05);
+}
+
+.book-now-overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.room-details-item:hover .book-now-overlay {
+    opacity: 1;
+}
+
+.btn-gradient {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+}
+
+.book-now-btn {
+    font-size: 0.9rem;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.book-now-btn:hover {
+    transform: scale(1.05);
+}
+
+.room-name {
+    font-size: 1.25rem;
     font-weight: 700;
 }
 
-.rd-title .btn {
-    font-size: 0.85rem;
-    padding: 0.4rem 1rem;
+.room-price {
+    font-size: 1.2rem;
+    color: var(--text-primary);
 }
 
-ul.list-unstyled li {
-    font-size: 0.95rem;
+.room-size {
+    font-size: 1rem;
+    color: var(--text-muted);
 }
 
-.review-item {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 1rem;
+.room-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
 }
 
-.review-add input,
-.review-add textarea,
-.review-add select {
-    border-radius: 0.5rem;
+.room-features li {
+    background-color: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
 }
