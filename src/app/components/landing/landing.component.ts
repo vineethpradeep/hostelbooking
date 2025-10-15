@@ -6,7 +6,6 @@ import { AboutUsComponent } from '../about-us/about-us.component';
 import { ServicesComponent } from '../services/services.component';
 import { FeaturedRoomsComponent } from '../featured-rooms/rooms.component';
 import { TestimonialsComponent } from '../testimonials/testimonials.component';
-import { LandingMenuComponent } from '../landing-menu/landing-menu.component';
 import { FacilitiesComponent } from '../facilities/facilities.component';
 import { StatsCounterComponent } from '../stats-counter/stats-counter.component';
 import { MenuComponent } from '../menu/menu.component';
@@ -22,7 +21,6 @@ import { MenuComponent } from '../menu/menu.component';
     ServicesComponent,
     FeaturedRoomsComponent,
     TestimonialsComponent,
-    MenuComponent,
     FacilitiesComponent,
     StatsCounterComponent,
   ],
