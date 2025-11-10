@@ -5,13 +5,17 @@ import { RoomDetailsComponent } from './components/room-details/room-details.com
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { FacilitiesComponent } from './components/facilities/facilities.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { LoginComponent } from './components/auth/login/login.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'rooms', component: RoomsComponent },
   { path: 'about', component: AboutUsComponent },
   { path: 'contact', component: ContactUsComponent },
-    { path: 'facilities', component: FacilitiesComponent },
+  { path: 'facilities', component: FacilitiesComponent },
+  { path: 'auth/register', component: RegisterComponent },
+  { path: 'auth/login', component: LoginComponent },
   { path: 'rooms/:id', component: RoomDetailsComponent },
   { path: '**', redirectTo: '' },
 ];

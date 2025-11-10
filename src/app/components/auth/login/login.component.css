@@ -1,0 +1,14 @@
+.card {
+  border-radius: 10px;
+}
+
+button {
+  font-weight: 600;
+}
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

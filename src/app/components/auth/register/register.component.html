@@ -1,0 +1,145 @@
+<section class="registration py-5 d-flex align-items-center" style="min-height: 100vh;">
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <div class="col-md-8 col-lg-6">
+
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+
+            <h3 class="mb-4 text-center">Register</h3>
+
+            <!-- Your UPDATED two-column form -->
+            <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+
+              <!-- Row: First Name + Last Name -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="firstName" class="form-label">First Name *</label>
+                  <input
+                    id="firstName"
+                    type="text"
+                    formControlName="firstName"
+                    class="form-control"
+                    placeholder="Enter your first name"
+                  />
+                  <div class="text-danger small"
+                       *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid">
+                    First name is required.
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="lastName" class="form-label">Last Name *</label>
+                  <input
+                    id="lastName"
+                    type="text"
+                    formControlName="lastName"
+                    class="form-control"
+                    placeholder="Enter your last name"
+                  />
+                </div>
+              </div>
+
+              <!-- Row: Email + Phone -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="emailAddress" class="form-label">Email Address *</label>
+                  <input
+                    id="emailAddress"
+                    type="email"
+                    formControlName="emailAddress"
+                    class="form-control"
+                    placeholder="Enter your email"
+                  />
+                  <div class="text-danger small"
+                       *ngIf="registerForm.get('emailAddress')?.touched && registerForm.get('emailAddress')?.invalid">
+                    <span *ngIf="registerForm.get('emailAddress')?.errors?.['required']">Email is required.</span>
+                    <span *ngIf="registerForm.get('emailAddress')?.errors?.['email']">Enter a valid email.</span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="phoneNumber" class="form-label">Phone</label>
+                  <input
+                    id="phoneNumber"
+                    type="text"
+                    formControlName="phoneNumber"
+                    class="form-control"
+                    placeholder="+911234567890"
+                  />
+                  <div class="text-danger small"
+                       *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid">
+                    Enter a valid phone number.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Row: Password + Confirm Password -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="password" class="form-label">Password *</label>
+                  <input
+                    id="password"
+                    type="password"
+                    formControlName="password"
+                    class="form-control"
+                    placeholder="Enter password"
+                  />
+                  <div class="text-danger small"
+                       *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+                    <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</span>
+                    <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Minimum 8 characters.</span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                  <input
+                    id="confirmPassword"
+                    type="password"
+                    formControlName="confirmPassword"
+                    class="form-control"
+                    placeholder="Confirm password"
+                  />
+                  <div class="text-danger small"
+                       *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+                    Passwords do not match.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Roles -->
+              <div class="mb-3">
+                <label class="form-label">Roles *</label>
+                <div class="form-check" *ngFor="let role of availableRoles">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    (change)="onRoleChange(role.id, $event)"
+                    id="role{{ role.id }}"
+                  />
+                  <label class="form-check-label" for="role{{ role.id }}">
+                    {{ role.name }}
+                  </label>
+                </div>
+                <div class="text-danger small" *ngIf="roleIdsArray?.invalid && registerForm.touched">
+                  Select at least one role.
+                </div>
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" class="btn btn-primary w-100"
+                      [disabled]="submitting || registerForm.invalid">
+                {{ submitting ? 'Registering…' : 'Register' }}
+              </button>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
