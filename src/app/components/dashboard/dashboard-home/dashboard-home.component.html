@@ -1,0 +1,81 @@
+<section class="aboutus-section spad">
+  <div class="container">
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5>Total Users</h5>
+      <h3>1,248</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5>Bookings Today</h5>
+      <h3>84</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5>Revenue</h5>
+      <h3>₹ 1,85,000</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5>Pending Approvals</h5>
+      <h3>12</h3>
+    </div>
+  </div>
+</div>
+
+<!-- Charts -->
+<div class="row">
+  <div class="col-md-6 mb-4">
+    <div class="card p-3 shadow-sm">
+      <h5 class="mb-3">Monthly Bookings</h5>
+      <canvas height="200"  id="barChart"></canvas>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card p-3 shadow-sm">
+      <h5 class="mb-3">User Role Distribution</h5>
+      <canvas  height="200" id="pieChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="card p-3 shadow-sm">
+  <h5 class="mb-3">Recent Bookings</h5>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Customer</th>
+        <th>Room</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let b of bookingList; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ b.customer }}</td>
+        <td>{{ b.room }}</td>
+        <td>{{ b.date }}</td>
+        <td>
+          <span class="badge bg-success" *ngIf="b.status == 'Confirmed'">Confirmed</span>
+          <span class="badge bg-warning text-dark" *ngIf="b.status == 'Pending'">Pending</span>
+          <span class="badge bg-danger" *ngIf="b.status == 'Cancelled'">Cancelled</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  </div>
+</section>
+

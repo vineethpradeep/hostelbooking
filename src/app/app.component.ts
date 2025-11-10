@@ -15,9 +15,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     RouterOutlet,
-    HeaderComponent,
-    FooterComponent,
-    PreloaderDirective,
   ],
   templateUrl: './app.component.html',
 })

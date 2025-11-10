@@ -26,7 +26,7 @@
                   class="list-unstyled mb-0 d-md-flex flex-md-row justify-content-md-center gap-md-4"
                 >
                   <li
-                    *ngFor="let item of menu"
+                    *ngFor="let item of dynamicMenus"
                     [class.active]="item.active"
                     [class.has-children]="hasChildren(item)"
                     class="mb-3 mb-md-0 position-relative menu-link"
@@ -43,7 +43,6 @@
                         class="bi bi-chevron-down ms-1"
                       ></i>
                     </a>
-
                     <ul
                       class="dropdown list-unstyled"
                       *ngIf="hasChildren(item) && item.open"
@@ -60,27 +59,18 @@
                     </ul>
                   </li>
                 </ul>
-                <div class="mobile-login d-md-none mt-4">
-                  <button
-                    class="btn btn-outline-secondary login-btn w-100"
-                    routerLink="/auth/login">
-                    Login 
-                  </button>
-                </div>
               </nav>
             </div>
           </div>
-        </div>
-        <div
+        </div>   
+          <div
           class="col-12 col-md-3 text-md-end mt-3 mt-md-0 tn-right d-none d-md-block">
-          <button
-            class="btn btn-outline-secondary login-btn mr-4"
-            routerLink="/auth//login">
-            Login
+          Welcome {{userName}},
+          <button  (click)="logout()"
+            class="btn btn-outline-secondary login-btn mr-4">
+            Logout
           </button>
-                   
-        </div>
-   
+        </div>  
       </div>
     </div>
   </div>
@@ -90,3 +80,6 @@
     (click)="toggleMenu()"
   ></div>
 </header>
+
+
+

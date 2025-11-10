@@ -49,7 +49,8 @@ export class LoginComponent {
         this.submitting = false;
 
         // Save token if backend returns one
-        // localStorage.setItem("token", res.token);
+        debugger;
+        this.authService.setTokenAfterLogin(res.Data.AccessToken,res.Data.User.Roles[0],res.Data.User.FirstName);
 
         this.router.navigate(['/dashboard']);
       },

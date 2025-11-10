@@ -25,41 +25,13 @@ interface MenuItem {
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  // isLandingPage = false;
-  // isSticky = false;
-  // constructor(private router: Router, private el: ElementRef) {
-  //   this.router.events
-  //     .pipe(filter((e) => e instanceof NavigationEnd))
-  //     .subscribe((e: any) => {
-  //       this.isLandingPage =
-  //         e.urlAfterRedirects === '/' || e.urlAfterRedirects === '/home';
-  //       this.isSticky = false;
-  //     });
-  // }
-
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   if (this.isLandingPage) return;
-
-  //   const headerHeight = this.el.nativeElement.offsetHeight;
-  //   this.isSticky = window.scrollY > headerHeight;
-  // }
+  
 
   menu: MenuItem[] = [
-    { label: 'Home', url: '/', active: true },
+    { label: 'Home', url: '/', active: false },
     { label: 'Rooms', url: '/rooms', active: false },
     { label: 'About', url: '/about', active: false },
-    { label: 'Facilities', url: '/facilities', active: false },
-    // {
-    //   label: 'Services',
-    //   active: false,
-    //   open: false,
-    //   children: [
-    //     { label: 'WiFi', url: '/services/wifi' },
-    //     { label: 'Laundry', url: '/services/laundry' },
-    //     { label: 'Meals', url: '/services/meals' },
-    //   ],
-    // },
+    { label: 'Facilities', url: '/facilities', active: false },   
     { label: 'Contact', url: '/contact', active: false },
   ];
 
