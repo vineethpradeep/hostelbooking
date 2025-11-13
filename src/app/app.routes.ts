@@ -11,9 +11,9 @@ import { DashBoardLayoutComponent } from './components/dashboard/layout/layout.c
 import { AuthGuard } from './services/auth-guard';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 import { HeroComponent } from './components/hero/hero.component';
-import { UsersComponent } from './users/users.component';
-import { PaymentComponent } from './payment/payment.component';
-import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './components/users/users.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { BookingComponent } from './components/booking/booking.component';
 
 export const routes: Routes = [
