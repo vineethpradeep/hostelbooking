@@ -11,6 +11,10 @@ import { DashBoardLayoutComponent } from './components/dashboard/layout/layout.c
 import { AuthGuard } from './services/auth-guard';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 import { HeroComponent } from './components/hero/hero.component';
+import { UsersComponent } from './users/users.component';
+import { PaymentComponent } from './payment/payment.component';
+import { ProfileComponent } from './profile/profile.component';
+import { BookingComponent } from './components/booking/booking.component';
 
 export const routes: Routes = [
 
@@ -37,15 +41,17 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashBoardLayoutComponent,
-    canActivate: [AuthGuard],
+   // canActivate: [AuthGuard],
     children: [
   { path: '', component: DashboardHomeComponent },
   { path: 'rooms', component: RoomsComponent },
+  { path: 'users', component: UsersComponent }, 
+  { path: 'payment', component: PaymentComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'booking', component: BookingComponent },
   { path: 'about', component: AboutUsComponent },
   { path: 'contact', component: ContactUsComponent },
   { path: 'facilities', component: FacilitiesComponent },
-  { path: 'auth/register', component: RegisterComponent },
-  { path: 'auth/login', component: LoginComponent },
   { path: 'rooms/:id', component: RoomDetailsComponent },
     ]
   }

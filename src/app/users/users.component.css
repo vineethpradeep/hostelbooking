@@ -1,0 +1,11 @@
+.card {
+  border-radius: 10px;
+}
+
+table tbody tr:hover {
+  background: #f4f4f4;
+}
+
+.badge {
+  font-size: 13px;
+}

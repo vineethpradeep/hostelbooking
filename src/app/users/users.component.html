@@ -1,0 +1,30 @@
+
+<div class="card p-3 shadow-sm">
+  <h5 class="mb-3">User Details
+    </h5>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>First Name
+        <th>Last Name
+        <th>Email Address
+        <th>Phone Number
+      </tr>
+    </thead>
+
+
+
+<tbody>
+  <tr *ngFor="let u of userList; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td>{{ u.firstName }}</td>
+    <td>{{ u.lastName }}</td>
+    <td>{{ u.emailAddress }}</td>
+    <td>{{ u.phoneNumber }}</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+

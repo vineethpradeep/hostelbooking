@@ -1,0 +1,31 @@
+
+<div class="card p-3 shadow-sm">
+  <h5 class="mb-3">Payment Details</h5>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Transaction Id
+        <th>Phone Number
+        <th>Amount
+        <th>Payment Status
+      </tr>
+    </thead>
+
+
+
+<tr *ngFor="let p of paymentList; let i = index">
+  <td>{{ i + 1 }}</td>
+  <td>{{ p.transactionId }}</td>
+  <td>{{ p.phoneNumber }}</td>
+  <td>{{ p.amount }}</td>
+  <td>
+    <span class="badge bg-success" *ngIf="p.paymentStatus === 'Success'">Success</span>
+    <span class="badge bg-warning text-dark" *ngIf="p.paymentStatus === 'Pending'">Pending</span>
+    <span class="badge bg-danger" *ngIf="p.paymentStatus === 'Failed'">Failed</span>
+  </td>
+</tr>
+
+</table>
+</div>
+
