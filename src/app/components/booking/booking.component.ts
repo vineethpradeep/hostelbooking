@@ -4,9 +4,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-booking',
-  
-   imports: [    CommonModule,
-    RouterModule],
+  imports: [    CommonModule, RouterModule],
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.css',
 })

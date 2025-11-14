@@ -4,8 +4,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-users',
-    imports: [    CommonModule,
-    RouterModule],
+  imports: [    CommonModule,RouterModule],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })

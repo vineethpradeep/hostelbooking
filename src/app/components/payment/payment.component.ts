@@ -4,9 +4,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
-  
-   imports: [    CommonModule,
-    RouterModule],
+  imports: [    CommonModule,RouterModule],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css'
 })
