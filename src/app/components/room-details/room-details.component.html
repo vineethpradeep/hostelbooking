@@ -160,6 +160,7 @@
                 </button>
               </div>
             </div>
+   
           </form>
         </div>
       </div>
@@ -167,7 +168,12 @@
       <div class="col-lg-4">
         <div class="room-booking shadow-sm rounded">
           <!-- <h4 class="mb-4 text-center">Your Reservation</h4> -->
-          <app-booking-form></app-booking-form>
+          <ng-container *ngIf="bookingFormVisible">
+      <app-booking-form
+        [propertyId]="roomId"
+        (close)="closeBookingForm()"
+      ></app-booking-form>
+    </ng-container>
         </div>
       </div>
     </div>

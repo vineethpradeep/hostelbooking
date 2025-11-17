@@ -1,12 +1,9 @@
 <div class="booking-root">
   <h2>Bookings</h2>
 
-  <div class="toolbar">
-    <button (click)="startCreate()">New Booking</button>
-  </div>
+  <button class="btn btn-primary" (click)="openBookingForm()">Book Now</button>
 
-  <div *ngIf="loading">Loading bookings...</div>
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
 
   <table *ngIf="bookings?.length" class="booking-table">
     <thead>
@@ -52,23 +49,12 @@
     <h3>{{ selectedId ? 'Edit Booking' : 'Create Booking' }}</h3>
 
     <form [formGroup]="bookingForm" (ngSubmit)="save()">
-
       <div class="two-col">
         <label>Booking Number
           <input formControlName="bookingNumber" />
         </label>
 
-        <label>Property Id
-          <input type="number" formControlName="propertyId" />
-        </label>
-      </div>
-
-      <div class="two-col">
-        <!-- Uncomment if needed
-        <label>User Id
-          <input type="number" formControlName="userId" />
-        </label>
-        -->
+      
 
         <label>Bed Id
           <input type="number" formControlName="bedId" />
@@ -84,11 +70,6 @@
           <input type="date" formControlName="checkOutDate" />
         </label>
       </div>
-
-      <div class="two-col">
-        <label>Planned Check-out
-          <input type="date" formControlName="plannedCheckOutDate" />
-        </label>
 
         <label>Monthly Rent
           <input type="number" step="0.01" formControlName="monthlyRent" />
@@ -110,16 +91,19 @@
           <input formControlName="bookingType" />
         </label>
 
-        <label>Special Requests
-          <input formControlName="specialRequests" />
-        </label>
-      </div>
+       <label>Special Requests</label>
+<textarea
+  formControlName="specialRequests"
+  rows="3"
+  placeholder="Enter any special instructions..."
+  class="form-control"
+></textarea>
+
 
       <div class="form-actions">
         <button type="submit">{{ selectedId ? 'Update' : 'Create' }}</button>
         <button type="button" (click)="cancel()">Cancel</button>
       </div>
-
     </form>
 
     <div *ngIf="bookingForm.invalid && bookingForm.touched" class="validation">
@@ -127,7 +111,7 @@
     </div>
   </div>
 
-  <div *ngIf="!bookings || (bookings.length === 0 && !loading)">
+  <div *ngIf="!bookings || bookings.length === 0 && !loading">
     No bookings found.
   </div>
 </div>

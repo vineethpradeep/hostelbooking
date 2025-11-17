@@ -1,40 +1,16 @@
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
-}
+.booking-root {
+  padding: 1rem;
 
-.two-col label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 500;
-}
-
-.two-col input {
-  padding: 8px;
-  margin-top: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.booking-form {
-  background: #fafafa;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  max-width: 650px;
-}
-
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-button {
-  padding: 8px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
+  .toolbar { margin-bottom: 0.5rem; }
+  .booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    th, td { padding: 0.4rem; border: 1px solid #eee; text-align: left; }
+    .actions { display:flex; gap: 6px; }
+  }
+  .booking-form { margin-top: 1rem; background: #fafafa; padding: 1rem; border-radius: 6px; }
+  .two-col { display:flex; gap: 1rem; margin-bottom: 0.5rem; }
+  label { flex:1; display:flex; flex-direction:column; font-size: 0.9rem; }
+  .form-actions { margin-top: 0.6rem; display:flex; gap:8px; }
+  .error { color: darkred; }
 }
