@@ -1,18 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { Component } from '@angular/core';
-import { HeroComponent } from '../../hero/hero.component';
-import { AboutUsComponent } from '../../about-us/about-us.component';
-import { ServicesComponent } from '../../services/services.component';
-import { FeaturedRoomsComponent } from '../../featured-rooms/rooms.component';
-import { TestimonialsComponent } from '../../testimonials/testimonials.component';
-import { FacilitiesComponent } from '../../facilities/facilities.component';
-import { StatsCounterComponent } from '../../stats-counter/stats-counter.component';
-import { BookingComponent } from '../../booking/booking.component';
+
 import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from '../../footer/footer.component';
 import { PreloaderDirective } from '../../../directives/preloader.directive';
-
 
 @Component({
   selector: 'app-landing',
@@ -20,19 +12,11 @@ import { PreloaderDirective } from '../../../directives/preloader.directive';
   imports: [
     CommonModule,
     RouterModule,
+    RouterOutlet,
     HeaderComponent,
     FooterComponent,
-    PreloaderDirective,
-    HeroComponent,
-    AboutUsComponent,
-    ServicesComponent,
-    FeaturedRoomsComponent,
-    TestimonialsComponent,
-    FacilitiesComponent,
-    StatsCounterComponent,
-    BookingComponent,
+    PreloaderDirective
   ],
   templateUrl: './layout.component.html',
 })
 export class PublicLayoutComponent {}
-

@@ -7,6 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PreloaderDirective } from './directives/preloader.directive';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BookingFormComponent } from './components/booking-form/booking-form.component';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     RouterOutlet,
+   BookingFormComponent
+
   ],
   templateUrl: './app.component.html',
+ 
 })
 export class AppComponent {
   isLandingPage = false;

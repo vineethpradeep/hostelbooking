@@ -15,6 +15,7 @@ import { UsersComponent } from './components/users/users.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BookingComponent } from './components/booking/booking.component';
+import { BookingFormComponent } from './components/booking-form/booking-form.component';
 
 export const routes: Routes = [
 
@@ -31,6 +32,8 @@ export const routes: Routes = [
   { path: 'auth/register', component: RegisterComponent },
   { path: 'auth/login', component: LoginComponent },
   { path: 'rooms/:id', component: RoomDetailsComponent },
+  { path: 'bookings', component: BookingFormComponent }
+
     ]
   },
 
