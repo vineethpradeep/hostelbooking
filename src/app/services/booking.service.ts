@@ -7,7 +7,7 @@ import { BookingFormDto } from '../models/booking-form.model';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class BookingService {
 
   private baseUrl = 'https://localhost:5001/api/bookings';  // CHANGE THIS to your API URL
 

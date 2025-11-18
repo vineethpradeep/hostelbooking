@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { ApiService } from '../../services/api.service';
+
 import { BookingFormDto } from '../../models/booking-form.model';
+import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-booking-form',
@@ -29,7 +30,7 @@ export class BookingFormComponent implements OnInit {
   private readonly propertyIdFixed = 101;
   private readonly userIdFixed = 1;
 
-  constructor(private fb: FormBuilder, private api: ApiService) {}
+  constructor(private fb: FormBuilder, private api: BookingService) {}
 
   ngOnInit(): void {
     this.initForm();
