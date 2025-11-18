@@ -1,133 +1,88 @@
-<div class="booking-root">
-  <h2>Bookings</h2>
+<div class="booking-root container">
+ 
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form [formGroup]="bookingForm" (ngSubmit)="save()">
+        <!-- Booking Number -->
+        <!-- <div class="row mb-3">
+          <div class="col-md-12">
+            <label class="form-label">Booking Number</label>
+            <input type="text" formControlName="bookingNumber" class="form-control" placeholder="Enter booking number" />
+          </div>
+        </div> -->
 
-  <div class="toolbar">
-    <button (click)="startCreate()">New Booking</button>
-  </div>
+        <!-- Check-in Date -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label class="form-label">Check-in Date</label>
+            <input type="date" formControlName="checkInDate" class="form-control" />
+          </div>
+        </div>
 
-  <div *ngIf="loading">Loading bookings...</div>
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+        <!-- Check-out Date -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label class="form-label">Check-out Date</label>
+            <input type="date" formControlName="checkOutDate" class="form-control" />
+          </div>
+        </div>
 
-  <table *ngIf="bookings?.length" class="booking-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Booking No</th>
-        <th>Property</th>
-        <th>User</th>
-        <th>Bed</th>
-        <th>Check-in</th>
-        <th>Check-out</th>
-        <th>Planned Checkout</th>
-        <th>Rent</th>
-        <th>Deposit</th>
-        <th>Status</th>
-        <th>Type</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let b of bookings">
-        <td>{{ b.bookingId }}</td>
-        <td>{{ b.bookingNumber }}</td>
-        <td>{{ b.propertyId }}</td>
-        <td>{{ b.userId }}</td>
-        <td>{{ b.bedId }}</td>
-        <td>{{ b.checkInDate }}</td>
-        <td>{{ b.checkOutDate || '-' }}</td>
-        <td>{{ b.plannedCheckOutDate }}</td>
-        <td>{{ b.monthlyRent | number:'1.2-2' }}</td>
-        <td>{{ b.securityDeposit | number:'1.2-2' }}</td>
-        <td>{{ b.status }}</td>
-        <td>{{ b.bookingType }}</td>
-        <td class="actions">
-          <button (click)="startEdit(b)">Edit</button>
-          <button (click)="deleteBooking(b.bookingId)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        <!-- Monthly Rent -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label class="form-label">Monthly Rent</label>
+            <input type="number" step="0.01" formControlName="monthlyRent" class="form-control" placeholder="₹0.00" />
+          </div>
+        </div>
 
-  <div *ngIf="editing" class="booking-form">
-    <h3>{{ selectedId ? 'Edit Booking' : 'Create Booking' }}</h3>
+        <!-- Security Deposit -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label class="form-label">Security Deposit</label>
+            <input type="number" step="0.01" formControlName="securityDeposit" class="form-control" placeholder="₹0.00" />
+          </div>
+        </div>
 
-    <form [formGroup]="bookingForm" (ngSubmit)="save()">
+        <!-- Booking Type -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label class="form-label">Booking Type</label>
+            <input type="text" formControlName="bookingType" class="form-control" placeholder="Online / Walk-in" />
+          </div>
+        </div>
 
-      <div class="two-col">
-        <label>Booking Number
-          <input formControlName="bookingNumber" />
-        </label>
+        <!-- Special Requests -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label class="form-label">Special Requests</label>
+            <textarea
+              rows="3"
+              formControlName="specialRequests"
+              class="form-control"
+              placeholder="Any special request?"
+            ></textarea>
+          </div>
+        </div>
 
-        <label>Property Id
-          <input type="number" formControlName="propertyId" />
-        </label>
+        <!-- Buttons -->
+        <div class="mt-4 d-flex gap-3">
+          <button type="submit" class="btn btn-primary px-4">
+            {{ selectedId ? 'Update' : 'Create' }}
+          </button>
+
+          <button type="button" (click)="cancel()" class="btn btn-secondary px-4">
+            Cancel
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Validation -->
+      <div *ngIf="bookingForm.invalid && bookingForm.touched" class="alert alert-danger mt-3">
+        Please fix validation errors.
       </div>
 
-      <div class="two-col">
-        <!-- Uncomment if needed
-        <label>User Id
-          <input type="number" formControlName="userId" />
-        </label>
-        -->
-
-        <label>Bed Id
-          <input type="number" formControlName="bedId" />
-        </label>
-      </div>
-
-      <div class="two-col">
-        <label>Check-in Date
-          <input type="date" formControlName="checkInDate" />
-        </label>
-
-        <label>Check-out Date 
-          <input type="date" formControlName="checkOutDate" />
-        </label>
-      </div>
-
-      <div class="two-col">
-        <label>Planned Check-out
-          <input type="date" formControlName="plannedCheckOutDate" />
-        </label>
-
-        <label>Monthly Rent
-          <input type="number" step="0.01" formControlName="monthlyRent" />
-        </label>
-      </div>
-
-      <div class="two-col">
-        <label>Security Deposit
-          <input type="number" step="0.01" formControlName="securityDeposit" />
-        </label>
-
-        <label>Status
-          <input formControlName="status" />
-        </label>
-      </div>
-
-      <div class="two-col">
-        <label>Booking Type
-          <input formControlName="bookingType" />
-        </label>
-
-        <label>Special Requests
-          <input formControlName="specialRequests" />
-        </label>
-      </div>
-
-      <div class="form-actions">
-        <button type="submit">{{ selectedId ? 'Update' : 'Create' }}</button>
-        <button type="button" (click)="cancel()">Cancel</button>
-      </div>
-
-    </form>
-
-    <div *ngIf="bookingForm.invalid && bookingForm.touched" class="validation">
-      Please fix validation errors.
     </div>
   </div>
 
-  <div *ngIf="!bookings || (bookings.length === 0 && !loading)">
-    No bookings found.
-  </div>
 </div>

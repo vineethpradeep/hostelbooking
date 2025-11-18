@@ -1,18 +1,18 @@
-<app-breadcrumb
+<!-- <app-breadcrumb
   [title]="'Rooms'"
   [paths]="[
     { label: 'Home', url: '/' },
     { label: 'Rooms', url: '/rooms' }
   ]"
-></app-breadcrumb>
+></app-breadcrumb> -->
 
 <section class="room-details-section py-5" *ngIf="room">
   <div class="container">
+     <h2 class="mb-2">Create Booking</h2>
     <div class="row g-4">
       <div class="col-lg-8">
         <div
-          class="room-details-item shadow-lg rounded overflow-hidden position-relative"
-        >
+          class="room-details-item shadow-lg rounded overflow-hidden position-relative">
           <div class="room-image position-relative">
             <img [src]="room.image" [alt]="room.name" class="img-fluid" />
             <div
@@ -61,112 +61,10 @@
             </p>
           </div>
         </div>
-
-        <div class="rd-reviews mt-5">
-          <h4 class="mb-4">Reviews</h4>
-          <div
-            class="review-item d-flex mb-3"
-            *ngFor="let review of room.reviews; let i = index"
-          >
-            <div class="ri-pic me-3">
-              <img
-                [src]="review.avatar"
-                [alt]="review.name"
-                class="rounded-circle"
-                width="60"
-                height="60"
-              />
-            </div>
-            <div class="ri-text flex-grow-1">
-              <div
-                class="d-flex justify-content-between align-items-center mb-1"
-              >
-                <h5 class="mb-0">{{ review.name }}</h5>
-                <div class="rating text-warning">
-                  <ng-container *ngFor="let _ of reviewStars[i].fullStars">
-                    <i class="bi bi-star-fill"></i>
-                  </ng-container>
-                  <i
-                    *ngIf="reviewStars[i].halfStar"
-                    class="bi bi-star-half"
-                  ></i>
-                  <ng-container *ngFor="let _ of reviewStars[i].emptyStars">
-                    <i class="bi bi-star"></i>
-                  </ng-container>
-                </div>
-              </div>
-              <span class="text-muted fs-7">{{ review.date }}</span>
-              <p class="mt-1">{{ review.text }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="review-add mt-5">
-          <h4 class="mb-4">Add Review</h4>
-          <form
-            class="ra-form"
-            (ngSubmit)="submitReview()"
-            #reviewForm="ngForm"
-          >
-            <div class="row g-3">
-              <div class="col-md-6">
-                <input
-                  type="text"
-                  placeholder="Name*"
-                  [(ngModel)]="newReview.name"
-                  name="name"
-                  required
-                  class="form-control"
-                />
-              </div>
-              <div class="col-md-6">
-                <input
-                  type="email"
-                  placeholder="Email*"
-                  [(ngModel)]="newReview.email"
-                  name="email"
-                  required
-                  class="form-control"
-                />
-              </div>
-              <div class="col-12">
-                <h6 class="mb-2">Your Rating:</h6>
-                <select
-                  [(ngModel)]="newReview.rating"
-                  name="rating"
-                  required
-                  class="form-select mb-2"
-                >
-                  <option [value]="1">1</option>
-                  <option [value]="2">2</option>
-                  <option [value]="3">3</option>
-                  <option [value]="4">4</option>
-                  <option [value]="5">5</option>
-                </select>
-                <textarea
-                  placeholder="Your Review"
-                  [(ngModel)]="newReview.text"
-                  name="text"
-                  required
-                  class="form-control mb-2"
-                  rows="3"
-                ></textarea>
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                  [disabled]="reviewForm.invalid"
-                >
-                  Submit Review
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
       </div>
 
       <div class="col-lg-4">
         <div class="room-booking shadow-sm rounded">
-          <!-- <h4 class="mb-4 text-center">Your Reservation</h4> -->
           <app-booking-form></app-booking-form>
         </div>
       </div>
