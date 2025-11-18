@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -26,8 +26,17 @@ interface StarSet {
 })
 export class RoomDetailsComponent {
   room?: Room;
+  roomId!: number;
+
   stars: StarSet = { fullStars: [], halfStar: false, emptyStars: [] };
   reviewStars: StarSet[] = [];
+
+  // ⭐ NEW — control visibility of booking form
+  bookingFormVisible: boolean = false;
+
+  // ⭐ NEW — to call child method startCreate()
+  @ViewChild(BookingFormComponent)
+  bookingFormCmp!: BookingFormComponent;
 
   newReview: Partial<Review> = { name: '', email: '', text: '', rating: 0 };
 
@@ -37,8 +46,8 @@ export class RoomDetailsComponent {
   ) {}
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.room = this.roomService.getRoomById(id);
+    this.roomId = Number(this.route.snapshot.paramMap.get('id'));
+    this.room = this.roomService.getRoomById(this.roomId);
 
     if (this.room) {
       this.stars = this.getStars(this.room.rating ?? 0);
@@ -83,5 +92,22 @@ export class RoomDetailsComponent {
     } else {
       alert('Please fill all required fields.');
     }
+  }
+
+  // ⭐ NEW — When clicking Book Now
+  openBookingForm() {
+    this.bookingFormVisible = true;
+
+    // Wait until component renders, then call startCreate()
+    setTimeout(() => {
+      if (this.bookingFormCmp && this.bookingFormCmp.startCreate) {
+        this.bookingFormCmp.startCreate();
+      }
+    }, 50);
+  }
+
+  // ⭐ NEW — When booking form emits close
+  closeBookingForm() {
+    this.bookingFormVisible = false;
   }
 }
