@@ -46,7 +46,7 @@ export class AdminHeaderComponent {
     this.dynamicMenus = [
       { label: 'Dashboard', url: '/dashboard',active:false  },
       { label: 'Users', url: '/dashboard/users', active: false },
-      { label: 'Bookings', url: '/dashboard/booking',active:false },
+      { label: 'Bookings', url: '/dashboard/booking-list',active:false },
       { label: 'Payments', url: '/dashboard/payment',active:false },
       { label: 'Profile', url: '/dashboard/profile',active:false }
     ];

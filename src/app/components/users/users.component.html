@@ -1,30 +1,68 @@
-
 <div class="card p-3 shadow-sm">
-  <h5 class="mb-3">User Details
-    </h5>
+  <h5 class="mb-3">User Details</h5>
+
   <table class="table table-bordered table-hover">
     <thead class="table-dark">
       <tr>
         <th>#</th>
-        <th>First Name
-        <th>Last Name
-        <th>Email Address
-        <th>Phone Number
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email Address</th>
+        <th>Phone Number</th>
+        <th style="width: 150px;">Actions</th>
       </tr>
     </thead>
 
+    <tbody>
+      <tr *ngFor="let u of users; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ u.FirstName }}</td>
+        <td>{{ u.LastName }}</td>
+        <td>{{ u.EmailAddress }}</td>
+        <td>{{ u.PhoneNumber }}</td>
 
-
-<tbody>
-  <tr *ngFor="let u of userList; let i = index">
-    <td>{{ i + 1 }}</td>
-    <td>{{ u.firstName }}</td>
-    <td>{{ u.lastName }}</td>
-    <td>{{ u.emailAddress }}</td>
-    <td>{{ u.phoneNumber }}</td>
-  </tr>
-</tbody>
-</table>
+        <td>
+          <button class="btn btn-sm btn-primary me-2" (click)="editUser(u)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteUser(u.UserId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 
+
+<!-- EDIT USER MODAL -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Edit User</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <label class="form-label">First Name</label>
+        <input class="form-control mb-2" [(ngModel)]="selectedUser.FirstName">
+
+        <label class="form-label">Last Name</label>
+        <input class="form-control mb-2" [(ngModel)]="selectedUser.LastName">
+
+        <label class="form-label">Email Address</label>
+        <input class="form-control mb-2" [(ngModel)]="selectedUser.EmailAddress">
+
+        <label class="form-label">Phone Number</label>
+        <input class="form-control mb-2" [(ngModel)]="selectedUser.PhoneNumber">
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" (click)="saveUser()">Save Changes</button>
+      </div>
+
+    </div>
+  </div>
+</div>

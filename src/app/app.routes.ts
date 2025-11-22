@@ -14,8 +14,9 @@ import { HeroComponent } from './components/hero/hero.component';
 import { UsersComponent } from './components/users/users.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { BookingComponent } from './components/booking/booking.component';
+
 import { BookingFormComponent } from './components/booking-form/booking-form.component';
+import { BookingListComponent } from './components/booking-list/booking-list.component';
 
 export const routes: Routes = [
 
@@ -51,7 +52,7 @@ export const routes: Routes = [
   { path: 'users', component: UsersComponent }, 
   { path: 'payment', component: PaymentComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'booking', component: BookingComponent },
+  { path: 'booking-list', component: BookingListComponent },
   { path: 'about', component: AboutUsComponent },
   { path: 'contact', component: ContactUsComponent },
   { path: 'facilities', component: FacilitiesComponent },

@@ -3,108 +3,108 @@
     <div class="card-body">
       <form [formGroup]="bookingForm" (ngSubmit)="save()">
 
-        <!-- Check-in Date -->
-        <div class="row mb-3">
-          <div class="col-md-12">
-            <label class="form-label">
-              Check-in Date <span class="text-danger">*</span>
-            </label>
-            <input type="date" formControlName="checkInDate" class="form-control"
-              [class.is-invalid]="bookingForm.get('checkInDate')?.touched && bookingForm.get('checkInDate')?.invalid" />
+        <!-- Hidden required fields -->
+        <input type="hidden" formControlName="bookingNumber" />
+        <input type="hidden" formControlName="propertyId" />
+        <input type="hidden" formControlName="userId" />
+        <input type="hidden" formControlName="bedId" />
+        <input type="hidden" formControlName="plannedCheckOutDate" />
 
-            <div class="invalid-feedback" *ngIf="bookingForm.get('checkInDate')?.touched && bookingForm.get('checkInDate')?.hasError('required')">
-              Check-in date is required.
-            </div>
-          </div>
+        <!-- Check-in -->
+        <div class="mb-3">
+          <label class="form-label">Check-in Date <span class="text-danger">*</span></label>
+          <input
+            type="date"
+            formControlName="checkInDate"
+            class="form-control"
+            [class.is-invalid]="f['checkInDate'].touched && f['checkInDate'].invalid"
+          />
+          <div class="invalid-feedback">Check-in date is required.</div>
         </div>
 
-        <!-- Check-out Date -->
-        <div class="row mb-3">
-          <div class="col-md-12">
-            <label class="form-label">
-              Check-out Date <span class="text-danger">*</span>
-            </label>
-            <input type="date" formControlName="checkOutDate" class="form-control"
-              [class.is-invalid]="bookingForm.get('checkOutDate')?.touched && bookingForm.get('checkOutDate')?.invalid" />
-
-            <div class="invalid-feedback" *ngIf="bookingForm.get('checkOutDate')?.touched && bookingForm.get('checkOutDate')?.hasError('required')">
-              Check-out date is required.
-            </div>
-          </div>
+        <!-- Check-out -->
+        <div class="mb-3">
+          <label class="form-label">Check-out Date <span class="text-danger">*</span></label>
+          <input
+            type="date"
+            formControlName="checkOutDate"
+            class="form-control"
+            [class.is-invalid]="f['checkOutDate'].touched && f['checkOutDate'].invalid"
+          />
+          <div class="invalid-feedback">Check-out date is required.</div>
         </div>
 
         <!-- Monthly Rent -->
-        <div class="row mb-3">
-          <div class="col-md-12">
-            <label class="form-label">
-              Monthly Rent <span class="text-danger">*</span>
-            </label>
-            <input type="number" min="1" step="0.01" formControlName="monthlyRent" class="form-control" placeholder="₹0.00"
-              [class.is-invalid]="bookingForm.get('monthlyRent')?.touched && bookingForm.get('monthlyRent')?.invalid" />
-
-            <div class="invalid-feedback" *ngIf="bookingForm.get('monthlyRent')?.touched && bookingForm.get('monthlyRent')?.hasError('required')">
-              Monthly rent is required.
-            </div>
-            <div class="invalid-feedback" *ngIf="bookingForm.get('monthlyRent')?.touched && bookingForm.get('monthlyRent')?.hasError('min')">
-              Rent must be more than 0.
-            </div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label">Monthly Rent <span class="text-danger">*</span></label>
+          <input
+            type="number"
+            formControlName="monthlyRent"
+            class="form-control"
+            placeholder="₹0.00"
+            [class.is-invalid]="f['monthlyRent'].touched && f['monthlyRent'].invalid"
+          />
+          <div class="invalid-feedback">Monthly rent is required.</div>
         </div>
 
         <!-- Security Deposit -->
-        <div class="row mb-3">
-          <div class="col-md-12">
-            <label class="form-label">
-              Security Deposit <span class="text-danger">*</span>
-            </label>
-            <input type="number" min="0" step="0.01" formControlName="securityDeposit" class="form-control" placeholder="₹0.00"
-              [class.is-invalid]="bookingForm.get('securityDeposit')?.touched && bookingForm.get('securityDeposit')?.invalid" />
-
-            <div class="invalid-feedback" *ngIf="bookingForm.get('securityDeposit')?.touched && bookingForm.get('securityDeposit')?.hasError('required')">
-              Security deposit is required.
-            </div>
-            <div class="invalid-feedback" *ngIf="bookingForm.get('securityDeposit')?.touched && bookingForm.get('securityDeposit')?.hasError('min')">
-              Deposit cannot be negative.
-            </div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label">Security Deposit <span class="text-danger">*</span></label>
+          <input
+            type="number"
+            formControlName="securityDeposit"
+            class="form-control"
+            [class.is-invalid]="f['securityDeposit'].touched && f['securityDeposit'].invalid"
+          />
+          <div class="invalid-feedback">Security deposit is required.</div>
         </div>
 
         <!-- Booking Type -->
-        <div class="row mb-3">
-          <div class="col-md-12">
-            <label class="form-label">
-              Booking Type <span class="text-danger">*</span>
-            </label>
-            <input type="text" formControlName="bookingType" class="form-control" placeholder="Online / Walk-in"
-              [class.is-invalid]="bookingForm.get('bookingType')?.touched && bookingForm.get('bookingType')?.invalid" />
-
-            <div class="invalid-feedback" *ngIf="bookingForm.get('bookingType')?.touched && bookingForm.get('bookingType')?.hasError('required')">
-              Booking type is required.
-            </div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label">Booking Type <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            formControlName="bookingType"
+            class="form-control"
+            placeholder="Online / Walk-in"
+            [class.is-invalid]="f['bookingType'].touched && f['bookingType'].invalid"
+          />
+          <div class="invalid-feedback">Booking type is required.</div>
         </div>
 
-        <!-- Special Requests (NO required asterisk) -->
-        <div class="row mb-3">
-          <div class="col-md-12">
-            <label class="form-label">Special Requests</label>
-            <textarea rows="3" formControlName="specialRequests" class="form-control"
-              placeholder="Any special request?"></textarea>
-          </div>
+        <!-- Special Requests -->
+        <div class="mb-3">
+          <label class="form-label">Special Requests</label>
+          <textarea rows="3" formControlName="specialRequests" class="form-control"></textarea>
         </div>
 
         <!-- Buttons -->
         <div class="mt-4 d-flex gap-3">
-          <button type="submit" class="btn btn-primary px-4">
-            {{ selectedId ? 'Update' : 'Create' }}
-          </button>
-
-          <button type="button" (click)="cancel()" class="btn btn-secondary px-4">
-            Cancel
-          </button>
+          <button type="submit" class="btn btn-primary px-4">CREATE</button>
+          <button type="button" (click)="cancel()" class="btn btn-secondary px-4">CANCEL</button>
         </div>
-
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- BOOTSTRAP POPUP MODAL ALERT -->
+<div class="modal fade" id="popupAlert" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" [ngClass]="{ 'bg-success': successMessage, 'bg-danger': errorMessage }">
+        <h5 class="modal-title text-white">{{ successMessage ? 'Success' : 'Error' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <p *ngIf="successMessage">{{ successMessage }}</p>
+        <p *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
     </div>
   </div>
 </div>

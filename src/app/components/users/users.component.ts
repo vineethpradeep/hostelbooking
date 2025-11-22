@@ -1,74 +1,83 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { UsersService } from '../../services/user.service';
+import { ApiResponse } from '../../models/api-response.model';
+import { UserDto } from '../../models/user.model';
+
+declare var bootstrap: any;  // For modal
 
 @Component({
   selector: 'app-users',
-  imports: [    CommonModule,RouterModule],
+  standalone: true,
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  imports: [CommonModule, FormsModule]
 })
 export class UsersComponent implements OnInit {
 
-  userList = [
-    {
-      firstName: 'Ravi',
-      lastName: 'Kumar',
-      emailAddress: 'ravi.kumar@example.com',
-      phoneNumber: '9876543210',
-      
-    },
-    {
-      firstName: 'Priya',
-      lastName: 'Sharma',
-      emailAddress: 'priya.sharma@example.com',
-      phoneNumber: '9123456780',
+  users: UserDto[] = [];
+  selectedPropertyId = 1;
+  selectedUserType = 'Admin';
 
-    },
-    {
-      firstName: 'Arun',
-      lastName: 'Nair',
-      emailAddress: 'arun.nair@example.com',
-      phoneNumber: '9988776655',
-      
-    },
-    {
-      firstName: 'Meera',
-      lastName: 'Joseph',
-      emailAddress: 'meera.joseph@example.com',
-      phoneNumber: '9012345678',
-  
-    }, {
-      firstName: 'Ravi',
-      lastName: 'Kumar',
-      emailAddress: 'ravi.kumar@example.com',
-      phoneNumber: '9876543210',
-      
-    },
-    {
-      firstName: 'Priya',
-      lastName: 'Sharma',
-      emailAddress: 'priya.sharma@example.com',
-      phoneNumber: '9123456780',
+  // Holds edited user data
+  selectedUser: UserDto = {} as UserDto;
 
-    },
-    {
-      firstName: 'Arun',
-      lastName: 'Nair',
-      emailAddress: 'arun.nair@example.com',
-      phoneNumber: '9988776655',
-      
-    },
-    {
-      firstName: 'Meera',
-      lastName: 'Joseph',
-      emailAddress: 'meera.joseph@example.com',
-      phoneNumber: '9012345678',
-  
+  constructor(private usersService: UsersService) {}
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    this.usersService.getUsers(this.selectedPropertyId, this.selectedUserType)
+      .subscribe({
+        next: (res: ApiResponse<UserDto[]>) => {
+          this.users = res.Data || [];
+        },
+        error: (err) => console.error("API ERROR:", err)
+      });
+  }
+
+  // -------------------------
+  // OPEN EDIT POPUP
+  // -------------------------
+  editUser(user: UserDto) {
+    this.selectedUser = { ...user }; // copy user data into form
+    const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
+    modal.show();
+  }
+
+  // -------------------------
+  // SAVE UPDATED USER
+  // -------------------------
+  saveUser() {
+    this.usersService.updateUser(this.selectedUser).subscribe({
+      next: () => {
+        alert("User updated successfully!");
+        this.loadUsers();
+      },
+      error: (err) => console.error("Update Error:", err)
+    });
+
+    const modal = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
+    modal.hide();
+  }
+
+  // -------------------------
+  // DELETE USER
+  // -------------------------
+  deleteUser(userId: number | undefined) {
+    if (!userId) return;
+
+    if (confirm("Are you sure you want to delete this user?")) {
+      this.usersService.deleteUserById(userId).subscribe({
+        next: () => {
+          alert("User deleted successfully!");
+          this.loadUsers();
+        },
+        error: (err) => console.error("Delete Error:", err)
+      });
     }
-  ];
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  }
 }

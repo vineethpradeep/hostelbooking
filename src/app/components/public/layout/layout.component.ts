@@ -7,7 +7,7 @@ import { FooterComponent } from '../../footer/footer.component';
 import { PreloaderDirective } from '../../../directives/preloader.directive';
 
 @Component({
-  selector: 'app-landing',
+  selector: 'app-public-layout',
   standalone: true,
   imports: [
     CommonModule,

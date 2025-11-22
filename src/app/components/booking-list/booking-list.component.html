@@ -1,0 +1,35 @@
+<div class="card p-3 shadow-sm">
+  <h5 class="mb-3">Booking Details</h5>
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>BookingNo</th>
+        <th>Booking Type</th>
+        <th>Check-In</th>
+        <th>Check-Out</th>
+        <th>Booking Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let b of BookingList; let i = index">
+        <td>{{ i + 1 }}</td>
+
+        <td>{{ b.BookingNumber }}</td>
+        <td>{{ b.BookingType }}</td>
+
+        <td>{{ b.CheckInDate | date:'dd-MM-yyyy' }}</td>
+
+        <td>
+          {{ b.CheckOutDate | date:'dd-MM-yyyy' }}
+        </td>
+
+        <td>
+         {{b.Status}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

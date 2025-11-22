@@ -8,7 +8,7 @@ import { FeaturedRoomsComponent } from '../featured-rooms/rooms.component';
 import { TestimonialsComponent } from '../testimonials/testimonials.component';
 import { FacilitiesComponent } from '../facilities/facilities.component';
 import { StatsCounterComponent } from '../stats-counter/stats-counter.component';
-import { BookingComponent } from '../booking/booking.component';
+import { BookingListComponent } from '../booking-list/booking-list.component';
 
 @Component({
   selector: 'app-landing',
@@ -23,7 +23,7 @@ import { BookingComponent } from '../booking/booking.component';
     TestimonialsComponent,
     FacilitiesComponent,
     StatsCounterComponent,
-    BookingComponent,
+    BookingListComponent,
   ],
   templateUrl: './landing.component.html',
 })

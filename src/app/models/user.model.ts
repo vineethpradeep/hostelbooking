@@ -1,0 +1,30 @@
+export interface UserDto {
+  UserId?: number;
+  PropertyId: number;
+  UserType: string;
+  FirstName: string;
+  LastName: string;
+  EmailAddress: string;
+  PhoneNumber: string;
+  AlternatePhoneNumber?: string;
+  DateOfBirth?: string;
+  Gender?: string;
+  BloodGroup?: string;
+  EmergencyContactName?: string;
+  EmergencyContactNumber?: string;
+  PermanentAddress?: string;
+  CurrentAddress?: string;
+  Occupation?: string;
+  Company?: string;
+  AadharNumber?: string;
+  PanNumber?: string;
+  IsActive: boolean;
+  CreatedDate: string;
+  PropertyName: string;
+  IdentityServerUserId?: number;
+  Roles: string[];
+  RoleIds: number[];
+  CreatedBy?: string;
+  LastModifiedDate?: string;
+  LastModifiedBy?: string;
+}

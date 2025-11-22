@@ -9,7 +9,7 @@ import { BookingFormDto } from '../models/booking-form.model';
 })
 export class BookingService {
 
-  private baseUrl = 'https://localhost:5001/api/bookings';  // CHANGE THIS to your API URL
+  private baseUrl = 'https://localhost:7001/api/Booking';  // CHANGE THIS to your API URL
 
   constructor(private http: HttpClient) {}
 
