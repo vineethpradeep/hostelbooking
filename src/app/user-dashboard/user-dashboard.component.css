@@ -1,0 +1,29 @@
+/* Card Hover Effect */
+.dashboard-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-box:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Action Buttons Animation */
+.action-btn {
+  transition: 0.3s ease;
+}
+
+.action-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Smooth Fade-in Up for whole page */
+:host {
+  display: block;
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,81 +1,156 @@
-<section class="aboutus-section spad">
-  <div class="container">
-<div class="row mb-4">
-  <div class="col-md-3">
-    <div class="card shadow-sm p-3">
-      <h5>Total Users</h5>
-      <h3>1,248</h3>
+<!-- admin-dashboard.component.html
+     Uploaded file (tooling URL): /mnt/data/090df415-b206-4961-8be6-7e33ac459c73.mp4
+     Paste into: src/app/components/dashboard/admin-dashboard/admin-dashboard.component.html
+-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="admin-shell container-fluid px-4 py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+      <h2 class="admin-title">Admin Dashboard</h2>
+      <p class="text-muted small">Complete system overview and management</p>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-secondary btn-sm">Export CSV</button>
+      <button class="btn btn-primary btn-sm">New Property</button>
     </div>
   </div>
 
-  <div class="col-md-3">
-    <div class="card shadow-sm p-3">
-      <h5>Bookings Today</h5>
-      <h3>84</h3>
+  <!-- Top summary -->
+  <div class="row g-4 summary-grid mb-4">
+    <div class="col-sm-6 col-md-3">
+      <div class="summary-card card-anim p-3">
+        <div class="label text-muted">Total Properties</div>
+        <div class="value h3 text-primary mb-1">45</div>
+        <small class="text-success">+5% from last month</small>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3">
+      <div class="summary-card card-anim p-3">
+        <div class="label text-muted">Total Users</div>
+        <div class="value h3 text-primary mb-1">1,248</div>
+        <small class="text-success">+12% from last month</small>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3">
+      <div class="summary-card card-anim p-3">
+        <div class="label text-muted">Active Tenants</div>
+        <div class="value h3 text-primary mb-1">820</div>
+        <small class="text-success">+8% from last month</small>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3">
+      <div class="summary-card card-anim p-3">
+        <div class="label text-muted">Monthly Revenue</div>
+        <div class="value h3 text-primary mb-1">₹5.2L</div>
+        <small class="text-success">+15% from last month</small>
+      </div>
     </div>
   </div>
 
-  <div class="col-md-3">
-    <div class="card shadow-sm p-3">
-      <h5>Revenue</h5>
-      <h3>₹ 1,85,000</h3>
+  <!-- Main content (left: overview, right: bookings + charts) -->
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="card card-pro card-anim">
+        <div class="card-header">System Overview</div>
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">Total Properties <strong>45</strong></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Active Properties <strong>42</strong></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Total Rooms <strong>850</strong></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Occupied Rooms <strong>823 (96.8%)</strong></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Available Rooms <strong>27 (3.2%)</strong></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Pending Bookings <strong>12</strong></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Total Revenue <strong>₹5,20,000</strong></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Pending Payments <strong>Paid</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5 d-flex flex-column gap-3">
+      <div class="card card-pro card-anim">
+        <div class="card-header">Recent Bookings</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table mb-0 elegant-table">
+              <thead class="table-dark">
+                <tr><th>Booking ID</th><th>Tenant</th><th>Property</th><th>Room</th><th>Move-In</th><th>Rent</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>#BK-1234</td><td>Raja</td><td>Karthick PG</td><td>101</td><td>Nov 1, 2025</td><td>₹8,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-pro card-anim">
+        <div class="card-header">Analytics</div>
+        <div class="card-body d-flex gap-3 align-items-center">
+          <canvas id="adminBarChart" height="100" style="flex:1;"></canvas>
+          <canvas id="adminDoughnut" height="100" style="width:140px;"></canvas>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="col-md-3">
-    <div class="card shadow-sm p-3">
-      <h5>Pending Approvals</h5>
-      <h3>12</h3>
+  <!-- Recent payments -->
+  <div class="card card-pro card-anim mt-4">
+    <div class="card-header">Recent Payments</div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table mb-0 elegant-table">
+          <thead class="table-dark">
+            <tr><th>Payment ID</th><th>Tenant</th><th>Property</th><th>Type</th><th>Amount</th><th>Date</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>#PAY-5678</td><td>Raja</td><td>Karthick PG</td><td>Rent</td><td>₹8,000</td><td>Oct 1, 2025</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+
+  <!-- User overview + quick actions -->
+  <div class="row mt-4 g-4">
+    <div class="col-lg-6">
+      <div class="card card-pro card-anim">
+        <div class="card-header">User Management Overview</div>
+        <div class="card-body p-0">
+          <table class="table mb-0 elegant-table">
+            <thead class="table-dark">
+              <tr><th>User Type</th><th>Total</th><th>Active</th><th>Inactive</th><th>New</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Guests</td><td>150</td><td>150</td><td>0</td><td>45</td></tr>
+              <tr><td>Tenants</td><td>823</td><td>820</td><td>3</td><td>67</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card card-pro card-anim">
+        <div class="card-header">Quick Actions</div>
+        <div class="card-body d-grid gap-2">
+          <button class="btn btn-primary">Add Property</button>
+          <button class="btn btn-secondary">Add User</button>
+          <button class="btn btn-info text-white">Generate Receipt</button>
+          <button class="btn btn-dark">Download Receipt</button>
+          <button class="btn btn-warning">Process Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- Charts -->
-<div class="row">
-  <div class="col-md-6 mb-4">
-    <div class="card p-3 shadow-sm">
-      <h5 class="mb-3">Monthly Bookings</h5>
-      <canvas height="200"  id="barChart"></canvas>
-    </div>
-  </div>
-
-  <div class="col-md-6 mb-4">
-    <div class="card p-3 shadow-sm">
-      <h5 class="mb-3">User Role Distribution</h5>
-      <canvas  height="200" id="pieChart"></canvas>
-    </div>
-  </div>
-</div>
-
-<!-- Table -->
-<div class="card p-3 shadow-sm">
-  <h5 class="mb-3">Recent Bookings</h5>
-  <table class="table table-bordered table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th>#</th>
-        <th>Customer</th>
-        <th>Room</th>
-        <th>Date</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr *ngFor="let b of bookingList; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ b.customer }}</td>
-        <td>{{ b.room }}</td>
-        <td>{{ b.date }}</td>
-        <td>
-          <span class="badge bg-success" *ngIf="b.status == 'Confirmed'">Confirmed</span>
-          <span class="badge bg-warning text-dark" *ngIf="b.status == 'Pending'">Pending</span>
-          <span class="badge bg-danger" *ngIf="b.status == 'Cancelled'">Cancelled</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-  </div>
-</section>
-
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

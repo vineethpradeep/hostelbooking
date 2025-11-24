@@ -8,15 +8,14 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { LoginComponent } from './components/auth/login/login.component';
 import { PublicLayoutComponent } from './components/public/layout/layout.component';
 import { DashBoardLayoutComponent } from './components/dashboard/layout/layout.component';
-import { AuthGuard } from './services/auth-guard';
-import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { UsersComponent } from './components/users/users.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ProfileComponent } from './components/profile/profile.component';
-
 import { BookingFormComponent } from './components/booking-form/booking-form.component';
 import { BookingListComponent } from './components/booking-list/booking-list.component';
+
+import { UsersDashboardComponent } from './user-dashboard/user-dashboard.component';
 
 export const routes: Routes = [
 
@@ -25,38 +24,35 @@ export const routes: Routes = [
     path: '',
     component: PublicLayoutComponent,
     children: [
-  { path: '', component: HeroComponent },
-  { path: 'rooms', component: RoomsComponent },
-  { path: 'about', component: AboutUsComponent },
-  { path: 'contact', component: ContactUsComponent },
-  { path: 'facilities', component: FacilitiesComponent },
-  { path: 'auth/register', component: RegisterComponent },
-  { path: 'auth/login', component: LoginComponent },
-  { path: 'rooms/:id', component: RoomDetailsComponent },
-  { path: 'bookings', component: BookingFormComponent }
-
-    ]
+      { path: '', component: HeroComponent },
+      { path: 'rooms', component: RoomsComponent },
+      { path: 'about', component: AboutUsComponent },
+      { path: 'contact', component: ContactUsComponent },
+      { path: 'facilities', component: FacilitiesComponent },
+      { path: 'auth/register', component: RegisterComponent },
+      { path: 'auth/login', component: LoginComponent },
+      { path: 'rooms/:id', component: RoomDetailsComponent },
+      { path: 'bookings', component: BookingFormComponent }
+    ] 
   },
-
-  // // LOGIN PAGE
-  // { path: 'login', component: LoginComponent },
 
   // DASHBOARD (After Login)
   {
     path: 'dashboard',
     component: DashBoardLayoutComponent,
-   // canActivate: [AuthGuard],
     children: [
-  { path: '', component: DashboardHomeComponent },
-  { path: 'rooms', component: RoomsComponent },
-  { path: 'users', component: UsersComponent }, 
-  { path: 'payment', component: PaymentComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'booking-list', component: BookingListComponent },
-  { path: 'about', component: AboutUsComponent },
-  { path: 'contact', component: ContactUsComponent },
-  { path: 'facilities', component: FacilitiesComponent },
-  { path: 'rooms/:id', component: RoomDetailsComponent },
+      { path: '', component: UsersDashboardComponent },   // default inside dashboard
+      { path: 'user-dashboard', component: UsersDashboardComponent }, // user dashboard
+      { path: 'rooms', component: RoomsComponent },
+      { path: 'users', component: UsersComponent },
+      { path: 'payment', component: PaymentComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'booking-list', component: BookingListComponent },
+      { path: 'about', component: AboutUsComponent },
+      { path: 'contact', component: ContactUsComponent },
+      { path: 'facilities', component: FacilitiesComponent },
+      { path: 'rooms/:id', component: RoomDetailsComponent }
     ]
   }
+
 ];

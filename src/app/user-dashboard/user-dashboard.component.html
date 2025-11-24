@@ -1,0 +1,169 @@
+<!-- Load Bootstrap, Icons & Animations -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+<div class="container py-4">
+
+  <h2 class="fw-bold mb-1 animate__animated animate__fadeInDown">
+    User / Tenant Dashboard
+  </h2>
+
+  <p class="text-muted mb-4 animate__animated animate__fadeIn">
+    Welcome back, Raja! Here's your booking overview.
+  </p>
+
+  <!-- ================== TOP STATS ================== -->
+  <div class="row g-3">
+
+    <!-- Current Booking -->
+    <div class="col-md-3">
+      <div class="card dashboard-box shadow-sm p-3 animate__animated animate__fadeInUp">
+        <h6 class="text-uppercase text-muted small">Current Booking</h6>
+        <h5 class="fw-bold">Active</h5>
+        <span class="text-muted small">Since Jan 15, 2025</span>
+      </div>
+    </div>
+
+    <!-- Monthly Rent -->
+    <div class="col-md-3">
+      <div class="card dashboard-box shadow-sm p-3 animate__animated animate__fadeInUp animate__delay-1s">
+        <h6 class="text-uppercase text-muted small">Monthly Rent</h6>
+        <h5 class="fw-bold">₹8,000</h5>
+        <span class="text-muted small">Next due: Nov 1, 2025</span>
+      </div>
+    </div>
+
+    <!-- Pending Payments -->
+    <div class="col-md-3">
+      <div class="card dashboard-box shadow-sm p-3 animate__animated animate__fadeInUp animate__delay-2s">
+        <h6 class="text-uppercase text-muted small">Pending Payments</h6>
+        <h5 class="fw-bold">2</h5>
+        <span class="text-muted small">Total: ₹8,500</span>
+      </div>
+    </div>
+
+    <!-- Stay Duration -->
+    <div class="col-md-3">
+      <div class="card dashboard-box shadow-sm p-3 animate__animated animate__fadeInUp animate__delay-3s">
+        <h6 class="text-uppercase text-muted small">Stay Duration</h6>
+        <h5 class="fw-bold">10 Months</h5>
+        <span class="text-muted small">Since Jan 2025</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================== BOOKING DETAILS ================== -->
+  <div class="card shadow-sm p-4 mt-4 animate__animated animate__fadeInLeft">
+    <h5 class="fw-bold mb-3">Current Booking Details</h5>
+
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Property:</strong> Karthick PG</p>
+        <p><strong>Room No:</strong> 101</p>
+        <p><strong>Room Type:</strong> Single Occupancy</p>
+        <p><strong>Floor:</strong> 1st Floor</p>
+        <p><strong>Move-In Date:</strong> Jan 15, 2025</p>
+      </div>
+
+      <div class="col-md-6">
+        <p><strong>Contract:</strong> 12 Months</p>
+        <p><strong>Monthly Rent:</strong> ₹8,000</p>
+        <p><strong>Security Deposit:</strong> ₹16,000 (Paid)</p>
+        <p><strong>Address:</strong> Sector 62, CBE</p>
+        <p><strong>Owner Contact:</strong> 1243434</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================== AMENITIES ================== -->
+  <div class="card shadow-sm p-4 mt-3 animate__animated animate__fadeInRight">
+    <h5 class="fw-bold mb-3">Amenities Included</h5>
+    <p>
+      AC, WiFi, Attached Bathroom, Wardrobe, Study Table
+    </p>
+  </div>
+
+  <!-- ================== UPCOMING PAYMENTS ================== -->
+  <div class="card shadow-sm p-4 mt-4 animate__animated animate__fadeInUp">
+    <h5 class="fw-bold mb-3">Upcoming Payments</h5>
+
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Payment Type</th>
+          <th>Amount</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Monthly Rent</td>
+          <td>₹8,000</td>
+          <td>Nov 1, 2025</td>
+          <td><span class="badge bg-warning text-dark">Due Soon</span></td>
+          <td>
+            <button class="btn btn-success btn-sm">
+              <i class="bi bi-cash-coin"></i> Pay Now
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ================== MAINTENANCE ================== -->
+  <div class="card shadow-sm p-4 mt-4 animate__animated animate__fadeInUp">
+    <h5 class="fw-bold mb-3">Maintenance Requests</h5>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Issue</th>
+          <th>Description</th>
+          <th>Date Raised</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>#MR-1023</td>
+          <td>Plumbing</td>
+          <td>Bathroom tap leak</td>
+          <td>Oct 20, 2025</td>
+          <td><span class="badge bg-success">Resolved</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ================== QUICK ACTIONS ================== -->
+  <div class="card shadow-sm p-4 mt-4 mb-5 animate__animated animate__fadeInUp">
+    <h5 class="fw-bold mb-3">Quick Actions</h5>
+
+    <div class="d-flex gap-3 flex-wrap">
+
+      <button class="btn btn-primary action-btn">
+        <i class="bi bi-credit-card"></i> Pay Now
+      </button>
+
+      <button class="btn btn-secondary action-btn">
+        <i class="bi bi-download"></i> Download Receipt
+      </button>
+
+      <button class="btn btn-warning text-dark action-btn">
+        <i class="bi bi-tools"></i> Request Maintenance
+      </button>
+
+      <button class="btn btn-info text-white action-btn">
+        <i class="bi bi-arrow-repeat"></i> Extend Booking
+      </button>
+    </div>
+  </div>
+
+</div>
