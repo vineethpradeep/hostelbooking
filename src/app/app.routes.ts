@@ -16,10 +16,14 @@ import { BookingFormComponent } from './components/booking-form/booking-form.com
 import { BookingListComponent } from './components/booking-list/booking-list.component';
 
 import { UsersDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { AdminDashboardComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
+
 
 export const routes: Routes = [
 
+  // -------------------------
   // PUBLIC (Before Login)
+  // -------------------------
   {
     path: '',
     component: PublicLayoutComponent,
@@ -33,16 +37,17 @@ export const routes: Routes = [
       { path: 'auth/login', component: LoginComponent },
       { path: 'rooms/:id', component: RoomDetailsComponent },
       { path: 'bookings', component: BookingFormComponent }
-    ] 
+    ]
   },
 
-  // DASHBOARD (After Login)
+  // -------------------------
+  // ADMIN DASHBOARD
+  // -------------------------
   {
     path: 'dashboard',
     component: DashBoardLayoutComponent,
     children: [
-      { path: '', component: UsersDashboardComponent },   // default inside dashboard
-      { path: 'user-dashboard', component: UsersDashboardComponent }, // user dashboard
+      { path: '', component: AdminDashboardComponent },  
       { path: 'rooms', component: RoomsComponent },
       { path: 'users', component: UsersComponent },
       { path: 'payment', component: PaymentComponent },
@@ -53,6 +58,16 @@ export const routes: Routes = [
       { path: 'facilities', component: FacilitiesComponent },
       { path: 'rooms/:id', component: RoomDetailsComponent }
     ]
-  }
+  },
 
+  // -------------------------
+  // USER DASHBOARD (Direct URL)
+  // -------------------------
+  {
+    path: 'user-dashboard',
+    component: UsersDashboardComponent
+  },
+
+  // REDIRECT DEFAULT
+  { path: '**', redirectTo: '' }
 ];
