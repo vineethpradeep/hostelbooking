@@ -81,6 +81,15 @@
     color: #fff;
 }
 
+.mainmenu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+
 @media (max-width: 991px) {
     .nav-menu {
         position: fixed;
