@@ -3,6 +3,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 1rem;
     overflow: hidden;
+    margin-bottom: 2rem;
 }
 
 .room-details-item:hover {
@@ -40,37 +41,25 @@
     opacity: 1;
 }
 
-.btn-gradient {
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-}
-
-.book-now-btn {
-    font-size: 0.9rem;
-    border-radius: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-}
-
-.book-now-btn:hover {
-    transform: scale(1.05);
-}
-
 .room-name {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     font-weight: 700;
+    color: var(--primary-color);
 }
 
 .room-price {
     font-size: 1.2rem;
-    color: var(--text-primary);
+    color: var(--primary-color);
 }
 
 .room-size {
     font-size: 1rem;
+    font-weight: 600;
     color: var(--text-muted);
+}
+
+.room-size i {
+    font-size: 1.2rem;
 }
 
 .room-features {
@@ -86,4 +75,15 @@
     padding: 0.5rem 1rem;
     border-radius: 30px;
     font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+.room-features li:hover {
+    background-color: #eef2f7;
+}
+
+.room-features i {
+    font-size: 1rem;
 }

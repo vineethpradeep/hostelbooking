@@ -2,10 +2,9 @@
   <div class="container">
     <div class="footer-text">
       <div class="row">
-        <!-- About Section -->
         <div class="col-lg-4">
           <div class="ft-about">
-            <div class="logo">
+            <div class="logo mb-3">
               <a href="#">
                 <img src="assets/img/logo.png" alt="Footer Logo" />
               </a>
@@ -31,22 +30,31 @@
 
         <div class="col-lg-3 offset-lg-1">
           <div class="ft-contact">
-            <h6>Contact Us</h6>
-            <ul>
-              <li>123 MG Road, Bangalore - India</li>
-              <li>info&#64;karthickpg.com</li>
-              <li>+91-9876543210</li>
+            <h6 class="footer-heading">Contact Us</h6>
+            <ul class="footer-list">
+              <li>
+                <i class="bi bi-geo-alt me-2"></i> 123 MG Road, Bangalore -
+                India
+              </li>
+              <li>
+                <i class="bi bi-envelope me-2"></i> info&#64;karthickpg.com
+              </li>
+              <li><i class="bi bi-telephone me-2"></i> +91-9876543210</li>
             </ul>
           </div>
         </div>
 
         <div class="col-lg-3 offset-lg-1">
-          <div class="ft-newslatter">
-            <h6>New latest</h6>
+          <div class="ft-newsletter">
+            <h6 class="footer-heading">Newsletter</h6>
             <p>Get the latest updates and offers.</p>
             <form class="fn-form">
-              <input type="email" placeholder="Email" />
-              <button type="submit"><i class="bi bi-send"></i></button>
+              <div class="input-group">
+                <input type="email" placeholder="Enter your email" />
+                <button type="submit" aria-label="Subscribe">
+                  <i class="bi bi-send"></i>
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -56,7 +64,7 @@
 
   <div class="copyright-option">
     <div class="container">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="col-lg-7">
           <ul>
             <li><a href="#">Contact</a></li>
@@ -65,7 +73,7 @@
             <li><a href="#">Environmental Policy</a></li>
           </ul>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5 text-lg-end">
           <div class="co-text">
             <p>
               &copy; {{ currentYear }} All rights reserved | by

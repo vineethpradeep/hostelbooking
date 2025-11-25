@@ -1,0 +1,63 @@
+.room-filter {
+    /* background: var(--bg-color); */
+    background: #1f52ae;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    font-family: var(--app-font-family);
+    transition: all 0.3s ease;
+
+    position: sticky;
+    top: 80px;
+    z-index: 1000;
+}
+
+.room-filter:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+.room-filter h6 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--font-white-color);
+    letter-spacing: 0.5px;
+}
+
+.room-filter .form-control {
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.room-filter .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.2);
+    outline: none;
+}
+
+.room-filter .btn {
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 10px 16px;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.room-filter .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .room-filter {
+        margin-top: 1rem;
+    }
+}

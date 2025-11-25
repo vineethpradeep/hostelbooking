@@ -1,0 +1,28 @@
+<div class="room-filter">
+  <h6>Filter Rooms</h6>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search by name..."
+    [(ngModel)]="filters.search"
+  />
+  <input
+    type="number"
+    class="form-control"
+    placeholder="Min Price"
+    [(ngModel)]="filters.minPrice"
+  />
+  <input
+    type="number"
+    class="form-control"
+    placeholder="Max Price"
+    [(ngModel)]="filters.maxPrice"
+  />
+  <input
+    type="number"
+    class="form-control"
+    placeholder="Capacity"
+    [(ngModel)]="filters.capacity"
+  />
+  <button class="btn" (click)="applyFilters()">Apply Filters</button>
+</div>

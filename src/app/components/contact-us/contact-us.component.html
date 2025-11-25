@@ -1,8 +1,6 @@
-<!-- src/app/pages/contact-us/contact-us.component.html -->
 <section class="contact">
   <div class="container">
     <div class="grid">
-      <!-- Left: Info -->
       <div class="info">
         <h1>Contact Us</h1>
         <p>
@@ -10,13 +8,33 @@
         </p>
 
         <ul class="info-list" aria-label="Contact information">
-          <li><strong>Address:</strong> 123 RS Puram, Coimbatore - India</li>
-          <li><strong>Phone:</strong>+91-9876543210</li>
-          <li><strong>Email:</strong> info&#64;karthickpg.com</li>
+          <li>
+            <i class="bi bi-geo-alt-fill"></i>
+            <strong>Address:</strong> 123 RS Puram, Coimbatore - India
+          </li>
+          <li>
+            <i class="bi bi-telephone-fill"></i>
+            <strong>Phone:</strong> +91-9876543210
+          </li>
+          <li>
+            <i class="bi bi-envelope-fill"></i>
+            <strong>Email:</strong> info&#64;karthickpg.com
+          </li>
         </ul>
+
+        <div class="map-card">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.234567890!2d76.955832!3d11.016844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859f123456789%3A0xabcdef123456789!2sRS%20Puram%2C%20Coimbatore%2C%20India!5e0!3m2!1sen!2sin!4v1700000000000"
+            width="100%"
+            height="250"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
       </div>
 
-      <!-- Right: Form -->
       <div class="form-card">
         <form
           [formGroup]="form"
@@ -32,10 +50,6 @@
               formControlName="name"
               placeholder="Enter your name"
             />
-            <!-- <small class="error" *ngIf="f.name.touched && f.name.invalid">
-              <span *ngIf="f.name.errors?.['required']">Name is required.</span>
-              <span *ngIf="f.name.errors?.['minlength']">At least 2 characters.</span>
-            </small> -->
           </div>
 
           <div class="field">
@@ -46,10 +60,6 @@
               formControlName="email"
               placeholder="Enter your email"
             />
-            <!-- <small class="error" *ngIf="f.email.touched && f.email.invalid">
-              <span *ngIf="f.email.errors?.['required']">Email is required.</span>
-              <span *ngIf="f.email.errors?.['email']">Enter a valid email.</span>
-            </small> -->
           </div>
 
           <div class="field">
@@ -70,10 +80,6 @@
               formControlName="message"
               placeholder="Write your message"
             ></textarea>
-            <!-- <small class="error" *ngIf="f.message.touched && f.message.invalid">
-              <span *ngIf="f.message.errors?.['required']">Message is required.</span>
-              <span *ngIf="f.message.errors?.['minlength']">At least 10 characters.</span>
-            </small> -->
           </div>
 
           <button
@@ -85,7 +91,7 @@
           </button>
 
           <p class="success" *ngIf="submitSuccess" aria-live="polite">
-            ✅ Thanks! Your message has been sent.
+            Thanks! Your message has been sent.
           </p>
           <p class="error" *ngIf="submitError" aria-live="assertive">
             {{ submitError }}

@@ -1,31 +1,56 @@
 <section class="hero-section">
   <owl-carousel-o [options]="customOptions" class="hero-bg-carousel">
     <ng-template carouselSlide *ngFor="let slide of slides">
-      <div
-        class="hero-bg"
-        [ngStyle]="{ 'background-image': 'url(' + slide.img + ')' }"
-      ></div>
+      <div class="hero-slide">
+        <div
+          class="hero-bg"
+          [ngStyle]="{ 'background-image': 'url(' + slide.img + ')' }"
+        ></div>
+      </div>
     </ng-template>
   </owl-carousel-o>
 
   <div class="hero-overlay">
     <div class="container hero-content">
       <div class="row hero-row">
-        <div class="col-lg-6 col-md-8 col-sm-12 hero-text-col">
+        <div class="col-lg-7 col-md-10 hero-text-col">
           <div class="hero-text text-white">
+            <span class="hero-subtitle">Welcome to Karthick PG</span>
             <h1>Your Home Away From Home</h1>
             <p>
               Comfortable, affordable, and fully-furnished paying guest
-              accommodations in prime locations
+              accommodations in prime locations. Experience convenience and
+              community living like never before.
             </p>
-            <a routerLink="/get-started" class="primary-btn">Get Started</a>
+            <div class="hero-buttons">
+              <a
+                routerLink="/get-started"
+                class="primary-btn btn-content-center"
+                >Get Started</a
+              >
+              <a
+                routerLink="/learn-more"
+                class="secondary-btn btn-content-center"
+                >Learn More</a
+              >
+            </div>
+
+            <div class="hero-features d-flex flex-wrap mt-4">
+              <div class="feature-item">
+                <i class="bi bi-wifi"></i>
+                <span>Free Wi-Fi</span>
+              </div>
+              <div class="feature-item">
+                <i class="bi bi-shield-check"></i>
+                <span>Safe & Secure</span>
+              </div>
+              <div class="feature-item">
+                <i class="bi bi-geo-alt"></i>
+                <span>Prime Locations</span>
+              </div>
+            </div>
           </div>
         </div>
-        <!--
-        <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1 booking-col">
-          <app-booking-form></app-booking-form>
-        </div>
-        -->
       </div>
     </div>
   </div>

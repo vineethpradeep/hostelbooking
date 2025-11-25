@@ -21,7 +21,7 @@ interface StarSet {
     FormsModule,
     BreadcrumbComponent,
     BookingFormComponent,
-    EditBookingComponent
+    EditBookingComponent,
   ],
   templateUrl: './room-details.component.html',
   styleUrls: ['./room-details.component.css'],
@@ -33,10 +33,8 @@ export class RoomDetailsComponent {
   stars: StarSet = { fullStars: [], halfStar: false, emptyStars: [] };
   reviewStars: StarSet[] = [];
 
-  // ⭐ NEW — control visibility of booking form
   bookingFormVisible: boolean = false;
 
-  // ⭐ NEW — to call child method startCreate()
   @ViewChild(BookingFormComponent)
   bookingFormCmp!: BookingFormComponent;
 
@@ -96,11 +94,9 @@ export class RoomDetailsComponent {
     }
   }
 
-  // ⭐ NEW — When clicking Book Now
   openBookingForm() {
     this.bookingFormVisible = true;
 
-    // Wait until component renders, then call startCreate()
     setTimeout(() => {
       if (this.bookingFormCmp && this.bookingFormCmp.startCreate) {
         this.bookingFormCmp.startCreate();
@@ -108,7 +104,6 @@ export class RoomDetailsComponent {
     }, 50);
   }
 
-  // ⭐ NEW — When booking form emits close
   closeBookingForm() {
     this.bookingFormVisible = false;
   }

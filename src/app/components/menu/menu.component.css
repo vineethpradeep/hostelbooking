@@ -1,7 +1,6 @@
-/* ===== Main Menu ===== */
-.menu-item .nav-menu {
-    text-align: right;
-    transition: all 0.3s ease;
+.menu-item {
+    background: var(--bg-color);
+    border-bottom: 1px solid #e5e7eb;
 }
 
 .menu-item .mainmenu li {
@@ -9,84 +8,82 @@
     position: relative;
 }
 
-.menu-item .mainmenu li a {
-    font-size: 16px;
-    font-weight: 500;
-    color: #19191a;
-    display: inline-block;
-    padding: 27px 0;
-    margin-right: 42px;
-    position: relative;
-    transition: all 0.3s;
+.menu-item .mainmenu li a.nav-link {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-color);
+    padding: 18px 20px;
+    transition: all 0.3s ease;
+    border-radius: 6px;
 }
 
-.menu-item .mainmenu li a:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 52px;
-    width: 100%;
-    height: 2px;
-    background: var(--primary-color);
-    opacity: 0;
-    transition: all 0.3s;
+.menu-item .mainmenu li a.nav-link:hover {
+    background: var(--hover-bg);
+    color: var(--primary-color);
 }
 
-.menu-item .mainmenu li.active a:after,
-.menu-item .mainmenu li:hover>a:after {
-    opacity: 1;
+.menu-item .mainmenu li.active a.nav-link {
+    color: var(--primary-color);
 }
 
-/* Dropdown Menu */
 .menu-item .mainmenu li .dropdown {
     position: absolute;
-    top: 97px;
+    top: 55px;
     left: 0;
-    width: 180px;
+    min-width: 200px;
     background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     opacity: 0;
     visibility: hidden;
-    box-shadow: 0 9px 15px rgba(25, 25, 26, 0.05);
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    padding: 10px 0;
     z-index: 9;
 }
 
 .menu-item .mainmenu li:hover .dropdown {
-    top: 77px;
     opacity: 1;
     visibility: visible;
+    top: 50px;
 }
 
-.menu-item .mainmenu li .dropdown li a:hover {
-    color: var(--font-primary-color);
+.menu-item .mainmenu li .dropdown li a.dropdown-link {
+    display: block;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: var(--text-color);
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Sticky Behavior */
+.menu-item .mainmenu li .dropdown li a.dropdown-link:hover {
+    background: var(--hover-bg);
+    color: var(--primary-color);
+    border-radius: 6px;
+}
+
 .menu-item.sticky {
     position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
-    background-color: #fff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     z-index: 9999;
     animation: fadeInDown 0.3s ease;
 }
 
-/* Mobile Responsive */
 @media (max-width: 991px) {
     .menu-item .nav-menu {
         position: fixed;
         top: 0;
-        right: -300px;
-        width: 300px;
+        right: -280px;
+        width: 280px;
         height: 100%;
         background: #fff;
-        padding: 80px 30px 30px;
-        transition: all 0.5s;
-        display: block;
+        padding: 80px 20px;
+        transition: all 0.5s ease;
         z-index: 999;
         overflow-y: auto;
+        border-left: 1px solid #e5e7eb;
     }
 
     .menu-item .nav-menu.active {
@@ -94,13 +91,12 @@
     }
 
     .canvas-open {
-        display: block;
-        font-size: 22px;
+        font-size: 24px;
         position: absolute;
         right: 20px;
         top: 25px;
         cursor: pointer;
-        z-index: 100;
+        color: var(--primary-color);
     }
 
     .offcanvas-overlay {
@@ -109,10 +105,10 @@
         left: 0;
         height: 100%;
         width: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.4);
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s;
+        transition: all 0.3s ease;
         z-index: 98;
     }
 

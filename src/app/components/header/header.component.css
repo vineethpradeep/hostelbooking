@@ -1,210 +1,99 @@
-/* .header-section {
-    width: 100%;
-    position: relative;
-    z-index: 999;
+.header-section {
+    /* background: var(--bg-color); */
+    background: linear-gradient(135deg,
+            var(--primary-color) 0%,
+            var(--primary-highlight) 50%,
+            var(--accent-color) 100%);
     transition: all 0.3s ease;
+    z-index: 9999;
 }
 
-.top-nav {
-    border-bottom: 1px solid #e5e5e5;
-    padding: 10px 0;
-}
-
-.menu-container {
-    width: 100%;
-    transition: all 0.3s ease;
-}
-
-.header-section.home .menu-container {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-.menu-container.sticky {
+.header-section.sticky {
     position: fixed;
     top: 0;
-    left: 0;
-    background: #fff;
     width: 100%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     animation: fadeInDown 0.3s ease;
 }
 
-.header-section.sticky .top-nav {
-    display: none;
-}
-
-@keyframes fadeInDown {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-} */
-
-
-
-/* 
-.header-section {
-    width: 100%;
-    background-color: #fff;
-    transition: all 0.3s ease;
-    z-index: 9999;
-}
-
-.header-section.sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.top-nav {
-    border-bottom: 1px solid #e5e5e5;
-}
-
 .logo img {
-    max-height: 50px;
+    max-height: 40px;
 }
 
-.tn-right button {
-    min-width: 100px;
-} */
-
-.header-section {
-    width: 100%;
-    background-color: #fff;
+.nav-link {
+    font-weight: 600;
+    color: var(--font-white-color);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
     transition: all 0.3s ease;
-    z-index: 9999;
 }
 
-.header-section.sticky {
-    position: fixed;
-    top: 0;
+.nav-link:hover {
+    background: var(--hover-bg);
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
     left: 0;
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    padding: 10px 0;
 }
 
-.top-nav {
-    border-bottom: 1px solid #e5e5e5;
+.menu-link:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
 }
 
-.logo img {
-    max-height: 50px;
+.dropdown-link {
+    display: block;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #111827;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-link:hover {
+    background: #f1f5f9;
+    color: #2563eb;
+    border-radius: 6px;
 }
 
 .login-btn {
-    font-size: 14px;
-    padding: 6px 16px;
-    border-radius: 30px;
-    min-width: auto;
-    white-space: nowrap;
+    border-radius: 25px;
+    padding: 6px 18px;
+    font-weight: 500;
+    background: #fff;
+    color: #2563eb;
+    border: none;
+    transition: all 0.3s ease;
 }
 
-.mobile-login {
-    padding-top: 20px;
-    border-top: 1px solid #eee;
-}
-
-.menu-close {
-    position: relative;
-    text-align: right;
-    cursor: pointer;
-}
-
-.menu-close i {
-    color: #000;
-    transition: transform 0.2s ease;
-}
-
-.menu-close i:hover {
-    transform: rotate(90deg);
-}
-
-@media (min-width: 992px) {
-    .nav-menu {
-        display: flex !important;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .nav-menu ul {
-        display: flex;
-        flex-direction: row;
-        gap: 2rem;
-    }
-
-    .menu-link {
-        position: relative;
-    }
-
-    .menu-link a {
-        font-size: 16px;
-        font-weight: 500;
-        padding: 10px 0;
-        display: inline-block;
-        transition: color 0.3s ease;
-    }
-
-    .menu-link a::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -4px;
-        width: 0%;
-        height: 2px;
-        background-color: var(--primary-color, #2575fc);
-        transition: width 0.3s ease;
-    }
-
-    .menu-link:hover a::after {
-        width: 100%;
-    }
-
-    .menu-link.active a::after {
-        width: 100%;
-    }
-
-    .nav-menu li .dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 180px;
-        background: #fff;
-        opacity: 0;
-        visibility: hidden;
-        box-shadow: 0 9px 15px rgba(25, 25, 26, 0.05);
-        transition: all 0.3s;
-        z-index: 9;
-    }
-
-    .nav-menu li:hover .dropdown {
-        opacity: 1;
-        visibility: visible;
-    }
+.login-btn:hover {
+    background: #2563eb;
+    color: #fff;
 }
 
 @media (max-width: 991px) {
     .nav-menu {
         position: fixed;
         top: 0;
-        right: -300px;
-        width: 300px;
+        right: -280px;
+        width: 280px;
         height: 100%;
         background: #fff;
-        padding: 30px 30px 30px;
-        transition: all 0.5s;
+        padding: 80px 20px;
+        transition: right 0.4s ease;
         z-index: 999;
         overflow-y: auto;
+        border-left: 1px solid #e5e7eb;
     }
 
     .nav-menu.active {
@@ -212,22 +101,20 @@
     }
 
     .canvas-open {
-        display: block;
-        font-size: 22px;
+        color: #fff;
         cursor: pointer;
-        z-index: 100;
     }
 
     .offcanvas-overlay {
         position: fixed;
         top: 0;
         left: 0;
-        height: 100%;
         width: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s;
+        transition: all 0.3s ease;
         z-index: 98;
     }
 
@@ -236,20 +123,7 @@
         visibility: visible;
     }
 
-    .mainmenu li {
-        display: block;
-        margin-bottom: 20px;
-    }
-
-    .mainmenu li .dropdown {
-        position: static;
-        opacity: 1;
-        visibility: visible;
-        box-shadow: none;
-        padding-left: 15px;
-    }
-
-    .tn-right {
+    .mobile-login {
         margin-top: 20px;
     }
 }

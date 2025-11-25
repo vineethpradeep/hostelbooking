@@ -1,13 +1,122 @@
+.card {
+  border-radius: 1rem;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: none;
+}
+
+.card-header.bg-success {
+  background: linear-gradient(90deg, #0078d4, #005a9e);
+}
+
+.card-header.bg-warning {
+  background: linear-gradient(90deg, #0078d4, #005a9e);
+}
+
+.card-header.bg-info {
+  background: linear-gradient(90deg, #0078d4, #005a9e);
+}
+
+.form-label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-control,
+.form-select,
+textarea {
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  padding: 0.65rem 0.9rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+  border-color: var(--primary-color, #0078d4);
+  box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.2);
+}
+
 .rte-box {
-  border: 1px solid #ced4da;
-  border-radius: 6px;
-  padding: 10px;
-  min-height: 100px;
-  background: #fff;
+  min-height: 80px;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background: #f9fafb;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .rte-box:focus {
+  border-color: var(--primary-color, #0078d4);
+  box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.2);
   outline: none;
-  border-color: #86b7fe;
-  box-shadow: 0 0 0 .2rem rgba(13,110,253,.25);
+}
+
+.btn {
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 0.6rem 1.4rem;
+  transition: all 0.3s ease;
+}
+
+.btn-success {
+  background: linear-gradient(90deg, #0078d4, #005a9e);
+  border: none;
+}
+
+.btn-success:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-warning {
+  background: linear-gradient(90deg, #0078d4, #005a9e);
+  border: none;
+  color: #fff;
+}
+
+.btn-warning:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: #6b7280;
+  border: none;
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border: none;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.alert-success {
+  border-radius: 1rem;
+  font-size: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }

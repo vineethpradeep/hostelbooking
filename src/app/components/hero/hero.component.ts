@@ -28,12 +28,15 @@ export class HeroComponent implements OnInit {
   customOptions: OwlOptions = {
     loop: true,
     autoplay: true,
-    dots: true,
-    items: 1,
-    nav: false,
+    autoplayTimeout: 5000,
     autoplayHoverPause: true,
-    autoHeight: false,
+    items: 1,
+    dots: true,
+    nav: false,
     animateOut: 'fadeOut',
+    animateIn: 'fadeIn',
+    smartSpeed: 1000,
+    fluidSpeed: true,
   };
 
   constructor(private fb: FormBuilder) {}

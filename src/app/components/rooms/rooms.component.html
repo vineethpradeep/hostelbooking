@@ -1,50 +1,86 @@
-<section class="login py-5">
+<section class="rooms-section py-5">
   <div class="container">
-    <div class="row g-4 justify-content-center">
+    <nav aria-label="breadcrumb" class="mb-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <button class="btn btn-link p-0" (click)="goBack()">
+            <i class="bi bi-arrow-left me-1"></i> Back to
+          </button>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Rooms</li>
+      </ol>
+    </nav>
 
-      <div class="col-lg-4 col-md-6 col-sm-10" *ngFor="let room of rooms">
-        <div class="room-card rounded-4 overflow-hidden shadow-sm position-relative">
+    <div class="section-header mb-4">
+      <h2 class="section-heading">Discover Your Perfect Stay</h2>
+      <p class="section-description">
+        Browse through our curated list of modern, comfortable, and affordable
+        rooms. Use the filters on the left to find the one that matches your
+        lifestyle and budget.
+      </p>
+    </div>
 
-          <!-- Room Image -->
-          <div
-            class="room-image position-relative"
-            [ngStyle]="{ 'background-image': 'url(' + room.image + ')' }">
-
-            <div class="overlay d-flex justify-content-center align-items-center">
-              <button
-                class="view-btn btn btn-light px-4 py-2 rounded-pill fw-semibold"
-                (click)="onViewDetails(room.id)">
-                View Details
-              </button>
-            </div>
-          </div>
-
-          <!-- Room Content -->
-          <div class="room-content p-4 text-center">
-            <h4 class="fw-bold mb-1">{{ room.name }}</h4>
-            <p class="text-muted mb-2">{{ room.size }}</p>
-
-            <h3 class="text-primary fw-bold mb-4">
-              ₹{{ room.price | number }}
-              <span class="fs-6 text-muted">/month</span>
-            </h3>
-
-            <ul class="list-unstyled text-start">
-              <li>
-                <i class="bi bi-people-fill me-2"></i>
-                Max {{ room.capacity }} Person{{ room.capacity > 1 ? 's' : '' }}
-              </li>
-
-              <li *ngFor="let feature of room.services">
-                <i class="bi bi-check-circle-fill me-2"></i>
-                {{ feature }}
-              </li>
-            </ul>
-          </div>
-
-        </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-4 mb-4">
+        <app-room-filter
+          (filterChanged)="onFilterChanged($event)"
+        ></app-room-filter>
       </div>
 
+      <div class="col-lg-9 col-md-8">
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let room of rooms">
+            <div class="room-card">
+              <div
+                class="room-image"
+                [ngStyle]="{ 'background-image': 'url(' + room.image + ')' }"
+              >
+                <div class="overlay">
+                  <button class="view-btn" (click)="onViewDetails(room.id)">
+                    <i class="bi bi-eye me-2"></i> View Details
+                  </button>
+                </div>
+              </div>
+
+              <div class="room-content text-center">
+                <h4 class="room-title">{{ room.name }}</h4>
+                <p class="room-size">
+                  <i class="bi bi-aspect-ratio me-2"></i> {{ room.size }}
+                </p>
+
+                <div class="room-price-offer">
+                  <span class="discounted-price"
+                    >₹{{ room.price | number }}</span
+                  >
+                </div>
+
+                <div class="room-icons">
+                  <span
+                    ><i class="bi bi-person-fill"></i> Max
+                    {{ room.capacity }}</span
+                  >
+                  <span><i class="bi bi-snow"></i> AC</span>
+                  <span><i class="bi bi-droplet"></i> Bathroom</span>
+                  <span><i class="bi bi-book"></i> Study Table</span>
+                  <span><i class="bi bi-box"></i> Wardrobe</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="pagination-nav mt-4">
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+              <a class="page-link">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link">1</a></li>
+            <li class="page-item"><a class="page-link">2</a></li>
+            <li class="page-item"><a class="page-link">3</a></li>
+            <li class="page-item"><a class="page-link">Next</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </section>

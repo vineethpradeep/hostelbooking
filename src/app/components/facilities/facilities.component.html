@@ -1,18 +1,20 @@
 <section class="services-section">
   <div class="container">
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-12 text-center">
         <div class="section-title">
-          <!-- <span>Everything you need for a comfortable stay</span> -->
           <h2>Facilities & Amenities</h2>
+          <p class="subtitle">Everything you need for a comfortable stay</p>
         </div>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row g-4">
       <div class="col-lg-4 col-sm-6" *ngFor="let service of services">
         <div class="service-item">
-          <i class="{{ service.icon }} fs-1"></i>
+          <div class="icon-wrapper">
+            <i class="{{ service.icon }}"></i>
+          </div>
           <h4>{{ service.title }}</h4>
           <p>{{ service.description }}</p>
         </div>
