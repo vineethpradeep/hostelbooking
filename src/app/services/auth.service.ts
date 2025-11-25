@@ -13,6 +13,7 @@ export class AuthService {
   private USER_ROLE = 'app_role';
   private USER_NAME = 'app_user';
   private baseUrl = 'https://localhost:7001/api/Auth'; // set to your API base; update if needed
+  loginSuccess: any;
 
   constructor(private http: HttpClient) {}
 

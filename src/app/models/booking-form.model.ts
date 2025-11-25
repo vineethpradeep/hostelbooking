@@ -6,7 +6,7 @@ export interface BookingFormDto {
   bedId: number;
   checkInDate: Date;            // ISO date "YYYY-MM-DD"
   checkOutDate?: Date;   // ISO date or null
-  plannedCheckOutDate: string;    // ISO date "YYYY-MM-DD"
+ // plannedCheckOutDate: string;    // ISO date "YYYY-MM-DD"
   monthlyRent: number;
   securityDeposit: number;
   status: string;

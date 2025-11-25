@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+
+// Components
 import { RoomsComponent } from './components/rooms/rooms.component';
 import { RoomDetailsComponent } from './components/room-details/room-details.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
@@ -14,60 +16,68 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BookingFormComponent } from './components/booking-form/booking-form.component';
 import { BookingListComponent } from './components/booking-list/booking-list.component';
-
 import { UsersDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { AdminDashboardComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 
+// Guards
+import { AuthGuard } from './services/auth.guard';
 
 export const routes: Routes = [
 
-  // -------------------------
-  // PUBLIC (Before Login)
-  // -------------------------
+  // ------------------------------------------------------
+  // PUBLIC ROUTES
+  // ------------------------------------------------------
   {
     path: '',
     component: PublicLayoutComponent,
     children: [
       { path: '', component: HeroComponent },
       { path: 'rooms', component: RoomsComponent },
+
+      // ⭐ Require login before accessing room details
+      { path: 'rooms/:id', component: RoomDetailsComponent, canActivate: [AuthGuard] },
+
       { path: 'about', component: AboutUsComponent },
       { path: 'contact', component: ContactUsComponent },
       { path: 'facilities', component: FacilitiesComponent },
+
       { path: 'auth/register', component: RegisterComponent },
       { path: 'auth/login', component: LoginComponent },
-      { path: 'rooms/:id', component: RoomDetailsComponent },
-      { path: 'bookings', component: BookingFormComponent }
+
+      // Booking → must be logged in
+      { path: 'bookings', component: BookingFormComponent, canActivate: [AuthGuard] }
     ]
   },
 
-  // -------------------------
-  // ADMIN DASHBOARD
-  // -------------------------
+  // ------------------------------------------------------
+  // ADMIN DASHBOARD (Protected)
+  // ------------------------------------------------------
   {
     path: 'dashboard',
     component: DashBoardLayoutComponent,
+    canActivate: [AuthGuard], // ⭐ One guard is enough for whole dashboard
     children: [
-      { path: '', component: AdminDashboardComponent },  
+      { path: '', component: AdminDashboardComponent },
       { path: 'rooms', component: RoomsComponent },
       { path: 'users', component: UsersComponent },
       { path: 'payment', component: PaymentComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'booking-list', component: BookingListComponent },
-      { path: 'about', component: AboutUsComponent },
-      { path: 'contact', component: ContactUsComponent },
-      { path: 'facilities', component: FacilitiesComponent },
+
+      // No need canActivate again (parent already protected)
       { path: 'rooms/:id', component: RoomDetailsComponent }
     ]
   },
 
-  // -------------------------
-  // USER DASHBOARD (Direct URL)
-  // -------------------------
+  // ------------------------------------------------------
+  // USER DASHBOARD (Protected)
+  // ------------------------------------------------------
   {
     path: 'user-dashboard',
-    component: UsersDashboardComponent
+    component: UsersDashboardComponent,
+    canActivate: [AuthGuard]
   },
 
-  // REDIRECT DEFAULT
+  // FALLBACK
   { path: '**', redirectTo: '' }
 ];

@@ -141,7 +141,7 @@ export class BookingFormComponent implements OnInit {
       status: String(this.bookingForm.value.status),
       bookingType: String(this.bookingForm.value.bookingType),
       specialRequests: this.bookingForm.value.specialRequests ? String(this.bookingForm.value.specialRequests) : null,
-      plannedCheckOutDate: ''
+      //plannedCheckOutDate: ''
     };
 
     // Debug DTO

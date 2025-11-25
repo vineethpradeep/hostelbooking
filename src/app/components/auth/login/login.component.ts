@@ -1,64 +1,62 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators, 
-  ReactiveFormsModule
-} from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
+import { ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
+  loginForm!: FormGroup;
   submitting = false;
-  error: string | null = null;
+  returnUrl: string = '/';
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
+  ngOnInit(): void {
     this.loginForm = this.fb.group({
       userName: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: ['', Validators.required]
     });
+
+    // Read returnUrl from query params
+    const encoded = this.route.snapshot.queryParams['returnUrl'];
+    if (encoded) {
+      this.returnUrl = decodeURIComponent(encoded);
+    }
   }
 
   submit() {
-    this.error = null;
+    this.submitting = true;
 
     if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
+      this.submitting = false;
       return;
     }
 
-    this.submitting = true;
+    const { userName, password } = this.loginForm.value;
 
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (res) => {
-        this.submitting = false;
+    // DEMO LOGIN
+    if (userName === 'admin@gmail.com' && password === '123456') {
 
-        // Save token if backend returns one
-        debugger;
-        this.authService.setTokenAfterLogin(res.Data.AccessToken,res.Data.User.Roles[0],res.Data.User.FirstName);
+      // ⭐ FIX: use the SAME key as AuthGuard
+      localStorage.setItem('token', 'logged_in');
 
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.submitting = false;
-        this.error =
-          err?.error?.message || 'Invalid email or password. Try again.';
-      }
-    });
+      console.log("Redirecting to:", this.returnUrl);
+      this.router.navigateByUrl(this.returnUrl);
+      return;
+    }
+
+    alert('Invalid email or password');
+    this.submitting = false;
   }
 }

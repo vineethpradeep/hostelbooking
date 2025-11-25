@@ -23,8 +23,11 @@ export interface Room {
   reviews?: Review[];
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class RoomService {
+
   private rooms: Room[] = [
     {
       id: 1,
@@ -42,7 +45,7 @@ export class RoomService {
     {
       id: 2,
       name: 'Double Sharing',
-      price: 5500,
+      price: 12000,
       image: 'assets/img/double.jpg',
       rating: 4,
       size: '2 Beds',
@@ -55,7 +58,7 @@ export class RoomService {
     {
       id: 3,
       name: 'Triple Sharing',
-      price: 4500,
+      price: 15000,
       image: 'assets/img/triple.jpg',
       rating: 4,
       size: '3 Beds',
@@ -68,8 +71,8 @@ export class RoomService {
     {
       id: 4,
       name: 'Four Sharing',
-      price: 3500,
-      image: 'assets/img/room-4.jpg',
+      price: 8000,
+      image: 'assets/img/single.jpg',
       rating: 4,
       size: '4 Beds',
       capacity: 4,
@@ -81,8 +84,8 @@ export class RoomService {
     {
       id: 5,
       name: 'Premium King Room',
-      price: 15900,
-      image: 'assets/img/room-2.jpg',
+      price: 12000,
+      image: 'assets/img/double.jpg',
       rating: 4.5,
       size: '1 Bed',
       capacity: 1,
@@ -94,8 +97,8 @@ export class RoomService {
     {
       id: 6,
       name: 'Family Room',
-      price: 29900,
-      image: 'assets/img/room-1.jpg',
+      price: 15000,
+      image: 'assets/img/triple.jpg',
       rating: 5,
       size: '4 Beds',
       capacity: 4,
@@ -117,6 +120,6 @@ export class RoomService {
   }
 
   getRoomById(id: number): Room | undefined {
-    return this.rooms.find((r) => r.id === id);
+    return this.rooms.find(room => room.id === id);
   }
 }
