@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', 'logged_in');
 
       console.log("Redirecting to:", this.returnUrl);
-      this.router.navigateByUrl(this.returnUrl);
+      this.router.navigateByUrl("rooms");
       return;
     }
 

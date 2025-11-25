@@ -16,11 +16,12 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BookingFormComponent } from './components/booking-form/booking-form.component';
 import { BookingListComponent } from './components/booking-list/booking-list.component';
-import { UsersDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { AdminDashboardComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 
 // Guards
 import { AuthGuard } from './services/auth.guard';
+import { UsersDashboardComponent } from './components/dashboard/user-dashboard/user-dashboard.component';
+import { UserLayoutComponent } from './components/dashboard/user-layout/user-layout.component';
 
 export const routes: Routes = [
 
@@ -35,7 +36,7 @@ export const routes: Routes = [
       { path: 'rooms', component: RoomsComponent },
 
       // ⭐ Require login before accessing room details
-      { path: 'rooms/:id', component: RoomDetailsComponent, canActivate: [AuthGuard] },
+      { path: 'rooms/:id', component: RoomDetailsComponent },
 
       { path: 'about', component: AboutUsComponent },
       { path: 'contact', component: ContactUsComponent },
@@ -45,7 +46,7 @@ export const routes: Routes = [
       { path: 'auth/login', component: LoginComponent },
 
       // Booking → must be logged in
-      { path: 'bookings', component: BookingFormComponent, canActivate: [AuthGuard] }
+      { path: 'bookings', component: BookingFormComponent }
     ]
   },
 
@@ -55,7 +56,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashBoardLayoutComponent,
-    canActivate: [AuthGuard], // ⭐ One guard is enough for whole dashboard
+    // canActivate: [AuthGuard], // ⭐ One guard is enough for whole dashboard
     children: [
       { path: '', component: AdminDashboardComponent },
       { path: 'rooms', component: RoomsComponent },
@@ -74,8 +75,18 @@ export const routes: Routes = [
   // ------------------------------------------------------
   {
     path: 'user-dashboard',
-    component: UsersDashboardComponent,
-    canActivate: [AuthGuard]
+    component: UserLayoutComponent,
+     children: [
+      { path: '', component: UsersDashboardComponent },
+      { path: 'rooms', component: RoomsComponent },
+      { path: 'users', component: UsersComponent },
+      { path: 'payment', component: PaymentComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'booking-list', component: BookingListComponent },
+      // No need canActivate again (parent already protected)
+      { path: 'rooms/:id', component: RoomDetailsComponent }
+    ]
+    // canActivate: [AuthGuard]
   },
 
   // FALLBACK

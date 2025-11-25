@@ -32,7 +32,8 @@ export class AdminHeaderComponent {
   
   ngOnInit() {
   const role = this.auth.getUserRole(); // admin / user
-  this.userName=this.auth.getUserName();
+ // this.userName=this.auth.getUserName();
+   this.userName="admin"
  //const role = "admin";
 
   if (role === 'admin') {

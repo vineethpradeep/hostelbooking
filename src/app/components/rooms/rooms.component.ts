@@ -29,13 +29,13 @@ export class RoomsComponent implements OnInit {
   onViewDetails(roomId: number) {
     console.log("Button clicked for Room:", roomId);
 
-    if (!this.authService.isLoggedIn()) {
-      console.log("User not logged in → redirecting to Login");
-      this.router.navigate(['/auth/login'], {
-        queryParams: { returnUrl: `/rooms/${roomId}` }
-      });
-      return;
-    }
+    // if (!this.authService.isLoggedIn()) {
+    //   console.log("User not logged in → redirecting to Login");
+    //   this.router.navigate(['/auth/login'], {
+    //     queryParams: { returnUrl: `/rooms/${roomId}` }
+    //   });
+    //   return;
+    // }
 
     this.router.navigate(['/rooms', roomId]);
   }

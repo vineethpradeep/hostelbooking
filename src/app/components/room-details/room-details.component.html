@@ -8,9 +8,9 @@
 
 <section class="room-details-section py-5" *ngIf="room">
   <div class="container">
-    <h2 class="mb-2">Create Booking</h2>
     <div class="row g-4">
-      <div class="col-lg-8">
+      <div class="col-lg-4">
+        
         <div class="room-details-item shadow-lg rounded overflow-hidden position-relative">
 
           <div class="room-image position-relative">
@@ -51,12 +51,14 @@
           </div>
         </div>
       </div>
-
-      <div class="col-lg-4">
+      <div class="col-lg-8">
         <div class="room-booking shadow-sm rounded">
-          <app-booking-form></app-booking-form>
+          <app-edit-booking></app-edit-booking>
         </div>
       </div>
+
     </div>
   </div>
 </section>
+
+

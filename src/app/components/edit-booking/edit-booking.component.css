@@ -1,0 +1,13 @@
+.rte-box {
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 10px;
+  min-height: 100px;
+  background: #fff;
+}
+
+.rte-box:focus {
+  outline: none;
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 .2rem rgba(13,110,253,.25);
+}

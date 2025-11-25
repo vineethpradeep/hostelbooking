@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { RoomService, Review, Room } from '../../services/room.service';
 import { BookingFormComponent } from '../booking-form/booking-form.component';
+import { EditBookingComponent } from '../edit-booking/edit-booking.component';
 
 interface StarSet {
   fullStars: number[];
@@ -20,6 +21,7 @@ interface StarSet {
     FormsModule,
     BreadcrumbComponent,
     BookingFormComponent,
+    EditBookingComponent
   ],
   templateUrl: './room-details.component.html',
   styleUrls: ['./room-details.component.css'],
