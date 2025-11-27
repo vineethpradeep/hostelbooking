@@ -1,39 +1,37 @@
+<div class="container mt-4 d-flex justify-content-center">
+  <div class="profile-card">
+    <h4 class="profile-title">User Profile Summary</h4>
 
-
-
-
-<div class="container mt-4 justify-content-center">
-
-   <h4 class="mb-2 text-center">User Profile Summary</h4>
-
-  <div class="row text-center">
-          <div class="col-12 mb-3">
-            <strong>Name:</strong> {{ user.firstName }} {{ user.lastName }}
-          </div>
-
-          <div class="col-12 mb-3">
-            <strong>Email:</strong> {{ user.email }}
-          </div>
-
-          <div class="col-12 mb-3">
-            <strong>Phone:</strong> {{ user.phone }}
-          </div>
-
-          <div class="col-12 mb-3">
-            <strong>Role:</strong> User
-          </div>
-
-          <div class="col-12 mb-3">
-            <strong>Total Bookings:</strong> {{ user.totalBookings }}
-          </div>
-
-          <div class="col-12 mb-3">
-            <strong>Status:</strong>
-            <span class="badge bg-success">Active</span>
-          </div>
-
-        </div>
-
+    <div class="profile-details">
+      <div class="detail-item">
+        <span class="label">Name:</span>
+        <span class="value">{{ user.firstName }} {{ user.lastName }}</span>
       </div>
 
-  
+      <div class="detail-item">
+        <span class="label">Email:</span>
+        <span class="value">{{ user.email }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="label">Phone:</span>
+        <span class="value">{{ user.phone }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="label">Role:</span>
+        <span class="value">User</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="label">Total Bookings:</span>
+        <span class="value">{{ user.totalBookings }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="label">Status:</span>
+        <span class="badge bg-success">Active</span>
+      </div>
+    </div>
+  </div>
+</div>
