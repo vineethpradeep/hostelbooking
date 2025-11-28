@@ -12,4 +12,5 @@ export interface BookingFormDto {
   status: string;
   bookingType: string;
   specialRequests?: string | null;
+  durationMonths: number;   // <-- ADD THIS LINE
 }

@@ -10,7 +10,7 @@
             <h3 class="mb-4 text-center">Register</h3>
 
             <!-- Your UPDATED two-column form -->
-            <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+       <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
 
               <!-- Row: First Name + Last Name -->
               <div class="row">
@@ -106,25 +106,6 @@
                        *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
                     Passwords do not match.
                   </div>
-                </div>
-              </div>
-
-              <!-- Roles -->
-              <div class="mb-3">
-                <label class="form-label">Roles *</label>
-                <div class="form-check" *ngFor="let role of availableRoles">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    (change)="onRoleChange(role.id, $event)"
-                    id="role{{ role.id }}"
-                  />
-                  <label class="form-check-label" for="role{{ role.id }}">
-                    {{ role.name }}
-                  </label>
-                </div>
-                <div class="text-danger small" *ngIf="roleIdsArray?.invalid && registerForm.touched">
-                  Select at least one role.
                 </div>
               </div>
 

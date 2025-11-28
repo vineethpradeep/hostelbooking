@@ -3,41 +3,66 @@
     <div class="card-body">
       <form [formGroup]="bookingForm" (ngSubmit)="save()">
 
-        <!-- Hidden required fields -->
-        <input type="hidden" formControlName="bookingNumber" />
-        <input type="hidden" formControlName="propertyId" />
-        <input type="hidden" formControlName="userId" />
-        <input type="hidden" formControlName="bedId" />
-
-        <!-- ❌ Removed plannedCheckOutDate hidden input -->
-
-        <!-- Check-in -->
+        <!-- Hardcoded Property -->
         <div class="mb-3">
-          <label class="form-label">Check-in Date <span class="text-danger">*</span></label>
+          <label class="form-label">Property</label>
+          <input type="text" class="form-control" value="Property A" disabled />
+        </div>
+
+        <!-- Hardcoded Room Type -->
+        <div class="mb-3">
+          <label class="form-label">Room Type</label>
+          <input type="text" class="form-control" value="Single Bed" disabled />
+        </div>
+
+        <!-- Move-in Date -->
+        <div class="mb-3">
+          <label class="form-label">Move-in Date <span class="text-danger">*</span></label>
+
           <input
             type="date"
             formControlName="checkInDate"
             class="form-control"
             [class.is-invalid]="f['checkInDate'].touched && f['checkInDate'].invalid"
           />
-          <div class="invalid-feedback">Check-in date is required.</div>
+
+          <div class="invalid-feedback">Move-in date is required.</div>
         </div>
 
-        <!-- Check-out -->
+        <!-- Duration (Months) -->
         <div class="mb-3">
-          <label class="form-label">Check-out Date <span class="text-danger">*</span></label>
-          <input
-            type="date"
-            formControlName="checkOutDate"
+          <label class="form-label">Duration (Months) <span class="text-danger">*</span></label>
+
+          <select
+            formControlName="durationMonths"
             class="form-control"
-            [class.is-invalid]="f['checkOutDate'].touched && f['checkOutDate'].invalid"
-          />
-          <div class="invalid-feedback">Check-out date is required.</div>
+            [class.is-invalid]="f['durationMonths'].touched && f['durationMonths'].invalid"
+          >
+            <option value="">Select duration</option>
+            <option *ngFor="let m of monthsList" [value]="m">
+              {{ m }} Month(s)
+            </option>
+          </select>
+
+          <div class="invalid-feedback" *ngIf="f['durationMonths'].errors?.['required']">
+            Duration is required.
+          </div>
+
+          <div class="invalid-feedback" *ngIf="f['durationMonths'].errors?.['min']">
+            Minimum duration is 1 month.
+          </div>
+        </div>
+
+        <!-- Special Requirements -->
+        <div class="mb-3">
+          <label class="form-label">Special Requirements</label>
+          <textarea rows="3" class="form-control" formControlName="specialRequests"></textarea>
         </div>
 
         <!-- Monthly Rent -->
         <div class="mb-3">
           <label class="form-label">Monthly Rent <span class="text-danger">*</span></label>
+
           <input
             type="number"
             formControlName="monthlyRent"
@@ -45,24 +70,28 @@
             placeholder="₹0.00"
             [class.is-invalid]="f['monthlyRent'].touched && f['monthlyRent'].invalid"
           />
+
           <div class="invalid-feedback">Monthly rent is required.</div>
         </div>
 
         <!-- Security Deposit -->
         <div class="mb-3">
           <label class="form-label">Security Deposit <span class="text-danger">*</span></label>
+
           <input
             type="number"
             formControlName="securityDeposit"
             class="form-control"
             [class.is-invalid]="f['securityDeposit'].touched && f['securityDeposit'].invalid"
           />
+
           <div class="invalid-feedback">Security deposit is required.</div>
         </div>
 
         <!-- Booking Type -->
         <div class="mb-3">
           <label class="form-label">Booking Type <span class="text-danger">*</span></label>
+
           <input
             type="text"
             formControlName="bookingType"
@@ -70,32 +99,35 @@
             placeholder="Online / Walk-in"
             [class.is-invalid]="f['bookingType'].touched && f['bookingType'].invalid"
           />
-          <div class="invalid-feedback">Booking type is required.</div>
-        </div>
 
-        <!-- Special Requests -->
-        <div class="mb-3">
-          <label class="form-label">Special Requests</label>
-          <textarea rows="3" formControlName="specialRequests" class="form-control"></textarea>
+          <div class="invalid-feedback">Booking type is required.</div>
         </div>
 
         <!-- Buttons -->
         <div class="mt-4 d-flex gap-3">
-          <button type="submit" class="btn btn-primary px-4">CREATE</button>
-          <button type="button" (click)="cancel()" class="btn btn-secondary px-4">CANCEL</button>
+          <button type="submit" class="btn btn-primary px-4">
+            Continue → Payment
+          </button>
+
+          <button type="button" (click)="cancel()" class="btn btn-secondary px-4">
+            CANCEL
+          </button>
         </div>
+
       </form>
     </div>
   </div>
 </div>
 
-<!-- BOOTSTRAP POPUP MODAL ALERT -->
+<!-- Modal Popup -->
 <div class="modal fade" id="popupAlert" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" [ngClass]="{ 'bg-success': successMessage, 'bg-danger': errorMessage }">
-        <h5 class="modal-title text-white">{{ successMessage ? 'Success' : 'Error' }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title text-white">
+          {{ successMessage ? 'Success' : 'Error' }}
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
@@ -104,7 +136,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
       </div>
     </div>
   </div>

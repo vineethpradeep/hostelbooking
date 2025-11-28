@@ -1,62 +1,75 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators, 
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule,RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  loginForm!: FormGroup;
+  loginForm: FormGroup;
   submitting = false;
-  returnUrl: string = '/';
+  error: string | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private authService: AuthService,
+    private router: Router
+  ) {
 
-  ngOnInit(): void {
     this.loginForm = this.fb.group({
       userName: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required]]
     });
-
-    // Read returnUrl from query params
-    const encoded = this.route.snapshot.queryParams['returnUrl'];
-    if (encoded) {
-      this.returnUrl = decodeURIComponent(encoded);
-    }
+   }
+  
+    submit() {
+  this.error = null;
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
   }
-
-  submit() {
-    this.submitting = true;
-
-    if (this.loginForm.invalid) {
+  this.submitting = true;
+  this.authService.login(this.loginForm.value).subscribe({
+    next: (res) => {
       this.submitting = false;
-      return;
+      const token = res.Data.AccessToken;
+      const user = res.Data.User;
+      const role = user.Roles[0];       // <-- role from backend
+      const firstName = user.FirstName;
+
+      // Save token, role, firstname (your existing method)
+      this.authService.setTokenAfterLogin(token, role, firstName);
+
+      // ⭐ ROLE-BASED REDIRECTION
+      if (role === 'Admin') {
+        this.router.navigate(['/dashboard']);
+      } else if(role=='Tenant')
+      {
+        this.router.navigate(['/user-dashboard']);
+      }
+      else{
+        this.router.navigate(['/auth/login']);
+      }
+    },
+
+    error: (err) => {
+      this.submitting = false;
+      this.error =
+        err?.error?.message || 'Invalid email or password. Try again.';
     }
+  });
+}
 
-    const { userName, password } = this.loginForm.value;
-
-    // DEMO LOGIN
-    if (userName === 'admin@gmail.com' && password === '123456') {
-
-      // ⭐ FIX: use the SAME key as AuthGuard
-      localStorage.setItem('token', 'logged_in');
-
-      console.log("Redirecting to:", this.returnUrl);
-      this.router.navigateByUrl("rooms");
-      return;
-    }
-
-    alert('Invalid email or password');
-    this.submitting = false;
-  }
 }

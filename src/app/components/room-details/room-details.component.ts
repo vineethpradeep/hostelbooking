@@ -97,11 +97,11 @@ export class RoomDetailsComponent {
   openBookingForm() {
     this.bookingFormVisible = true;
 
-    setTimeout(() => {
+    /* setTimeout(() => {
       if (this.bookingFormCmp && this.bookingFormCmp.startCreate) {
         this.bookingFormCmp.startCreate();
       }
-    }, 50);
+    }, 50); */
   }
 
   closeBookingForm() {
