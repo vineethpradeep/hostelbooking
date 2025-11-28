@@ -18,41 +18,45 @@ interface MenuItem {
 
 @Component({
   selector: 'app-admin-header',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './admin-header.component.html',
-  styleUrl: './admin-header.component.css'
+  styleUrls: ['../../header/header.component.css'],
 })
 export class AdminHeaderComponent {
- dynamicMenus: MenuItem[] = [];
+  dynamicMenus: MenuItem[] = [];
 
-  constructor(private router: Router, private el: ElementRef,private auth:AuthService) {}
+  constructor(
+    private router: Router,
+    private el: ElementRef,
+    private auth: AuthService
+  ) {}
   isSticky = false;
   menuOpen = false;
-  userName:string="";
-  
-  ngOnInit() {
-  const role = this.auth.getUserRole(); // admin / user
- // this.userName=this.auth.getUserName();
-   this.userName="admin"
- //const role = "admin";
+  userName: string = '';
 
-  if (role === 'admin') {
-    this.dynamicMenus = [
-      { label: 'Dashboard', url: '/dashboard',active:false  },
-      { label: 'Users', url: '/dashboard/admin',active:false },
-      { label: 'Bookings', url: '/dashboard/bookings',active:false },
-      { label: 'Profile', url: '/dashboard/profile',active:false }
-    ];
-  } else {
-    this.dynamicMenus = [
-      { label: 'Dashboard', url: '/dashboard',active:false  },
-      { label: 'Users', url: '/dashboard/users', active: false },
-      { label: 'Bookings', url: '/dashboard/booking-list',active:false },
-      { label: 'Payments', url: '/dashboard/payment',active:false },
-      { label: 'Profile', url: '/dashboard/profile',active:false }
-    ];
+  ngOnInit() {
+    const role = this.auth.getUserRole(); // admin / user
+    // this.userName=this.auth.getUserName();
+    this.userName = 'admin';
+    //const role = "admin";
+
+    if (role === 'admin') {
+      this.dynamicMenus = [
+        { label: 'Dashboard', url: '/dashboard', active: false },
+        { label: 'Users', url: '/dashboard/admin', active: false },
+        { label: 'Bookings', url: '/dashboard/bookings', active: false },
+        { label: 'Profile', url: '/dashboard/profile', active: false },
+      ];
+    } else {
+      this.dynamicMenus = [
+        { label: 'Dashboard', url: '/dashboard', active: false },
+        { label: 'Users', url: '/dashboard/users', active: false },
+        { label: 'Bookings', url: '/dashboard/booking-list', active: false },
+        { label: 'Payments', url: '/dashboard/payment', active: false },
+        { label: 'Profile', url: '/dashboard/profile', active: false },
+      ];
+    }
   }
-}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -79,7 +83,7 @@ export class AdminHeaderComponent {
       this.menuOpen = false;
     }
   }
-  logout(){
+  logout() {
     this.auth.logout();
     this.router.navigate(['/auth/login']);
   }

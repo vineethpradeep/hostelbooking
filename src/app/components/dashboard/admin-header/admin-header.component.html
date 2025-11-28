@@ -1,85 +1,65 @@
 <header class="header-section" [class.sticky]="isSticky">
-  <div class="top-nav py-2">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-6 col-md-3 logo">
-          <a routerLink="/">
-            <img src="assets/img/logo.png" alt="Logo" class="img-fluid" />
-          </a>
+  <div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center py-3">
+      <a routerLink="/" class="logo">
+        <img src="assets/img/logo.png" alt="Logo" />
+      </a>
+
+      <nav class="nav-menu" [class.active]="menuOpen">
+        <div class="menu-close d-md-none text-end mb-4" (click)="toggleMenu()">
+          <i class="bi bi-x-lg fs-4"></i>
         </div>
-        <div class="col-6 d-md-none text-end">
-          <div class="canvas-open" (click)="toggleMenu()">
-            <i class="bi bi-list"></i>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mt-3 mt-md-0">
-          <div class="menu-item">
-            <div class="nav-menu" [class.active]="menuOpen">
-              <div
-                class="menu-close d-md-none text-end mb-4"
-                (click)="toggleMenu()"
-              >
-                <i class="bi bi-x-lg fs-4"></i>
-              </div>
-              <nav class="mainmenu">
-                <ul
-                  class="list-unstyled mb-0 d-md-flex flex-md-row justify-content-md-center gap-md-4"
+        <ul class="mainmenu list-unstyled mb-0 d-md-flex gap-md-4">
+          <li
+            *ngFor="let item of dynamicMenus"
+            [class.active]="item.active"
+            [class.has-children]="hasChildren(item)"
+            class="menu-link position-relative"
+          >
+            <a [routerLink]="item.url" (click)="onNavigate()" class="nav-link">
+              {{ item.label }}
+              <i *ngIf="hasChildren(item)" class="bi bi-chevron-down ms-1"></i>
+            </a>
+            <ul
+              class="dropdown list-unstyled"
+              *ngIf="hasChildren(item) && item.open"
+            >
+              <li *ngFor="let child of item.children">
+                <a
+                  [routerLink]="child.url"
+                  (click)="onNavigate()"
+                  class="dropdown-link"
                 >
-                  <li
-                    *ngFor="let item of dynamicMenus"
-                    [class.active]="item.active"
-                    [class.has-children]="hasChildren(item)"
-                    class="mb-3 mb-md-0 position-relative menu-link"
-                  >
-                    <a
-                      [routerLink]="item.url"
-                      (click)="onNavigate()"
-                      href="javascript:void(0)"
-                      class="text-decoration-none text-dark"
-                    >
-                      {{ item.label }}
-                      <i
-                        *ngIf="hasChildren(item)"
-                        class="bi bi-chevron-down ms-1"
-                      ></i>
-                    </a>
-                    <ul
-                      class="dropdown list-unstyled"
-                      *ngIf="hasChildren(item) && item.open"
-                    >
-                      <li *ngFor="let child of item.children">
-                        <a
-                          [routerLink]="child.url"
-                          (click)="onNavigate()"
-                          class="text-decoration-none text-dark"
-                        >
-                          {{ child.label }}
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>   
-          <div
-          class="col-12 col-md-3 text-md-end mt-3 mt-md-0 tn-right d-none d-md-block">
-          Welcome {{userName}},
-          <button  (click)="logout()"
-            class="btn btn-outline-secondary login-btn mr-4">
+                  {{ child.label }}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="mobile-login d-md-none mt-4 text-center">
+          <button class="btn btn-primary w-100 login-btn" (click)="logout()">
             Logout
           </button>
-        </div>  
+        </div>
+      </nav>
+
+      <div class="actions d-none d-md-block">
+        <span class="text-white me-3">Welcome {{ userName }}</span>
+        <button (click)="logout()" class="btn btn-outline-light login-btn">
+          Logout
+        </button>
+      </div>
+
+      <div class="canvas-open d-md-none" (click)="toggleMenu()">
+        <i class="bi bi-list fs-3"></i>
       </div>
     </div>
   </div>
+
   <div
     class="offcanvas-overlay"
     [class.active]="menuOpen"
     (click)="toggleMenu()"
   ></div>
 </header>
-
-
-
