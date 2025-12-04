@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+/* import { Component, ElementRef, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -86,5 +86,100 @@ export class AdminHeaderComponent {
   logout() {
     this.auth.logout();
     this.router.navigate(['/auth/login']);
+  }
+}
+ */
+
+interface MenuChild {
+  label: string;
+  url: string;
+}
+
+interface MenuItem {
+  label: string;
+  url?: string;
+  active: boolean;
+  open?: boolean;
+  children?: MenuChild[];
+}
+
+
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+
+
+
+@Component({
+  selector: 'app-admin-layout',
+  standalone:true,
+  imports: [CommonModule, RouterModule],
+  templateUrl: './admin-header.component.html',
+  styleUrls: ['./admin-layout.component.css']
+})
+export class AdminHeaderComponent implements OnInit {
+
+  // HEADER DATA
+  userName: string = '';
+
+  // HEADER FUNCTIONS
+  isSticky = false;
+  menuOpen = false;
+
+  // DASHBOARD DATA
+  dashboardStats: any = {};
+  
+  dynamicMenus: MenuItem[] = [];
+
+  constructor(private router: Router, private el: ElementRef) {}
+
+  ngOnInit(): void {
+
+    // User name
+    this.userName = localStorage.getItem('app_user') || '';
+
+    debugger;
+// Load user header menus
+     const data = localStorage.getItem("AdminHeaderMenus");
+      data ? JSON.parse(data) : null;
+
+   
+
+  if (data) {
+    this.dynamicMenus = JSON.parse(data).map((m: any) => ({
+      label: m.MenuName,
+      url: m.MenuUrl,
+      active: false
+    }));
+  }
+
+  }
+
+  // Sticky header
+  @HostListener('window:scroll', [])
+  onScroll() {
+    const headerHeight = this.el.nativeElement.offsetHeight;
+    this.isSticky = window.scrollY > headerHeight;
+  }
+
+  // Mobile Menu Toggle
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  // Close menu after clicking a link
+  onNavigate() {
+    if (window.innerWidth < 992) {
+      this.menuOpen = false;
+    }
+  }
+
+  // Logout
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/auth/login']);
+  }
+  hasChildren(item: MenuItem): boolean {
+    return Array.isArray(item.children) && item.children.length > 0;
   }
 }

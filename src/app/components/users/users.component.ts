@@ -18,7 +18,7 @@ export class UsersComponent implements OnInit {
 
   users: UserDto[] = [];
   selectedPropertyId = 1;
-  selectedUserType = 'Admin';
+  selectedUserType = 'Tenant';
 
   // Holds edited user data
   selectedUser: UserDto = {} as UserDto;

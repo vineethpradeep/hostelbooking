@@ -69,7 +69,7 @@
   </div> -->
 
   <!-- STEP 1: BOOKING DETAILS -->
- <div *ngIf="step === 1">
+<!--  <div *ngIf="step === 1">
     <div class="card shadow-sm mb-4">
       <div class="card-header bg-success text-white">
         <h5 class="mb-0">Step 1: Booking Details</h5>
@@ -78,22 +78,22 @@
       <div class="card-body">
         <form [formGroup]="bookingForm">
 
-          <div class="row g-3">
+          <div class="row g-3"> -->
 
             <!-- Property Hardcoded -->
-            <div class="col-md-6">
+          <!--   <div class="col-md-6">
               <label class="form-label">Property</label>
               <input type="text" class="form-control" value="Property A" disabled />
             </div>
-
+ -->
             <!-- Room Type Hardcoded -->
-            <div class="col-md-6">
+       <!--      <div class="col-md-6">
               <label class="form-label">Room Type</label>
               <input type="text" class="form-control" value="Single Bed" disabled />
             </div>
-
+ -->
             <!-- Move-in Date -->
-            <div class="col-md-6">
+          <!--   <div class="col-md-6">
               <label class="form-label">Move-in Date <span class="text-danger">*</span></label>
               <input
                 type="date"
@@ -102,9 +102,9 @@
                 [class.is-invalid]="f['moveInDate'].touched && f['moveInDate'].invalid" />
               <div class="invalid-feedback">Move-in date is required.</div>
             </div>
-
+ -->
             <!-- Duration Dropdown -->
-            <div class="col-md-6">
+         <!--    <div class="col-md-6">
               <label class="form-label">Duration (Months) <span class="text-danger">*</span></label>
               <select class="form-select"
                       formControlName="duration"
@@ -113,46 +113,53 @@
                 <option *ngFor="let m of monthsList" [value]="m">{{ m }} Month(s)</option>
               </select>
               <div class="invalid-feedback">Duration is required.</div>
-            </div>
+            </div> -->
 
             <!-- Checkout Date Auto -->
            <!--  <div class="col-md-6">
               <label class="form-label">Check-out Date</label>
               <input type="text" class="form-control" formControlName="checkOutDate" readonly />
             </div>
- -->
-            <!-- Special Requirements -->
-            <div class="col-12">
-              <label class="form-label">Special Requirements</label>
-              <textarea rows="3" class="form-control" formControlName="specialReq"></textarea>
-            </div>
+ -->        
+           <!-- Monthly Rent -->
+<!-- <div class="col-md-6">
+  <label class="form-label">Monthly Rent <span class="text-danger">*</span></label>
+  <input type="number"
+         class="form-control"
+         placeholder="Enter monthly rent"
+         formControlName="monthlyRent"
+         [class.is-invalid]="f['monthlyRent'].touched && f['monthlyRent'].invalid" />
+  <div class="invalid-feedback">Monthly rent is required.</div>
+</div> -->
 
-            <!-- Monthly Rent -->
-            <div class="col-md-6">
-              <label class="form-label">Monthly Rent <span class="text-danger">*</span></label>
-              <input type="number"
-                     class="form-control"
-                     placeholder="Enter monthly rent"
-                     formControlName="monthlyRent"
-                     [class.is-invalid]="f['monthlyRent'].touched && f['monthlyRent'].invalid" />
-              <div class="invalid-feedback">Monthly rent is required.</div>
-            </div>
+<!-- Security Deposit -->
+<!-- <div class="col-md-6">
+  <label class="form-label">Security Deposit <span class="text-danger">*</span></label>
+  <input type="number"
+         class="form-control"
+         placeholder="Enter security deposit"
+         formControlName="securityDeposit"
+         [class.is-invalid]="f['securityDeposit'].touched && f['securityDeposit'].invalid" />
+  <div class="invalid-feedback">Security deposit is required.</div>
+</div> -->
 
-            <!-- Security Deposit -->
-            <div class="col-md-6">
-              <label class="form-label">Security Deposit <span class="text-danger">*</span></label>
-              <input type="number"
-                     class="form-control"
-                     placeholder="Enter security deposit"
-                     formControlName="securityDeposit"
-                     [class.is-invalid]="f['securityDeposit'].touched && f['securityDeposit'].invalid" />
-              <div class="invalid-feedback">Security deposit is required.</div>
-            </div>
+<!-- Special Requirements (Now Below Rent & Deposit) -->
+<!-- <div class="col-12">
+  <label class="form-label">Special Requirements</label>
+  <textarea rows="3"
+            class="form-control"
+            formControlName="specialReq"
+            placeholder="Enter any special requirements (optional)">
+  </textarea>
+</div>
 
-          </div> <!-- END row -->
+
+            
+
+          </div> --> <!-- END row -->
 
           <!-- Continue button UNDER the form, not inside a column -->
-          <button type="button"
+     <!--      <button type="button"
                   class="btn btn-success mt-4 float-end"
                   (click)="goToStep(2)">
             Continue → Payment
@@ -161,9 +168,9 @@
         </form>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- STEP 2 - PAYMENT -->
-  <div *ngIf="step === 2">
+<!--   <div *ngIf="step === 2">
     <div class="card shadow-sm mb-4">
       <div class="card-header bg-warning">
         <h5 class="mb-0">Step 2: Payment Details</h5>
@@ -214,10 +221,190 @@
       </div>
 
     </div>
-  </div>
+  </div> -->
 
 
   <!-- STEP 3 - CONFIRMATION -->
+  <!-- <div *ngIf="step === 3">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-info text-white">
+        <h5 class="mb-0">Step 3: Booking Confirmed</h5>
+      </div>
+
+      <div class="card-body text-center">
+        <div class="alert alert-success">
+          <h5 class="fw-bold">Booking Successful!</h5>
+          <p>Your booking has been recorded and confirmation email sent.</p>
+        </div>
+
+        <button class="btn btn-primary" (click)="goToStep(2)">← Back</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+ -->
+
+ <div class="">
+
+  <!-- STEP 1: BOOKING DETAILS -->
+  <div *ngIf="step === 1">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0">Step 1: Booking Details</h5>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="bookingForm">
+
+          <div class="row g-3">
+
+            <!-- Property Hardcoded -->
+            <div class="col-md-6">
+              <label class="form-label">Property</label>
+              <input type="text" class="form-control" value="Property A" disabled />
+            </div>
+
+            <!-- Room Type Hardcoded -->
+            <div class="col-md-6">
+              <label class="form-label">Room Type</label>
+              <input type="text" class="form-control" value="Single Bed" disabled />
+            </div>
+
+            <!-- Move-in Date -->
+            <div class="col-md-6">
+              <label class="form-label">Move-in Date <span class="text-danger">*</span></label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="moveInDate"
+                [class.is-invalid]="f['moveInDate'].touched && f['moveInDate'].invalid" />
+              <div class="invalid-feedback">Move-in date is required.</div>
+            </div>
+
+      
+
+            <!-- Duration Dropdown -->
+            <div class="col-md-6">
+              <label class="form-label">Duration (Months) <span class="text-danger">*</span></label>
+              <select class="form-select"
+                      formControlName="duration"
+                      [class.is-invalid]="f['duration'].touched && f['duration'].invalid">
+                <option value="">Select Duration</option>
+                <option *ngFor="let m of monthsList" [value]="m">{{ m }} Month(s)</option>
+              </select>
+              <div class="invalid-feedback">Duration is required.</div>
+            </div>
+
+                <!-- Hidden Checkout Date (required for backend) -->
+            <input type="hidden" formControlName="checkOutDate">
+           
+
+       
+            <!-- Monthly Rent -->
+            <div class="col-md-6">
+              <label class="form-label">Monthly Rent <span class="text-danger">*</span></label>
+              <input type="number"
+                     class="form-control"
+                     placeholder="Enter monthly rent"
+                     formControlName="monthlyRent"
+                     [class.is-invalid]="f['monthlyRent'].touched && f['monthlyRent'].invalid" />
+              <div class="invalid-feedback">Monthly rent is required.</div>
+            </div>
+
+            <!-- Security Deposit -->
+            <div class="col-md-6">
+              <label class="form-label">Security Deposit <span class="text-danger">*</span></label>
+              <input type="number"
+                     class="form-control"
+                     placeholder="Enter security deposit"
+                     formControlName="securityDeposit"
+                     [class.is-invalid]="f['securityDeposit'].touched && f['securityDeposit'].invalid" />
+              <div class="invalid-feedback">Security deposit is required.</div>
+            </div>
+
+            <!-- Special Requirements -->
+            <div class="col-12">
+              <label class="form-label">Special Requirements</label>
+              <textarea rows="3"
+                        class="form-control"
+                        formControlName="specialReq"
+                        placeholder="Enter any special requirements (optional)">
+              </textarea>
+            </div>
+
+          </div> <!-- END row -->
+
+          <!-- Continue button -->
+          <button type="button"
+                  class="btn btn-success mt-4 float-end"
+                  (click)="goToStep(2)">
+            Continue → Payment
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: PAYMENT DETAILS -->
+  <div *ngIf="step === 2">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-warning">
+        <h5 class="mb-0">Step 2: Payment Details</h5>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="paymentForm">
+
+          <div class="row g-3">
+
+            <div class="col-12">
+              <label class="form-label">Payment Method</label>
+              <select class="form-select" formControlName="paymentMethod">
+                <option>Cash</option>
+                <option>UPI</option>
+                <option>Credit/Debit Card</option>
+                <option>Bank Transfer</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Total Amount</label>
+              <input type="text" class="form-control" value="₹30,000" disabled />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Payment Notes</label>
+              <textarea class="form-control"
+                        rows="2"
+                        placeholder="Optional"
+                        formControlName="notes"></textarea>
+            </div>
+
+          </div>
+
+          <!-- Back button -->
+          <button type="button"
+                  class="btn btn-secondary mt-4"
+                  (click)="goToStep(1)">
+            ← Back
+          </button>
+
+          <!-- Make Payment button -->
+          <button type="button"
+                  class="btn btn-warning mt-4 float-end"
+                  (click)="submitPayment()">
+            Make Payment
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 3: CONFIRMATION -->
   <div *ngIf="step === 3">
     <div class="card shadow-sm mb-4">
       <div class="card-header bg-info text-white">

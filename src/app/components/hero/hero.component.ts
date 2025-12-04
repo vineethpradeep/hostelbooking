@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { OwlOptions, CarouselModule } from 'ngx-owl-carousel-o';
-import { BookingFormComponent } from '../booking-form/booking-form.component';
+import { EditBookingComponent } from '../edit-booking/edit-booking.component';
+
 
 @Component({
   selector: 'app-hero',
@@ -11,7 +12,7 @@ import { BookingFormComponent } from '../booking-form/booking-form.component';
     CommonModule,
     CarouselModule,
     ReactiveFormsModule,
-    BookingFormComponent,
+    EditBookingComponent
   ],
   templateUrl: './hero.component.html',
   styleUrls: ['./hero.component.css'],

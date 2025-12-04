@@ -7,7 +7,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PreloaderDirective } from './directives/preloader.directive';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BookingFormComponent } from './components/booking-form/booking-form.component';
+import { EditBookingComponent } from './components/edit-booking/edit-booking.component';
+
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ import { BookingFormComponent } from './components/booking-form/booking-form.com
     CommonModule,
     ReactiveFormsModule,
     RouterOutlet,
-   BookingFormComponent
+    EditBookingComponent
 
   ],
   templateUrl: './app.component.html',

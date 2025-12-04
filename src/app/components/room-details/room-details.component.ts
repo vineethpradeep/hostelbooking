@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { RoomService, Review, Room } from '../../services/room.service';
-import { BookingFormComponent } from '../booking-form/booking-form.component';
+
 import { EditBookingComponent } from '../edit-booking/edit-booking.component';
 
 interface StarSet {
@@ -20,7 +20,7 @@ interface StarSet {
     CommonModule,
     FormsModule,
     BreadcrumbComponent,
-    BookingFormComponent,
+    
     EditBookingComponent,
   ],
   templateUrl: './room-details.component.html',
@@ -35,8 +35,8 @@ export class RoomDetailsComponent {
 
   bookingFormVisible: boolean = false;
 
-  @ViewChild(BookingFormComponent)
-  bookingFormCmp!: BookingFormComponent;
+  @ViewChild(EditBookingComponent)
+  bookingFormCmp!: EditBookingComponent;
 
   newReview: Partial<Review> = { name: '', email: '', text: '', rating: 0 };
 

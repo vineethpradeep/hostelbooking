@@ -9,3 +9,20 @@ table tbody tr:hover {
 .badge {
   font-size: 13px;
 }
+/* Edit Button */
+.btn-edit {
+  background: linear-gradient(45deg, #005CFF, #8A2BE2);
+  color: white;
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.btn-edit:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+

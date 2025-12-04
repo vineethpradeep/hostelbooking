@@ -3,14 +3,19 @@ export interface BookingFormDto {
   bookingNumber: string;
   propertyId: number;
   userId: number;
-  bedId: number;
-  checkInDate: Date;            // ISO date "YYYY-MM-DD"
-  checkOutDate?: Date;   // ISO date or null
- // plannedCheckOutDate: string;    // ISO date "YYYY-MM-DD"
+  bedId: number; 
+
+  checkInDate: Date;     // YYYY-MM-DD
+  checkOutDate: Date;    // YYYY-MM-DD
+
   monthlyRent: number;
   securityDeposit: number;
+
+  durationMonths: number;  // required
   status: string;
-  bookingType: string;
+
   specialRequests?: string | null;
-  durationMonths: number;   // <-- ADD THIS LINE
+
+  paymentMethod?: string;
+  paymentNotes?: string;
 }

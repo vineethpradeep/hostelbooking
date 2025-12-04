@@ -3,11 +3,13 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AboutUsComponent } from '../../about-us/about-us.component';
 import { ServicesComponent } from '../../services/services.component';
-import { AdminHeaderComponent } from '../admin-header/admin-header.component';
 import { FooterComponent } from '../../footer/footer.component';
+import { AdminHeaderComponent } from '../admin-header/admin-header.component';
+
 
 @Component({
   selector: 'app-user-layout',
+  standalone:true,
   imports: [
     CommonModule,
     RouterModule,

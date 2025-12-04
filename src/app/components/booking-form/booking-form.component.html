@@ -1,22 +1,22 @@
-<div class="booking-root container">
+<!-- <div class="booking-root container">
   <div class="card shadow-sm">
     <div class="card-body">
-      <form [formGroup]="bookingForm" (ngSubmit)="save()">
+      <form [formGroup]="bookingForm" (ngSubmit)="save()"> -->
 
         <!-- Hardcoded Property -->
-        <div class="mb-3">
+      <!--   <div class="mb-3">
           <label class="form-label">Property</label>
           <input type="text" class="form-control" value="Property A" disabled />
         </div>
-
+ -->
         <!-- Hardcoded Room Type -->
-        <div class="mb-3">
+      <!--   <div class="mb-3">
           <label class="form-label">Room Type</label>
           <input type="text" class="form-control" value="Single Bed" disabled />
         </div>
-
+ -->
         <!-- Move-in Date -->
-        <div class="mb-3">
+       <!--  <div class="mb-3">
           <label class="form-label">Move-in Date <span class="text-danger">*</span></label>
 
           <input
@@ -28,9 +28,9 @@
 
           <div class="invalid-feedback">Move-in date is required.</div>
         </div>
-
+ -->
         <!-- Duration (Months) -->
-        <div class="mb-3">
+      <!--   <div class="mb-3">
           <label class="form-label">Duration (Months) <span class="text-danger">*</span></label>
 
           <select
@@ -51,16 +51,16 @@
           <div class="invalid-feedback" *ngIf="f['durationMonths'].errors?.['min']">
             Minimum duration is 1 month.
           </div>
-        </div>
+        </div> -->
 
         <!-- Special Requirements -->
-        <div class="mb-3">
+       <!--  <div class="mb-3">
           <label class="form-label">Special Requirements</label>
           <textarea rows="3" class="form-control" formControlName="specialRequests"></textarea>
-        </div>
+        </div> -->
 
         <!-- Monthly Rent -->
-        <div class="mb-3">
+      <!--   <div class="mb-3">
           <label class="form-label">Monthly Rent <span class="text-danger">*</span></label>
 
           <input
@@ -73,9 +73,9 @@
 
           <div class="invalid-feedback">Monthly rent is required.</div>
         </div>
-
+ -->
         <!-- Security Deposit -->
-        <div class="mb-3">
+      <!--   <div class="mb-3">
           <label class="form-label">Security Deposit <span class="text-danger">*</span></label>
 
           <input
@@ -86,10 +86,10 @@
           />
 
           <div class="invalid-feedback">Security deposit is required.</div>
-        </div>
+        </div> -->
 
         <!-- Booking Type -->
-        <div class="mb-3">
+    <!--     <div class="mb-3">
           <label class="form-label">Booking Type <span class="text-danger">*</span></label>
 
           <input
@@ -102,10 +102,10 @@
 
           <div class="invalid-feedback">Booking type is required.</div>
         </div>
-
+ -->
         <!-- Buttons -->
-        <div class="mt-4 d-flex gap-3">
-          <button type="submit" class="btn btn-primary px-4">
+        <!-- <div class="mt-4 d-flex gap-3"> -->
+     <!--      <button type="submit" class="btn btn-primary px-4">
             Continue → Payment
           </button>
 
@@ -117,10 +117,10 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Modal Popup -->
-<div class="modal fade" id="popupAlert" tabindex="-1">
+<!-- <div class="modal fade" id="popupAlert" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" [ngClass]="{ 'bg-success': successMessage, 'bg-danger': errorMessage }">
@@ -141,3 +141,4 @@
     </div>
   </div>
 </div>
+ -->

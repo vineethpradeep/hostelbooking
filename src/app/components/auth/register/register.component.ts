@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
         this.submitting = false;
         this.router.navigate(['/auth/login'], { queryParams: { registered: '1' } });
       },
-      error: (err) => {
+      error: (err: { error: { message: string; }; }) => {
         this.submitting = false;
         this.error = err?.error?.message || 'Registration failed. Please try again.';
       }

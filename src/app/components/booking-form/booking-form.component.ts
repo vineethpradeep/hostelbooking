@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+/* import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -27,9 +27,9 @@ export class BookingFormComponent implements OnInit {
 
   // Months list for dropdown
   monthsList: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
+ */
   // Hardcoded values
-  private readonly propertyIdFixed = 1;
+ /*  private readonly propertyIdFixed = 1;
   private readonly userIdFixed = 11;
   private readonly bedIdFixed = 1;
 
@@ -41,49 +41,49 @@ export class BookingFormComponent implements OnInit {
     this.autoUpdateCheckoutDate();
     this.autoUpdateWhenCheckInChanges();
   }
-
+ */
   // ======================================================
   // INIT FORM
   // ======================================================
-  private initForm() {
+/*   private initForm() {
     this.bookingForm = this.fb.group({
       bookingId: [0],
       bookingNumber: ['', Validators.required],
-
+ */
       // Hardcoded – no validation
-      propertyId: [this.propertyIdFixed],
-      bedId: [this.bedIdFixed],
+/*       propertyId: [this.propertyIdFixed],
+      bedId: [this.bedIdFixed], */
 
       // Required fields
-      checkInDate: ['', Validators.required],
+    /*   checkInDate: ['', Validators.required],
       durationMonths: [null, Validators.required],
       monthlyRent: [null, [Validators.required, Validators.min(1)]],
       securityDeposit: [null, [Validators.required, Validators.min(1)]],
-      bookingType: ['', Validators.required],
+      bookingType: ['', Validators.required], */
 
       // Auto-filled
-      checkOutDate: [''],
+    /*   checkOutDate: [''],
 
       status: ['Active'],
       specialRequests: ['']
     });
   }
-
+ */
   // ======================================================
   // LOAD INITIAL VALUES
   // ======================================================
-  private loadInitialValues() {
+/*   private loadInitialValues() {
     this.bookingForm.patchValue({
       propertyId: this.propertyIdFixed,
       bedId: this.bedIdFixed,
       bookingNumber: this.generateBookingNumber()
     });
-  }
+  } */
 
   // ======================================================
   // AUTO CALCULATE CHECKOUT WHEN MONTHS CHANGE
   // ======================================================
-  private autoUpdateCheckoutDate() {
+/*   private autoUpdateCheckoutDate() {
     this.bookingForm.get('durationMonths')?.valueChanges.subscribe(months => {
       const checkIn = this.bookingForm.get('checkInDate')?.value;
       if (!months || !checkIn) return;
@@ -94,11 +94,11 @@ export class BookingFormComponent implements OnInit {
       this.bookingForm.patchValue({ checkOutDate: this.formatDate(d) });
     });
   }
-
+ */
   // ======================================================
   // AUTO CALCULATE WHEN CHECK-IN CHANGES
   // ======================================================
-  private autoUpdateWhenCheckInChanges() {
+ /*  private autoUpdateWhenCheckInChanges() {
     this.bookingForm.get('checkInDate')?.valueChanges.subscribe(dateValue => {
       const months = this.bookingForm.get('durationMonths')?.value;
       if (!months || !dateValue) return;
@@ -108,17 +108,17 @@ export class BookingFormComponent implements OnInit {
 
       this.bookingForm.patchValue({ checkOutDate: this.formatDate(d) });
     });
-  }
+  } */
 
   // Format date → YYYY-MM-DD
-  private formatDate(d: Date): string {
+ /*  private formatDate(d: Date): string {
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   }
-
+ */
   // ======================================================
   // SAVE BOOKING
   // ======================================================
-  save() {
+  /* save() {
     this.successMessage = null;
     this.errorMessage = null;
 
@@ -166,25 +166,25 @@ export class BookingFormComponent implements OnInit {
       }
     });
   }
-
+ */
   // ======================================================
   // CANCEL FORM
   // ======================================================
-  cancel() {
+/*   cancel() {
     this.bookingForm.reset();
     this.loadInitialValues();
   }
-
+ */
   // ======================================================
   // POPUP
   // ======================================================
-  private showPopup() {
+ /*  private showPopup() {
     const modalEl = document.getElementById('popupAlert');
     if (modalEl) new bootstrap.Modal(modalEl).show();
-  }
+  } */
 
   // Generate booking number
-  private generateBookingNumber(): string {
+/*   private generateBookingNumber(): string {
     return 'BK' + new Date().getTime().toString().slice(-6);
   }
 
@@ -192,3 +192,4 @@ export class BookingFormComponent implements OnInit {
     return this.bookingForm.controls;
   }
 }
+ */

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+/* import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -65,5 +65,89 @@ export class UsersDashboardComponent implements AfterViewInit {
 
   requestMaintenance() {
     console.log('Request Maintenance clicked');
+  }
+}
+ */
+
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+
+interface MenuChild {
+  label: string;
+  url: string;
+}
+
+interface MenuItem {
+  label: string;
+  url?: string;
+  active: boolean;
+  open?: boolean;
+  children?: MenuChild[];
+}
+
+@Component({
+  selector: 'app-user-layout',
+  templateUrl: './user-dashboard.component.html',
+  styleUrls: ['./user-dashboard.component.css']
+})
+export class UserDashboardComponent implements OnInit {
+
+  // HEADER
+  dynamicMenus: MenuItem[] = [];
+  userName: string = '';
+  menuOpen = false;
+  isSticky = false;
+
+  // DASHBOARD
+  dashboard: any = {};
+
+  constructor(private router: Router, private el: ElementRef) {}
+
+  ngOnInit(): void {
+
+    // Load username
+    this.userName = localStorage.getItem('app_user') ?? '';
+
+    // Load user header menus
+     const data = localStorage.getItem("AdminHeaderMenus");
+      data ? JSON.parse(data) : null;
+
+   
+
+  if (data) {
+    this.dynamicMenus = JSON.parse(data).map((m: any) => ({
+      label: m.MenuName,
+      url: m.MenuUrl,
+      active: false
+    }));
+  }
+
+    // Load user dashboard data
+    const dash = localStorage.getItem('UserDashboard');
+    if (dash) this.dashboard = JSON.parse(dash);
+  }
+
+  // Sticky header
+  @HostListener('window:scroll', [])
+  onScroll() {
+    const h = this.el.nativeElement.offsetHeight;
+    this.isSticky = window.scrollY > h;
+  }
+
+  // Mobile menu toggle
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  // Close menu after clicking a link
+  onNavigate() {
+    if (window.innerWidth < 992) {
+      this.menuOpen = false;
+    }
+  }
+
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/auth/login']);
   }
 }

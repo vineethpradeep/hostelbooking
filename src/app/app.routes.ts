@@ -14,14 +14,15 @@ import { HeroComponent } from './components/hero/hero.component';
 import { UsersComponent } from './components/users/users.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { BookingFormComponent } from './components/booking-form/booking-form.component';
+
 import { BookingListComponent } from './components/booking-list/booking-list.component';
 import { AdminDashboardComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 
 // Guards
 import { AuthGuard } from './services/auth.guard';
-import { UsersDashboardComponent } from './components/dashboard/user-dashboard/user-dashboard.component';
 import { UserLayoutComponent } from './components/dashboard/user-layout/user-layout.component';
+import { EditBookingComponent } from './components/edit-booking/edit-booking.component';
+import { UserDashboardComponent } from './components/dashboard/user-dashboard/user-dashboard.component';
 
 export const routes: Routes = [
 
@@ -46,7 +47,7 @@ export const routes: Routes = [
       { path: 'auth/login', component: LoginComponent },
 
       // Booking → must be logged in
-      { path: 'bookings', component: BookingFormComponent }
+      { path: 'bookings', component: EditBookingComponent }
     ]
   },
 
@@ -77,7 +78,7 @@ export const routes: Routes = [
     path: 'user-dashboard',
     component: UserLayoutComponent,
      children: [
-      { path: '', component: UsersDashboardComponent },
+      { path: '', component: UserDashboardComponent },
       { path: 'rooms', component: RoomsComponent },
       { path: 'users', component: UsersComponent },
       { path: 'payment', component: PaymentComponent },

@@ -16,10 +16,10 @@ export class BookingListService {
   // ------------------------------------------
   // GET: Fetch all bookings
   // ------------------------------------------
-  getAllBookings(): Observable<Booking[]> {
+ /*  getAllBookings(): Observable<Booking[]> {
     return this.http.get<Booking[]>(this.apiUrl);
   }
-
+ */
   // ------------------------------------------
   // GET: Search bookings with query parameters
   // api/booking/search?propertyId=..&status=.. etc.

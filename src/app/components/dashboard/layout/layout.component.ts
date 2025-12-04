@@ -8,6 +8,7 @@ import { AdminHeaderComponent } from '../admin-header/admin-header.component';
 
 
 
+
 @Component({
   selector: 'app-landing',
   standalone: true,
@@ -16,7 +17,7 @@ import { AdminHeaderComponent } from '../admin-header/admin-header.component';
     RouterModule,
     AboutUsComponent,
     ServicesComponent,
-    AdminHeaderComponent,
+   AdminHeaderComponent,
     FooterComponent    
   ],
   templateUrl: './layout.component.html',

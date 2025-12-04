@@ -12,6 +12,7 @@ export class BookingListComponent implements OnInit {
 
   BookingList: any[] = [];
 
+
   constructor(private bookingService: BookingListService) {}
 
   ngOnInit(): void {
@@ -21,8 +22,8 @@ export class BookingListComponent implements OnInit {
   search() {
     const query = {
       propertyId: 1,
-      userId: 10,
-      bedId: 1,
+      userId: 17,
+      bedId: 2,
       status: 'Confirmed',
       fromDate: '2025-01-01',
       toDate: '2025-01-31',

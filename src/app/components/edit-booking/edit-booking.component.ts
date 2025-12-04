@@ -40,6 +40,8 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { BookingService } from '../../services/booking.service';
+import { BookingFormDto } from '../../models/booking-form.model';
 
 @Component({
   selector: 'app-edit-booking',
@@ -49,32 +51,40 @@ import {
   styleUrl: './edit-booking.component.css',
 })
 export class EditBookingComponent implements OnInit {
+
   step = 1;
 
   bookingForm!: FormGroup;
   paymentForm!: FormGroup;
 
-  // Duration dropdown list (1–12 months)
-  monthsList: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder) {}
+  propertyIdFixed = 1;
+  bedIdFixed = 2;
+  userIdFixed = 17;
+
+  monthsList = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+  constructor(private fb: FormBuilder, private api: BookingService) {}
 
   ngOnInit(): void {
-    this.bookingForm = this.fb.group({
-      // Hardcoded (no validation)
-      roomType: ['Single Bed'],
 
-      // Required fields
+    this.bookingForm = this.fb.group({
+      property: ['Property A'],
+      roomType: ['Single Bed'],
       moveInDate: ['', Validators.required],
       duration: ['', Validators.required],
-        monthlyRent: ['', Validators.required],
-  securityDeposit: ['', Validators.required],
 
-      // Auto-calculated
-      checkOutDate: [''],
+      monthlyRent: ['', Validators.required],
+      securityDeposit: ['', Validators.required],
 
-      // Optional
+      checkOutDate: [''],   // hidden field but required internally
       specialReq: [''],
+
+      bookingNumber: [''],
+      propertyId: [''],
+      bedId: ['']
     });
 
     this.paymentForm = this.fb.group({
@@ -82,63 +92,112 @@ export class EditBookingComponent implements OnInit {
       notes: ['']
     });
 
-    // Auto-calc checkout date when move-in or duration changes
-    this.bookingForm.get('moveInDate')?.valueChanges.subscribe(() => {
-      this.updateCheckoutDate();
-    });
-
-    this.bookingForm.get('duration')?.valueChanges.subscribe(() => {
-      this.updateCheckoutDate();
-    });
+    // Auto update checkout date
+    this.bookingForm.get('moveInDate')?.valueChanges.subscribe(() => this.updateCheckoutDate());
+    this.bookingForm.get('duration')?.valueChanges.subscribe(() => this.updateCheckoutDate());
   }
 
-  // ----------------------------------------
+  // ------------------------------
   // AUTO CALCULATE CHECKOUT DATE
-  // ----------------------------------------
+  // ------------------------------
   private updateCheckoutDate() {
     const moveIn = this.bookingForm.get('moveInDate')?.value;
-    const months = this.bookingForm.get('duration')?.value;
+    const months = Number(this.bookingForm.get('duration')?.value);
 
-    if (!moveIn || !months) {
-      this.bookingForm.patchValue({ checkOutDate: '' });
+    console.log("CHECKOUT UPDATE: moveIn=", moveIn, "duration=", months);
+
+    if (!moveIn || !months || months <= 0) {
+      console.log("Not enough data to calculate checkout date");
       return;
     }
 
-    const date = new Date(moveIn);
-    date.setMonth(date.getMonth() + Number(months));
+    const d = new Date(moveIn);
+    d.setMonth(d.getMonth() + months);
 
-    const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0');
-    const dd = String(date.getDate()).padStart(2, '0');
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
 
-    const formatted = `${yyyy}-${mm}-${dd}`;
+    const finalDate = `${yyyy}-${mm}-${dd}`;
 
-    this.bookingForm.patchValue({ checkOutDate: formatted }, { emitEvent: false });
+    console.log("✔ Checkout calculated:", finalDate);
+
+    this.bookingForm.patchValue({ checkOutDate: finalDate }, { emitEvent: false });
   }
 
-  // Go to next or previous step
   goToStep(stepNo: number) {
-
-    // Validate Step-1 before going to Step-2
-    if (stepNo === 2) {
-      if (this.bookingForm.invalid) {
-        this.bookingForm.markAllAsTouched();
-        return;
-      }
+    if (stepNo === 2 && this.bookingForm.invalid) {
+      this.bookingForm.markAllAsTouched();
+      return;
     }
-
     this.step = stepNo;
   }
 
-  // Update special requirements from editable div
-  updateSpecialReq(event: any) {
+  submitPayment() {
+    if (this.paymentForm.invalid) {
+      this.paymentForm.markAllAsTouched();
+      return;
+    }
+    this.save();
+  }
+
+  private generateBookingNumber(): string {
+    return 'BK' + Math.floor(100000 + Math.random() * 900000);
+  }
+
+  save() {
+    // Ensure checkout date is computed before saving
+    this.updateCheckoutDate();
+
+    if (!this.bookingForm.value.checkOutDate) {
+      this.errorMessage = "Checkout date calculation failed.";
+      return;
+    }
+
     this.bookingForm.patchValue({
-      specialReq: event.target.innerHTML
+      propertyId: this.propertyIdFixed,
+      bedId: this.bedIdFixed,
+      bookingNumber: this.bookingForm.value.bookingNumber || this.generateBookingNumber()
+    });
+
+    const dto: BookingFormDto = {
+      bookingId: 0,
+      bookingNumber: this.bookingForm.value.bookingNumber,
+
+      propertyId: Number(this.propertyIdFixed),
+      bedId: Number(this.bedIdFixed),
+      userId: Number(this.userIdFixed),
+
+      checkInDate: this.bookingForm.value.moveInDate,
+      checkOutDate: this.bookingForm.value.checkOutDate,
+
+      monthlyRent: Number(this.bookingForm.value.monthlyRent),
+      securityDeposit: Number(this.bookingForm.value.securityDeposit),
+
+      durationMonths: Number(this.bookingForm.value.duration),
+
+      status: "Booked",
+      specialRequests: this.bookingForm.value.specialReq,
+
+      paymentMethod: this.paymentForm.value.paymentMethod,
+      paymentNotes: this.paymentForm.value.notes
+    };
+
+    console.log("📌 FINAL DTO SENT:", dto);
+
+    this.api.createBooking(dto).subscribe({
+      next: () => {
+        this.successMessage = "Booking Created Successfully!";
+        this.goToStep(3);
+      },
+      error: err => {
+        this.errorMessage = err.error?.message || "Booking failed";
+      }
     });
   }
 
-  // Getter for easy access
-  get f() {
-    return this.bookingForm.controls;
-  }
+  get f() { return this.bookingForm.controls; }
 }
+
+
+ 
