@@ -60,9 +60,9 @@ export class EditBookingComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  propertyIdFixed = 1;
-  bedIdFixed = 2;
-  userIdFixed = 17;
+  propertyIdFixed = 3;
+  bedIdFixed = 3;
+  userIdFixed = 1;
 
   monthsList = [1,2,3,4,5,6,7,8,9,10,11,12];
 

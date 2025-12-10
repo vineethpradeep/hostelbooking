@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     this.submitting = true;
     const formVal = this.registerForm.value;
     const payload: RegisterModel = {
-      propertyId: 1,
+      propertyId: 3,
       firstName: formVal.firstName,
       lastName: formVal.lastName,
       emailAddress: formVal.emailAddress,
