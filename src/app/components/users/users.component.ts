@@ -17,7 +17,7 @@ declare var bootstrap: any;  // For modal
 export class UsersComponent implements OnInit {
 
   users: UserDto[] = [];
-  selectedPropertyId = 1;
+  selectedPropertyId = 3;
   selectedUserType = 'Tenant';
 
   // Holds edited user data

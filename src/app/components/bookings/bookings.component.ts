@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-booking-list',
-  templateUrl: './booking-list.component.html',
+  templateUrl: './bookings.component.html',
   standalone: true,
   imports: [CommonModule]
 })

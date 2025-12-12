@@ -1,42 +1,38 @@
-<div class="container mt-4 d-flex justify-content-center">
-  <div class="card p-4 shadow-sm payment-card">
-    <h5 class="mb-3 text-center">Payment Details</h5>
+<div class="container-fluid mt-4">
+  <h3 class="page-title">Payment Details</h3>
 
-    <div class="payment-list">
-      <div class="payment-item" *ngFor="let p of paymentList; let i = index">
-        <div class="payment-info">
-          <span class="label">#</span>
-          <span class="value">{{ i + 1 }}</span>
-        </div>
-        <div class="payment-info">
-          <span class="label">Transaction Id:</span>
-          <span class="value">{{ p.transactionId }}</span>
-        </div>
-        <div class="payment-info">
-          <span class="label">Phone:</span>
-          <span class="value">{{ p.phoneNumber }}</span>
-        </div>
-        <div class="payment-info">
-          <span class="label">Amount:</span>
-          <span class="value">{{ p.amount }}</span>
-        </div>
-        <div class="payment-info">
-          <span class="label">Status:</span>
-          <span class="value">
-            <span class="badge bg-success" *ngIf="p.paymentStatus === 'Success'"
-              >Success</span
-            >
+  <div class="table-responsive mt-3">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Transaction ID</th>
+          <th>Phone</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of paymentList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ p.transactionId }}</td>
+          <td>{{ p.phoneNumber }}</td>
+          <td>{{ p.amount }}</td>
+          <td>
             <span
-              class="badge bg-warning text-dark"
-              *ngIf="p.paymentStatus === 'Pending'"
-              >Pending</span
+              class="badge"
+              [ngClass]="{
+                'bg-success': p.paymentStatus === 'Success',
+                'bg-warning text-dark': p.paymentStatus === 'Pending',
+                'bg-danger': p.paymentStatus === 'Failed'
+              }"
             >
-            <span class="badge bg-danger" *ngIf="p.paymentStatus === 'Failed'"
-              >Failed</span
-            >
-          </span>
-        </div>
-      </div>
-    </div>
+              {{ p.paymentStatus }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

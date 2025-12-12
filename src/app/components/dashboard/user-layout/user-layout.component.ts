@@ -7,6 +7,8 @@ import { FooterComponent } from '../../footer/footer.component';
 import { AdminHeaderComponent } from '../admin-header/admin-header.component';
 
 
+
+
 @Component({
   selector: 'app-user-layout',
   standalone:true,
@@ -15,8 +17,10 @@ import { AdminHeaderComponent } from '../admin-header/admin-header.component';
     RouterModule,
     AboutUsComponent,
     ServicesComponent,
-    AdminHeaderComponent,
-    FooterComponent    
+    FooterComponent,
+    AdminHeaderComponent
+    
+
   ],
   templateUrl: './user-layout.component.html',
   styleUrl: './user-layout.component.css'

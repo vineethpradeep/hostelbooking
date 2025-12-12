@@ -6,23 +6,25 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  setTokenAfterLogin(token: any, role: any, firstName: any) {
+    throw new Error('Method not implemented.');
+  }
 
   // -----------------------------
   // LocalStorage Keys
   // -----------------------------
-  private TOKEN_KEY = 'app_token';
-  private USER_ROLE = 'app_role';
-  private USER_NAME = 'app_user';
+  private readonly TOKEN_KEY = 'app_token';
+  private readonly USER_ROLE = 'app_role';
+  private readonly USER_NAME = 'app_user';
 
-  private ADMIN_HEADER_MENUS = 'AdminHeaderMenus';
-
-  private USER_HEADER_MENUS = 'UserHeaderMenus';
-  private USER_DASHBOARD = 'UserDashboard';
+  private readonly HEADER_MENUS = 'HeaderMenus';
+ // private readonly USER_HEADER_MENUS = 'UserHeaderMenus';
 
   // -----------------------------
   // API Base URL
   // -----------------------------
-  private baseUrl = 'https://localhost:7001/api/Auth';
+  private readonly baseUrl = 'https://localhost:7001/api/Auth';
+ // setTokenAfterLogin: any;
 
   constructor(private http: HttpClient) {}
 
@@ -40,13 +42,20 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/login`, data).pipe(
       map((res: any) => {
 
-        debugger;
+        // Expected response:
+        // res.Data.AccessToken
+        // res.Data.User.Roles[0] -> admin | user
+        // res.Data.User.FirstName
+        // res.Data.Menus
 
-        // Expected response: { token, role, username }
-        if (res && res.Data.AccessToken && res.Data.User.Roles[0]) {
+        if (res?.Data?.AccessToken && res?.Data?.User?.Roles?.length) {
 
-          this.setTokenAfterLogin(res.Data.AccessToken, res.Data.User.Roles[0], res.Data.User.FirstName);
-          this.setMenuAfterLogin(res.Data.Menus);          
+          const token = res.Data.AccessToken;
+          const role  = res.Data.User.Roles[0];
+          const name  = res.Data.User.FirstName;
+
+          this.saveAuthData(token, role, name);
+          this.saveMenusByRole(res.Data.Menus, role);
         }
 
         return res;
@@ -55,34 +64,38 @@ export class AuthService {
   }
 
   // -----------------------------
-  // SAVE TOKEN + ROLE + USERNAME
+  // SAVE AUTH DATA
   // -----------------------------
-  setTokenAfterLogin(token: string, role: string, username: string) {
+  private saveAuthData(token: string, role: string, username: string): void {
     localStorage.setItem(this.TOKEN_KEY, token);
     localStorage.setItem(this.USER_ROLE, role);
     localStorage.setItem(this.USER_NAME, username);
   }
-setMenuAfterLogin(menus: any) {
-  localStorage.setItem(this.ADMIN_HEADER_MENUS, JSON.stringify(menus));
-}
 
+  // -----------------------------
+  // SAVE MENUS BY ROLE
+  // -----------------------------
+
+
+  private saveMenusByRole(menus: any[], role: string): void {
+       localStorage.setItem(this.HEADER_MENUS, JSON.stringify(menus));
+  }
 
   // -----------------------------
   // LOGOUT
   // -----------------------------
-  logout() {
+  logout(): void {
     localStorage.clear();
   }
 
   // -----------------------------
-  // AUTH GUARD HELPERS
+  // AUTH HELPERS (GUARDS USE THESE)
   // -----------------------------
   isLoggedIn(): boolean {
-    const token = localStorage.getItem(this.TOKEN_KEY);
-    return !!token;
+    return !!localStorage.getItem(this.TOKEN_KEY);
   }
 
-  getUserRole(): string {
+   getRole(): string {
     return localStorage.getItem(this.USER_ROLE) ?? '';
   }
 
@@ -90,33 +103,16 @@ setMenuAfterLogin(menus: any) {
     return localStorage.getItem(this.USER_NAME) ?? '';
   }
 
-    getMenuList(): string {
-    return localStorage.getItem(this.ADMIN_HEADER_MENUS) ?? '';
-  }
 
 
-  // -----------------------------
-  // USER MENUS
-  // -----------------------------
- /*  loadUserHeaderMenus() {
-    this.http.get('https://localhost:7001/api/Menu/user/header')
-      .subscribe((res: any) => {
-        if (res.success) {
-          localStorage.setItem(this.USER_HEADER_MENUS, JSON.stringify(res.data));
-        }
-      });
+  getMenus(): any[] {
+    return JSON.parse(localStorage.getItem(this.HEADER_MENUS) ?? '[]');
   }
- */
+
   // -----------------------------
-  // USER DASHBOARD (NO USER-ID)
+  // TOKEN (OPTIONAL)
   // -----------------------------
- /*  loadUserDashboard() {
-    this.http.get('https://localhost:7001/api/Dashboard/user/dashboard')
-      .subscribe((res: any) => {
-        if (res.success) {
-          localStorage.setItem(this.USER_DASHBOARD, JSON.stringify(res.data));
-        }
-      });
+  getToken(): string {
+    return localStorage.getItem(this.TOKEN_KEY) ?? '';
   }
- */
 }

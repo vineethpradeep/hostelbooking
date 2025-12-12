@@ -50,7 +50,7 @@ export class LoginComponent {
       const firstName = user.FirstName;
 
       // Save token, role, firstname (your existing method)
-      this.authService.setTokenAfterLogin(token, role, firstName);
+      //this.authService.setTokenAfterLogin(token, role, firstName);
 
       // ⭐ ROLE-BASED REDIRECTION
       if (role === 'Admin') {

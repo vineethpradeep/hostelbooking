@@ -107,6 +107,7 @@ interface MenuItem {
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 
 
@@ -131,19 +132,12 @@ export class AdminHeaderComponent implements OnInit {
   
   dynamicMenus: MenuItem[] = [];
 
-  constructor(private router: Router, private el: ElementRef) {}
+  constructor(private router: Router, private el: ElementRef, private authService: AuthService,) {}
 
   ngOnInit(): void {
-
-    // User name
-    this.userName = localStorage.getItem('app_user') || '';
-
-    debugger;
-// Load user header menus
-     const data = localStorage.getItem("AdminHeaderMenus");
+    this.userName = this.authService.getUserName();
+     const data = localStorage.getItem("HeaderMenus");
       data ? JSON.parse(data) : null;
-
-   
 
   if (data) {
     this.dynamicMenus = JSON.parse(data).map((m: any) => ({
