@@ -32,7 +32,7 @@ export class EditBookingComponent {
     });
   } */
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -50,7 +50,7 @@ import { BookingFormDto } from '../../models/booking-form.model';
   templateUrl: './edit-booking.component.html',
   styleUrl: './edit-booking.component.css',
 })
-export class EditBookingComponent implements OnInit {
+export class EditBookingComponent {
 
   step = 1;
 
@@ -60,6 +60,8 @@ export class EditBookingComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
+  @Input() monthlyRent!: number;
+
   propertyIdFixed = 3;
   bedIdFixed = 3;
   userIdFixed = 1;
@@ -67,6 +69,7 @@ export class EditBookingComponent implements OnInit {
   monthsList = [1,2,3,4,5,6,7,8,9,10,11,12];
 
   constructor(private fb: FormBuilder, private api: BookingService) {}
+
 
   ngOnInit(): void {
 
@@ -76,8 +79,8 @@ export class EditBookingComponent implements OnInit {
       moveInDate: ['', Validators.required],
       duration: ['', Validators.required],
 
-      monthlyRent: ['', Validators.required],
-      securityDeposit: ['', Validators.required],
+      monthlyRent: [8000],
+      securityDeposit: [2000],
 
       checkOutDate: [''],   // hidden field but required internally
       specialReq: [''],
@@ -159,7 +162,8 @@ export class EditBookingComponent implements OnInit {
       bedId: this.bedIdFixed,
       bookingNumber: this.bookingForm.value.bookingNumber || this.generateBookingNumber()
     });
-
+  
+ 
     const dto: BookingFormDto = {
       bookingId: 0,
       bookingNumber: this.bookingForm.value.bookingNumber,

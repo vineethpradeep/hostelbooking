@@ -6,34 +6,34 @@
           class="room-details-item shadow-lg rounded overflow-hidden position-relative"
         >
           <div class="room-image position-relative">
-            <img [src]="room.image" [alt]="room.name" class="img-fluid" />
+            <img [src]="room.Image" [alt]="room.Name" class="img-fluid" />
             <div
               class="book-now-overlay d-flex justify-content-center align-items-center"
             >
               <p
                 class="text-center text-white fw-semibold px-4 py-2 bg-dark bg-opacity-75 rounded-pill"
               >
-                {{ room.services[0] }}
+                <!-- {{ room.services[0] }} -->
               </p>
             </div>
           </div>
 
           <div class="rd-text p-4">
             <div class="d-flex justify-content-between align-items-center mb-2">
-              <h3 class="room-name mb-0">{{ room.name }}</h3>
+              <h3 class="room-name mb-0">{{ room.Name }}</h3>
             </div>
 
             <h5 class="room-price text-primary fw-bold mb-3">
-              ₹{{ room.price }} <span class="text-muted fs-6">/Month</span>
+              ₹{{ room.RentPerBed }} <span class="text-muted fs-6">/Month</span>
             </h5>
 
             <h4
               class="room-size text-muted fw-normal mb-3 d-flex align-items-center gap-2"
             >
-              <i class="bi bi-bed text-primary"></i> {{ room.size }}
+              <i class="bi bi-bed text-primary"></i> {{ room.Size }}
               <span class="ms-3"
                 ><i class="bi bi-people-fill text-primary"></i>
-                {{ room.capacity }} Person</span
+                {{ room.Capacity }} Person</span
               >
             </h4>
 
@@ -57,7 +57,7 @@
 
             <p class="text-muted small">
               {{
-                room.description || "Perfect stay with all amenities included."
+                room.Description || "Perfect stay with all amenities included."
               }}
             </p>
           </div>
@@ -66,7 +66,7 @@
 
       <div class="col-lg-8">
         <div class="room-booking shadow-sm rounded">
-          <app-edit-booking></app-edit-booking>
+          <app-edit-booking [monthlyRent]="monthlyRentAmount"></app-edit-booking>
         </div>
       </div>
     </div>

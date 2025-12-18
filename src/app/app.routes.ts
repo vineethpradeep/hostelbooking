@@ -43,7 +43,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: HeroComponent },
       { path: 'rooms', component: RoomsComponent },
-      { path: 'rooms/:id', component: RoomDetailsComponent },
+      { path: ':propertyId/rooms/:roomId', component: RoomDetailsComponent },
 
       { path: 'about', component: AboutUsComponent },
       { path: 'contact', component: ContactUsComponent },

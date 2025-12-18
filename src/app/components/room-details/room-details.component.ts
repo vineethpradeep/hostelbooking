@@ -1,11 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
-import { RoomService, Review, Room } from '../../services/room.service';
 
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { EditBookingComponent } from '../edit-booking/edit-booking.component';
+
+import { RoomService } from '../../services/room.service';
+import { Rooms } from '../../models/room.model';
+import { Rating } from '../../models/rating.model';
+import { Review } from '../../models/review.model';
 
 interface StarSet {
   fullStars: number[];
@@ -20,42 +24,83 @@ interface StarSet {
     CommonModule,
     FormsModule,
     BreadcrumbComponent,
-    
-    EditBookingComponent,
+    EditBookingComponent
   ],
   templateUrl: './room-details.component.html',
-  styleUrls: ['./room-details.component.css'],
+  styleUrls: ['./room-details.component.css']
 })
-export class RoomDetailsComponent {
-  room?: Room;
-  roomId!: number;
+export class RoomDetailsComponent implements OnInit {
+
+  room?: Rooms;
+  rating!: Rating;
 
   stars: StarSet = { fullStars: [], halfStar: false, emptyStars: [] };
   reviewStars: StarSet[] = [];
 
-  bookingFormVisible: boolean = false;
+  bookingFormVisible = false;
 
   @ViewChild(EditBookingComponent)
   bookingFormCmp!: EditBookingComponent;
 
-  newReview: Partial<Review> = { name: '', email: '', text: '', rating: 0 };
+    monthlyRentAmount: number = 8000;
+   
+  newReview: Partial<Review> = {
+    name: '',
+    email: '',
+    text: '',
+    rating: 0
+  };
 
   constructor(
     private route: ActivatedRoute,
     private roomService: RoomService
   ) {}
 
-  ngOnInit() {
-    this.roomId = Number(this.route.snapshot.paramMap.get('id'));
-    this.room = this.roomService.getRoomById(this.roomId);
+  // =============================
+  // INIT
+  // =============================
+  ngOnInit(): void {
+    //debugger;
+    const propertyId = Number(this.route.snapshot.paramMap.get('propertyId'));
+    const roomId = Number(this.route.snapshot.paramMap.get('roomId'));
 
-    if (this.room) {
-      this.stars = this.getStars(this.room.rating ?? 0);
-      this.reviewStars =
-        this.room.reviews?.map((r) => this.getStars(r.rating ?? 0)) || [];
-    }
+    this.roomService.getRoomById(propertyId, roomId).subscribe({
+      next: (room) => {
+        if (!room) {
+          console.error('Room not found');
+          return;
+        }
+
+        //debugger;
+        this.room = room;
+
+        // ⭐ Create Rating locally (NO API)
+      /*   this.rating = {
+          id: room.RoomId,
+          name: room.RoomName,
+          price: room.Price,
+          image: room.Image,
+          rating: 4.2,
+          size: '120 sq ft',
+          capacity: room.Capacity,
+          bed: room.TotalBeds > 1 ? 'Shared' : 'Single',
+          services: room.Features,
+          description: 'Comfortable room with all facilities',
+          reviews: []
+        }; */
+
+        //this.stars = this.getStars(this.rating.rating ?? 0);
+        this.reviewStars = [];
+      },
+      error: (err) => {
+        console.error('Room API failed', err);
+      }
+    });
   }
 
+  // =============================
+  // STAR LOGIC
+  // =============================
   getStars(rating: number): StarSet {
     const fullStars = Array.from({ length: Math.floor(rating) }, (_, i) => i);
     const halfStar = rating % 1 >= 0.5;
@@ -66,45 +111,42 @@ export class RoomDetailsComponent {
     return { fullStars, halfStar, emptyStars };
   }
 
-  submitReview() {
-    if (
-      this.room &&
-      this.newReview.name &&
-      this.newReview.text &&
-      this.newReview.rating
-    ) {
-      const review: Review = {
-        name: this.newReview.name,
-        email: this.newReview.email,
-        text: this.newReview.text,
-        rating: this.newReview.rating,
-        date: new Date().toLocaleDateString(),
-        avatar: 'assets/img/room/avatar/default-avatar.jpg',
-      };
-
-      this.room.reviews?.push(review);
-
-      this.reviewStars =
-        this.room.reviews?.map((r) => this.getStars(r.rating ?? 0)) || [];
-
-      this.newReview = { name: '', email: '', text: '', rating: 0 };
-      alert('Review submitted successfully!');
-    } else {
+  // =============================
+  // REVIEW
+  // =============================
+  submitReview(): void {
+    if (!this.newReview.name || !this.newReview.text || !this.newReview.rating) {
       alert('Please fill all required fields.');
+      return;
     }
+
+    const review: Review = {
+      name: this.newReview.name,
+      email: this.newReview.email,
+      text: this.newReview.text,
+      rating: this.newReview.rating,
+      date: new Date().toLocaleDateString(),
+      avatar: 'assets/img/room/avatar/default-avatar.jpg'
+    };
+
+    this.rating.reviews ??= [];
+    this.rating.reviews.push(review);
+
+    this.reviewStars =
+      this.rating.reviews.map(r => this.getStars(r.rating));
+
+    this.newReview = { name: '', email: '', text: '', rating: 0 };
+    alert('Review submitted successfully!');
   }
 
-  openBookingForm() {
+  // =============================
+  // BOOKING
+  // =============================
+  openBookingForm(): void {
     this.bookingFormVisible = true;
-
-    /* setTimeout(() => {
-      if (this.bookingFormCmp && this.bookingFormCmp.startCreate) {
-        this.bookingFormCmp.startCreate();
-      }
-    }, 50); */
   }
 
-  closeBookingForm() {
+  closeBookingForm(): void {
     this.bookingFormVisible = false;
   }
 }

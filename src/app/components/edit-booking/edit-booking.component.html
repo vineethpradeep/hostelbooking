@@ -303,17 +303,16 @@
        
             <!-- Monthly Rent -->
             <div class="col-md-6">
-              <label class="form-label">Monthly Rent <span class="text-danger">*</span></label>
+              <label class="form-label">Monthly Rent  <span class="text-danger">*</span></label>
               <input type="number"
+                   
                      class="form-control"
-                     placeholder="Enter monthly rent"
                      formControlName="monthlyRent"
-                     [class.is-invalid]="f['monthlyRent'].touched && f['monthlyRent'].invalid" />
-              <div class="invalid-feedback">Monthly rent is required.</div>
+                    readonly/>        
             </div>
 
             <!-- Security Deposit -->
-            <div class="col-md-6">
+          <!--   <div class="col-md-6">
               <label class="form-label">Security Deposit <span class="text-danger">*</span></label>
               <input type="number"
                      class="form-control"
@@ -321,6 +320,10 @@
                      formControlName="securityDeposit"
                      [class.is-invalid]="f['securityDeposit'].touched && f['securityDeposit'].invalid" />
               <div class="invalid-feedback">Security deposit is required.</div>
+            </div> -->
+             <div class="col-md-6">
+              <label class="form-label">Security Deposit</label>
+              <input type="text" class="form-control" value="2000" disabled />
             </div>
 
             <!-- Special Requirements -->
@@ -355,7 +358,7 @@
       </div>
 
       <div class="card-body">
-        <form [formGroup]="paymentForm">
+        <form [formGroup]="paymentForm"  (ngSubmit)="submitPayment()">
 
           <div class="row g-3">
 

@@ -1,125 +1,51 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
+import { Rooms } from '../models/room.model';
 
-export interface Review {
-  name: string;
-  email?: string;
-  text: string;
-  rating: number;
-  date?: string;
-  avatar?: string;
-}
 
-export interface Room {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  rating?: number;
-  size: string;
-  capacity: number;
-  bed: string;
-  services: string[];
-  description?: string;
-  reviews?: Review[];
-}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
 
-  private rooms: Room[] = [
-    {
-      id: 1,
-      name: 'Single Occupancy',
-      price: 8000,
-      image: 'assets/img/single.jpg',
-      rating: 4.5,
-      size: '1 Bed',
-      capacity: 1,
-      bed: 'Attached Bathroom, AC, Study Table, Wardrobe',
-      services: ['Attached Bathroom', 'AC', 'Study Table', 'Wardrobe'],
-      description: 'Perfect for solo stay with all basic amenities included.',
-      reviews: [],
-    },
-    {
-      id: 2,
-      name: 'Double Sharing',
-      price: 12000,
-      image: 'assets/img/double.jpg',
-      rating: 4,
-      size: '2 Beds',
-      capacity: 2,
-      bed: 'Shared Bathroom, AC, Study Tables, Wardrobes',
-      services: ['Shared Bathroom', 'AC', 'Study Tables', 'Wardrobes'],
-      description: 'Comfortable double-sharing room suitable for two guests.',
-      reviews: [],
-    },
-    {
-      id: 3,
-      name: 'Triple Sharing',
-      price: 15000,
-      image: 'assets/img/triple.jpg',
-      rating: 4,
-      size: '3 Beds',
-      capacity: 3,
-      bed: 'Shared Bathroom, Fan, Study Tables, Wardrobes',
-      services: ['Shared Bathroom', 'Fan', 'Study Tables', 'Wardrobes'],
-      description: 'Spacious triple-sharing room for three guests.',
-      reviews: [],
-    },
-    {
-      id: 4,
-      name: 'Four Sharing',
-      price: 8000,
-      image: 'assets/img/single.jpg',
-      rating: 4,
-      size: '4 Beds',
-      capacity: 4,
-      bed: 'Shared Bathroom, Fan, Study Tables, Wardrobes',
-      services: ['Shared Bathroom', 'Fan', 'Study Tables', 'Wardrobes'],
-      description: 'Ideal for group stay with four beds and shared amenities.',
-      reviews: [],
-    },
-    {
-      id: 5,
-      name: 'Premium King Room',
-      price: 12000,
-      image: 'assets/img/double.jpg',
-      rating: 4.5,
-      size: '1 Bed',
-      capacity: 1,
-      bed: 'King Bed, Attached Bathroom, AC, Study Table',
-      services: ['King Bed', 'Attached Bathroom', 'AC', 'Study Table'],
-      description: 'Luxury room with king bed and premium amenities.',
-      reviews: [],
-    },
-    {
-      id: 6,
-      name: 'Family Room',
-      price: 15000,
-      image: 'assets/img/triple.jpg',
-      rating: 5,
-      size: '4 Beds',
-      capacity: 4,
-      bed: 'King Beds, Attached Bathroom, AC, Wardrobes, Study Tables',
-      services: [
-        'King Beds',
-        'Attached Bathroom',
-        'AC',
-        'Wardrobes',
-        'Study Tables',
-      ],
-      description: 'Spacious family room with all facilities for 4 guests.',
-      reviews: [],
-    },
-  ];
+  private apiUrl = 'https://localhost:7001/api/Room';
 
-  getRooms(): Room[] {
-    return this.rooms;
+  constructor(private http: HttpClient) {}
+
+  // ✅ Get all rooms by property
+  getRoomsByProperty(propertyId: number): Observable<Rooms[]> {
+    return this.http.get<Rooms[]>(
+      `${this.apiUrl}/by-property/${propertyId}`
+    );
   }
 
-  getRoomById(id: number): Room | undefined {
-    return this.rooms.find(room => room.id === id);
+  // ✅ Get SINGLE room by id (from list)
+  getRoomById(propertyId: number, roomId: number): Observable<Rooms | undefined> {
+    return this.getRoomsByProperty(propertyId).pipe(
+      map((rooms: Rooms[]) =>
+        rooms.find(r => r.RoomId === roomId)
+      )
+    );
   }
+  
+   // ✅ Get room details
+  getRent(roomId: number): Observable<Rooms> {
+    return this.http.get<Rooms>(`${this.apiUrl}/${roomId}`);
+  }
+ 
+ filterRooms(
+  propertyId: number,
+  minPrice: number | null,
+  maxPrice: number | null,
+  capacity: number | null
+) {
+  return this.http.post<any[]>(
+    `${this.apiUrl}/filter`,
+    { propertyId, minPrice, maxPrice, capacity }
+  );
 }
+}
+
