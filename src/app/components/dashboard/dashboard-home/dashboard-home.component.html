@@ -1,106 +1,146 @@
+<!-- Load Bootstrap, Icons & Animations -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
 <div class="container py-4">
 
   <!-- Page Header -->
   <div class="mb-4">
-    <h2 class="fw-bold text-dark">Admin Dashboard</h2>
-    <p class="text-muted">Complete system overview and management</p>
+    <h2 class="fw-bold text-dark animate__animated animate__fadeInDown">
+      Admin Dashboard
+    </h2>
+    <p class="text-muted animate__animated animate__fadeIn">
+      Complete system overview and management
+    </p>
   </div>
 
-  <!-- Top Metrics -->
+  <!-- ================= TOP METRICS ================= -->
   <div class="row g-4">
 
+    <!-- Total Properties -->
     <div class="col-md-3">
-      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card">
+      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card
+                  animate__animated animate__fadeInUp">
         <h6 class="text-muted">Total Properties</h6>
-        <h2 class="fw-bold">2</h2>
+        <h2 class="fw-bold">{{ summary?.TotalProperties?.Value }}</h2>
         <span class="badge bg-success bg-opacity-10 text-success">
-          +5% from last month
+          +{{ summary?.TotalProperties?.GrowthPercentage }}% from last month
         </span>
       </div>
     </div>
 
+    <!-- Total Users -->
     <div class="col-md-3">
-      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card">
+      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card
+                  animate__animated animate__fadeInUp animate__delay-1s">
         <h6 class="text-muted">Total Users</h6>
-        <h2 class="fw-bold">10</h2>
+        <h2 class="fw-bold">{{ summary?.TotalUsers?.Value }}</h2>
         <span class="badge bg-primary bg-opacity-10 text-primary">
-          +12% from last month
+          +{{ summary?.TotalUsers?.GrowthPercentage }}% from last month
         </span>
       </div>
     </div>
 
+    <!-- Active Tenants -->
     <div class="col-md-3">
-      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card">
+      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card
+                  animate__animated animate__fadeInUp animate__delay-2s">
         <h6 class="text-muted">Active Tenants</h6>
-        <h2 class="fw-bold">2</h2>
+        <h2 class="fw-bold">{{ summary?.ActiveTenants?.Value }}</h2>
         <span class="badge bg-warning bg-opacity-10 text-warning">
-          +8% from last month
+          +{{ summary?.ActiveTenants?.GrowthPercentage }}% from last month
         </span>
       </div>
     </div>
 
+    <!-- Monthly Revenue -->
     <div class="col-md-3">
-      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card">
+      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card
+                  animate__animated animate__fadeInUp animate__delay-3s">
         <h6 class="text-muted">Monthly Revenue</h6>
-        <h2 class="fw-bold">₹5.2L</h2>
+        <h2 class="fw-bold">
+          ₹{{ summary?.MonthlyRevenue?.Value | number }}
+        </h2>
         <span class="badge bg-danger bg-opacity-10 text-danger">
-          +15% from last month
+          +{{ summary?.MonthlyRevenue?.GrowthPercentage }}% from last month
         </span>
       </div>
     </div>
 
   </div>
 
-  <!-- System Overview + Bookings -->
+  <!-- ================= SYSTEM OVERVIEW & BOOKINGS ================= -->
   <div class="row mt-4 g-4">
 
     <!-- System Overview -->
     <div class="col-lg-6">
-      <div class="card shadow-lg rounded-4 border-0">
+      <div class="card shadow-lg rounded-4 border-0
+                  animate__animated animate__fadeInLeft">
         <div class="card-header bg-white border-0 rounded-top-4 px-4 py-3">
           <h5 class="fw-bold">System Overview</h5>
         </div>
+
         <div class="card-body px-4 py-3">
-
           <ul class="list-group list-group-flush elegant-list">
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total Properties</span> <strong>45</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Active Properties</span> <strong>42</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total Rooms</span> <strong>850</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Occupied Rooms</span> <strong>823 (96.8%)</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Available Rooms</span> <strong>27 (3.2%)</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Pending Bookings</span> <strong>12</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total Revenue</span> <strong>₹5,20,000</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Pending Payments</span> <strong>Paid</strong>
-            </li>
-          </ul>
 
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total Properties</span>
+              <strong>{{ systemOverview?.TotalProperties }}</strong>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Active Properties</span>
+              <strong>{{ systemOverview?.ActiveProperties }}</strong>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total Rooms</span>
+              <strong>{{ systemOverview?.TotalRooms }}</strong>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Occupied Rooms</span>
+              <strong>
+                {{ systemOverview?.OccupiedRooms }}
+                ({{ systemOverview?.OccupancyPercentage }}%)
+              </strong>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Available Rooms</span>
+              <strong>{{ systemOverview?.AvailableRooms }}</strong>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Pending Bookings</span>
+              <strong>{{ systemOverview?.PendingBookings }}</strong>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total Revenue</span>
+              <strong>₹{{ systemOverview?.TotalRevenue | number }}</strong>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Pending Payments</span>
+              <strong>{{ systemOverview?.PendingPayments }}</strong>
+            </li>
+
+          </ul>
         </div>
       </div>
     </div>
 
     <!-- Recent Bookings -->
     <div class="col-lg-6">
-      <div class="card shadow-lg rounded-4 border-0">
+      <div class="card shadow-lg rounded-4 border-0
+                  animate__animated animate__fadeInRight">
         <div class="card-header bg-white border-0 rounded-top-4 px-4 py-3">
           <h5 class="fw-bold">Recent Bookings</h5>
         </div>
-        <div class="card-body">
 
+        <div class="card-body">
           <div class="table-responsive">
             <table class="table align-middle elegant-table">
               <thead>
@@ -114,27 +154,34 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#BK-1234</td>
-                  <td>Raja</td>
-                  <td>Karthick PG</td>
-                  <td>101</td>
-                  <td>Nov 1, 2025</td>
-                  <td>₹8,000</td>
+                <tr *ngFor="let b of recentBookings">
+                  <td>#{{ b.BookingNumber }}</td>
+                  <td>{{ b.TenantName }}</td>
+                  <td>{{ b.PropertyName }}</td>
+                  <td>{{ b.RoomNumber }}</td>
+                  <td>{{ b.MoveInDate | date:'mediumDate' }}</td>
+                  <td>₹{{ b.Rent }}</td>
+                </tr>
+
+                <tr *ngIf="recentBookings?.length === 0">
+                  <td colspan="6" class="text-center text-muted">
+                    No recent bookings
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
-
         </div>
+
       </div>
     </div>
 
   </div>
 
-  <!-- Recent Payments -->
+  <!-- ================= RECENT PAYMENTS ================= -->
   <div class="mt-4">
-    <div class="card shadow-lg rounded-4 border-0">
+    <div class="card shadow-lg rounded-4 border-0
+                animate__animated animate__fadeInUp">
       <div class="card-header bg-white border-0 rounded-top-4 px-4 py-3">
         <h5 class="fw-bold">Recent Payments</h5>
       </div>
@@ -153,13 +200,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>#PAY-5678</td>
-                <td>Raja</td>
-                <td>Karthick PG</td>
-                <td>Rent</td>
-                <td>₹8,000</td>
-                <td>Oct 1, 2025</td>
+              <tr *ngFor="let p of recentPayments">
+                <td>#{{ p.PaymentNumber }}</td>
+                <td>{{ p.TenantName }}</td>
+                <td>{{ p.PropertyName }}</td>
+                <td>{{ p.PaymentType }}</td>
+                <td>₹{{ p.Amount }}</td>
+                <td>{{ p.PaymentDate | date:'mediumDate' }}</td>
+              </tr>
+
+              <tr *ngIf="recentPayments?.length === 0">
+                <td colspan="6" class="text-center text-muted">
+                  No recent payments
+                </td>
               </tr>
             </tbody>
           </table>
@@ -167,71 +220,6 @@
       </div>
 
     </div>
-  </div>
-
-  <!-- User Overview + Quick Actions -->
-  <div class="row mt-4 g-4">
-
-    <!-- User Overview -->
-    <div class="col-lg-8">
-      <div class="card shadow-lg rounded-4 border-0">
-        <div class="card-header bg-white border-0 rounded-top-4 px-4 py-3">
-          <h5 class="fw-bold">User Management Overview</h5>
-        </div>
-        <div class="card-body">
-
-          <div class="table-responsive">
-            <table class="table elegant-table align-middle">
-              <thead>
-                <tr>
-                  <th>User Type</th>
-                  <th>Total</th>
-                  <th>Active</th>
-                  <th>Inactive</th>
-                  <th>New (This Month)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Guests</td>
-                  <td>150</td>
-                  <td>150</td>
-                  <td>0</td>
-                  <td>45</td>
-                </tr>
-                <tr>
-                  <td>Tenants</td>
-                  <td>823</td>
-                  <td>820</td>
-                  <td>3</td>
-                  <td>67</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="col-lg-4">
-      <div class="card shadow-lg rounded-4 border-0">
-        <div class="card-header bg-white border-0 rounded-top-4 px-4 py-3">
-          <h5 class="fw-bold">Quick Actions</h5>
-        </div>
-        <div class="card-body">
-          <div class="list-group elegant-actions">
-            <button class="list-group-item list-group-item-action">Add Property</button>
-            <button class="list-group-item list-group-item-action">Add User</button>
-            <button class="list-group-item list-group-item-action">Generate Receipt</button>
-            <button class="list-group-item list-group-item-action">Download Receipt</button>
-            <button class="list-group-item list-group-item-action">Process Payment</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 
 </div>

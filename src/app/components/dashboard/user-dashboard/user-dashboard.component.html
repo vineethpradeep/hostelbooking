@@ -1,87 +1,104 @@
-<!-- Load Bootstrap, Icons & Animations -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
 <div class="container py-4">
 
+  <!-- HEADER -->
   <h2 class="fw-bold mb-1 animate__animated animate__fadeInDown">
     User / Tenant Dashboard
   </h2>
 
   <p class="text-muted mb-4 animate__animated animate__fadeIn">
-    Welcome back, Raja! Here's your booking overview.
+    Welcome back, {{ userName }}! Here's your booking overview.
   </p>
 
   <!-- ================== TOP STATS ================== -->
-  <div class="row g-3">
+  <div class="row g-3 mb-4">
 
-    <!-- Current Booking -->
     <div class="col-md-3">
-      <div class="card dashboard-box shadow-sm p-3 animate__animated animate__fadeInUp">
+      <div class="card shadow-sm p-3">
         <h6 class="text-uppercase text-muted small">Current Booking</h6>
-        <h5 class="fw-bold">Active</h5>
-        <span class="text-muted small">Since Jan 15, 2025</span>
+        <h5 class="fw-bold">{{ bookingSummary.bookingStatus }}</h5>
+        <span class="text-muted small">
+          Since {{ bookingSummary.moveInDate | date:'MMM d, y' }}
+        </span>
       </div>
     </div>
 
-    <!-- Monthly Rent -->
     <div class="col-md-3">
-      <div class="card dashboard-box shadow-sm p-3 animate__animated animate__fadeInUp animate__delay-1s">
+      <div class="card shadow-sm p-3">
         <h6 class="text-uppercase text-muted small">Monthly Rent</h6>
-        <h5 class="fw-bold">₹8,000</h5>
-        <span class="text-muted small">Next due: Nov 1, 2025</span>
+        <h5 class="fw-bold">₹{{ bookingSummary.monthlyRent }}</h5>
+        <span class="text-muted small">
+          Next due: {{ bookingSummary.nextDueDate | date:'MMM d, y' }}
+        </span>
       </div>
     </div>
 
-    <!-- Pending Payments -->
     <div class="col-md-3">
-      <div class="card dashboard-box shadow-sm p-3 animate__animated animate__fadeInUp animate__delay-2s">
+      <div class="card shadow-sm p-3">
         <h6 class="text-uppercase text-muted small">Pending Payments</h6>
-        <h5 class="fw-bold">2</h5>
-        <span class="text-muted small">Total: ₹8,500</span>
+        <h5 class="fw-bold">{{ bookingSummary.pendingPaymentsCount }}</h5>
+        <span class="text-muted small">
+          Total: ₹{{ bookingSummary.pendingAmount }}
+        </span>
       </div>
     </div>
 
-    <!-- Stay Duration -->
     <div class="col-md-3">
-      <div class="card dashboard-box shadow-sm p-3 animate__animated animate__fadeInUp animate__delay-3s">
+      <div class="card shadow-sm p-3">
         <h6 class="text-uppercase text-muted small">Stay Duration</h6>
-        <h5 class="fw-bold">10 Months</h5>
-        <span class="text-muted small">Since Jan 2025</span>
+        <h5 class="fw-bold">{{ bookingSummary.stayDuration }} Months</h5>
+        <span class="text-muted small">
+          Since {{ bookingSummary.staySince | date:'MMM y' }}
+        </span>
       </div>
     </div>
+
   </div>
 
-  <!-- ================== BOOKING DETAILS ================== -->
-  <div class="card shadow-sm p-4 mt-4 animate__animated animate__fadeInLeft">
+  <!-- ================== CURRENT BOOKING DETAILS ================== -->
+  <div class="card shadow-sm p-4 mb-4">
     <h5 class="fw-bold mb-3">Current Booking Details</h5>
 
     <div class="row">
+
       <div class="col-md-6">
-        <p><strong>Property:</strong> Karthick PG</p>
-        <p><strong>Room No:</strong> 101</p>
-        <p><strong>Room Type:</strong> Single Occupancy</p>
-        <p><strong>Floor:</strong> 1st Floor</p>
-        <p><strong>Move-In Date:</strong> Jan 15, 2025</p>
+        <p><strong>Property:</strong> {{ bookingSummary.propertyName }}</p>
+        <p><strong>Room No:</strong> {{ bookingSummary.roomNumber }}</p>
+        <p><strong>Room Type:</strong> {{ bookingSummary.roomType }}</p>
+        <p><strong>Floor:</strong> {{ bookingSummary.floor }}</p>
+        <p><strong>Move-In Date:</strong>
+          {{ bookingSummary.moveInDate | date:'MMM d, y' }}
+        </p>
       </div>
 
       <div class="col-md-6">
-        <p><strong>Contract:</strong> 12 Months</p>
-        <p><strong>Monthly Rent:</strong> ₹8,000</p>
-        <p><strong>Security Deposit:</strong> ₹16,000 (Paid)</p>
-        <p><strong>Address:</strong> Sector 62, CBE</p>
-        <p><strong>Owner Contact:</strong> 1243434</p>
+        <p><strong>Contract:</strong> {{ bookingSummary.contractMonths }} Months</p>
+        <p><strong>Monthly Rent:</strong> ₹{{ bookingSummary.monthlyRent }}</p>
+        <p><strong>Security Deposit:</strong>
+          ₹{{ bookingSummary.securityDeposit }}
+          <span *ngIf="bookingSummary.depositPaid">(Paid)</span>
+        </p>
+        <p><strong>Address:</strong> {{ bookingSummary.address }}</p>
+        <p><strong>Owner Contact:</strong> {{ bookingSummary.ownerContact }}</p>
       </div>
+
     </div>
   </div>
 
   <!-- ================== AMENITIES ================== -->
   <div class="card shadow-sm p-4 mt-3 animate__animated animate__fadeInRight">
     <h5 class="fw-bold mb-3">Amenities Included</h5>
-    <p>
-      AC, WiFi, Attached Bathroom, Wardrobe, Study Table
+
+    <p *ngIf="amenities; else noAmenities">
+      {{ amenities }}
     </p>
+
+    <ng-template #noAmenities>
+      <span class="text-muted">No amenities available</span>
+    </ng-template>
   </div>
 
   <!-- ================== UPCOMING PAYMENTS ================== -->
@@ -100,15 +117,31 @@
       </thead>
 
       <tbody>
-        <tr>
-          <td>Monthly Rent</td>
-          <td>₹8,000</td>
-          <td>Nov 1, 2025</td>
-          <td><span class="badge bg-warning text-dark">Due Soon</span></td>
+        <tr *ngFor="let p of upcomingPayments">
+          <td>{{ p.paymentType }}</td>
+          <td>₹{{ p.amount }}</td>
+          <td>{{ p.dueDate | date:'MMM d, y' }}</td>
           <td>
-            <button class="btn btn-success btn-sm">
+            <span class="badge"
+              [ngClass]="{
+                'bg-warning text-dark': p.status === 'Due Soon',
+                'bg-secondary': p.status === 'Upcoming',
+                'bg-danger': p.status === 'Overdue'
+              }">
+              {{ p.status }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-success btn-sm"
+                    (click)="payNow(p)">
               <i class="bi bi-cash-coin"></i> Pay Now
             </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="upcomingPayments.length === 0">
+          <td colspan="5" class="text-center text-muted">
+            No upcoming payments
           </td>
         </tr>
       </tbody>
@@ -131,15 +164,35 @@
       </thead>
 
       <tbody>
-        <tr>
-          <td>#MR-1023</td>
-          <td>Plumbing</td>
-          <td>Bathroom tap leak</td>
-          <td>Oct 20, 2025</td>
-          <td><span class="badge bg-success">Resolved</span></td>
+        <tr *ngFor="let m of maintenanceRequests">
+          <td>#MR-{{ m.maintenanceRequestId }}</td>
+          <td>{{ m.issue }}</td>
+          <td>{{ m.description }}</td>
+          <td>{{ m.dateRaised | date:'MMM d, y' }}</td>
+          <td>
+            <span class="badge"
+              [ngClass]="{
+                'bg-success': m.status === 'Resolved',
+                'bg-warning': m.status === 'Open',
+                'bg-info': m.status === 'In Progress'
+              }">
+              {{ m.status }}
+            </span>
+          </td>
+        </tr>
+
+        <tr *ngIf="maintenanceRequests.length === 0">
+          <td colspan="5" class="text-center text-muted">
+            No maintenance requests
+          </td>
         </tr>
       </tbody>
     </table>
+
+    <button class="btn btn-warning text-dark mt-3"
+            (click)="requestMaintenance()">
+      <i class="bi bi-tools"></i> Request Maintenance
+    </button>
   </div>
 
   <!-- ================== QUICK ACTIONS ================== -->
@@ -148,21 +201,26 @@
 
     <div class="d-flex gap-3 flex-wrap">
 
-      <button class="btn btn-primary action-btn">
-        <i class="bi bi-credit-card"></i> Pay Now
+      <button class="btn btn-primary action-btn"
+              (click)="payNow(upcomingPayments[0])">
+        <i class="bi bi-credit-card"></i> PAY NOW
       </button>
 
-      <button class="btn btn-secondary action-btn">
+      <button class="btn btn-secondary action-btn"
+              (click)="downloadReceipt()">
         <i class="bi bi-download"></i> Download Receipt
       </button>
 
-      <button class="btn btn-warning text-dark action-btn">
+      <button class="btn btn-warning text-dark action-btn"
+              (click)="requestMaintenance()">
         <i class="bi bi-tools"></i> Request Maintenance
       </button>
 
-      <button class="btn btn-info text-white action-btn">
+      <button class="btn btn-info text-white action-btn"
+              (click)="extendBooking()">
         <i class="bi bi-arrow-repeat"></i> Extend Booking
       </button>
+
     </div>
   </div>
 

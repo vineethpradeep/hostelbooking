@@ -4,49 +4,76 @@ import { Observable } from 'rxjs';
 
 export interface Metric {
   value: number;
-  growthPercentage?: number;
+  growthPercentage: number;
 }
 
-export interface MonthlyBooking {
-  month: string;
-  count: number;
+export interface DashboardSummary {
+  totalProperties: Metric;
+  totalUsers: Metric;
+  activeTenants: Metric;
+  monthlyRevenue: Metric;
 }
 
-export interface UserRoleCount {
-  role: string;
-  count: number;
+export interface RecentBooking {
+  bookingNumber: string;
+  tenantName: string;
+  propertyName: string;
+  roomNumber: string;
+  moveInDate: string;
+  rent: number;
 }
 
+export interface RecentPayment {
+  paymentNumber: string;
+  tenantName: string;
+  propertyName: string;
+  paymentType: string;
+  amount: number;
+  paymentDate: string;
+}
+
+
+export interface SystemOverview {
+  TotalProperties: number;
+  ActiveProperties: number;
+  TotalRooms: number;
+  OccupiedRooms: number;
+  OccupancyPercentage: number;
+  AvailableRooms: number;
+  PendingBookings: number;
+  TotalRevenue: number;
+  PendingPayments: string;
+}
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
 
- // private baseUrl = 'https://localhost:7001/api/Dashboard';
+  private baseUrl = 'https://localhost:7001/api/dashboard';
 
   constructor(private http: HttpClient) {}
 
-getTotalProperties(): Observable<number> {
-  return this.http.get<number>(
-    'https://localhost:7001/api/Dashboard/property/total'
-  );
+  // ✅ Dashboard summary cards
+  getSummary(): Observable<DashboardSummary> {
+    return this.http.get<DashboardSummary>(`${this.baseUrl}/summary`);
+  }
+
+  // ✅ Recent bookings table
+  getRecentBookings(take: number = 5): Observable<RecentBooking[]> {
+    return this.http.get<RecentBooking[]>(
+      `${this.baseUrl}/recent-bookings?take=${take}`
+    );
+  }
+
+  // ✅ Recent payments table
+  getRecentPayments(take: number = 5): Observable<RecentPayment[]> {
+    return this.http.get<RecentPayment[]>(
+      `${this.baseUrl}/recent-payments?take=${take}`
+    );
+  }
+
+  
+  getSystemOverview(): Observable<SystemOverview> {
+    return this.http.get<SystemOverview>(
+      `${this.baseUrl}/system-overview`
+    );
 }
-
-  getTotalUsers(): Observable<any> {
-    return this.http.get<number>('https://localhost:7001/api/Dashboard/totalusers');
-  }
-
- /*  getActiveTenants(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/users/active-tenants`);
-  }
-
-  getMonthlyRevenue(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/revenue/monthly`);
-  }
-
-  getMonthlyBookings(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/charts/bookings`);
-  }
-
-  getUserRoleDistribution(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/charts/user-roles`);
-  } */
 }
