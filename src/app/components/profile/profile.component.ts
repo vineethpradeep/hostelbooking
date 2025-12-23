@@ -1,29 +1,51 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [    CommonModule,
-    RouterModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
- userSummary = 
-  "A verified user in the hostel booking system with access to room bookings, payment history, and personal account settings.";
+  profile = {
+    name: '',
+    email: '',
+    phone: '',
+    totalBookings: 0,
+    status:''
+  };
 
-user = {
-  firstName: 'Ravi',
-  lastName: 'Kumar',
-  email: 'ravi.kumar@example.com',
-  phone: '9876543210',
-  totalBookings: 4
-};
+  loading = false;
+  errorMessage = '';
 
-  constructor() {}
+  constructor(private profileService: ProfileService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadProfile();
+  }
+
+  loadProfile() {
+    this.loading = true;
+  debugger;
+    // 🔹 OPTION A: from localStorage
+    const userId = Number(localStorage.getItem('userId')) || 3;
+
+    this.profileService.getProfile(userId).subscribe(res => {
+      console.log('API Response:', res); // 🔍 debug
+
+      this.profile.name = res.Name;
+      this.profile.email = res.Email;
+      this.profile.phone = res.Phone;
+      this.profile.totalBookings = res.TotalBookings;
+      this.profile.status = res.Status;
+      
+    });
+
+  }
+
 }
-

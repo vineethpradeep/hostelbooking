@@ -61,10 +61,32 @@ rooms: Rooms[] = [];
   goBack() {
     this.router.navigate(['/rooms']);
   }
-  onViewDetails(roomId: number) {
-    const propertyId = 3;
-    this.router.navigate([''+propertyId+'/rooms/'+ roomId]);
+ onViewDetails(roomId: number) {
+
+  const propertyId = 3; // 🔴 replace with dynamic propertyId later
+
+  const isUserDashboard =
+    this.router.url.startsWith('/user-dashboard');
+
+  if (isUserDashboard) {
+    // 🔐 Logged-in user → stay in dashboard
+    this.router.navigate([
+      '/user-dashboard',
+      propertyId,
+      'rooms',
+      roomId
+    ]);
+  } else {
+    // 🌍 Public user
+    this.router.navigate([
+      '/',
+      propertyId,
+      'rooms',
+      roomId
+    ]);
   }
+}
+
 
 // 🔥 THIS CONNECTS YOUR FILTER COMPONENT
   onFilterChanged(filters: any) {

@@ -20,11 +20,42 @@
         <td>{{ u.LastName }}</td>
         <td>{{ u.EmailAddress }}</td>
         <td>{{ u.PhoneNumber }}</td>
+     <td>
+     <div style="display:flex; gap:8px; justify-content:center;">
+    
+      <button
+      style="
+        color:#0d6efd;
+        border:2px solid #0d6efd;
+        background:transparent;
+        padding:6px 14px;
+        font-size:13px;
+        cursor:pointer;
+      "
+      (click)="editUser(u)"
+      >
+        EDIT
+      </button>
 
-        <td>
-          <button class="btn btn-sm btn-primary" (click)="editUser(u)">Edit</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteUser(u.UserId)">Delete</button>
-        </td>
+      <button
+      style="
+        color:#dc3545;
+        border:2px solid #dc3545;
+        background:transparent;
+        padding:6px 14px;
+        font-size:13px;
+        cursor:pointer;
+      "
+      (click)="deleteUser(u.UserId)"
+      >
+        DELETE
+      </button>
+
+    </div>
+  </td>
+
+
+
       </tr>
     </tbody>
   </table>

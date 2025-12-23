@@ -32,6 +32,7 @@ import { TenantGuard } from './services/tenant.guard';
 import { AdminGuard } from './services/admin.guard';
 
 
+
 export const routes: Routes = [
 
   // ------------------------------------------------------
@@ -63,8 +64,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard, TenantGuard],
     children: [
       { path: '', component: UserDashboardComponent },
-    { path: 'rooms', component: RoomsComponent },
-      { path: 'rooms/:id', component: RoomDetailsComponent },
+      { path: 'rooms', component: RoomsComponent },
+      { path: ':propertyId/rooms/:roomId', component: RoomDetailsComponent },
+
       { path: 'about', component: AboutUsComponent },
       { path: 'facilities', component: FacilitiesComponent },
       { path: 'contact', component: ContactUsComponent }
@@ -80,12 +82,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard],
     children: [
       { path: '', component: AdminDashboardComponent },
-    // { path: 'rooms', component: RoomsComponent }, 
-     //{ path: 'properties', component: UsersComponent }, 
+    // { path: 'rooms', component: RoomsComponent },  
+     { path: 'properties', component: HeroComponent },
      { path: 'users', component: UsersComponent }, 
      { path: 'payments', component: PaymentComponent }, 
-     { path: 'bookings', component: BookingListComponent },
-     { path: 'profile', component: ProfileComponent }
+     { path: 'bookings', component: BookingListComponent}, 
+     {path:'profile',component:ProfileComponent}
     ]
   },
 

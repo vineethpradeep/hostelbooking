@@ -36,16 +36,17 @@ export class UserDashboardComponent implements OnInit {
   isSticky = false;
 
   // DASHBOARD DATA
+  bookingSummary: any = {};
+  currentBooking: any;
   amenities: string = '';
   upcomingPayments: UpcomingPayment[] = [];
   maintenanceRequests: MaintenanceRequest[] = [];
 
-  // 🔹 MISSING BEFORE — ADD THIS
-  bookingSummary: any = {};
+
 
   // Normally from JWT
   userId = 5;
-  roomId = 3;
+  roomId = 5;
 
   constructor(
     private router: Router,
@@ -70,6 +71,7 @@ export class UserDashboardComponent implements OnInit {
 
     // Load dashboard data
     this.loadBookingSummary();   // ✅ ADD
+    this.loadCurrentBooking();
     this.loadAmenities();
     this.loadUpcomingPayments();
     this.loadMaintenanceRequests();
@@ -78,13 +80,21 @@ export class UserDashboardComponent implements OnInit {
   // ================= API LOADERS =================
 
   loadBookingSummary() {
-    this.dashboardService.getBookingSummary(this.userId)
+    this.dashboardService.getDashboard(this.userId)
       .subscribe((res: any) => this.bookingSummary = res);
   }
+  
+  
+    loadCurrentBooking() {
+  this.dashboardService.getCurrentBooking()
+    .subscribe(res => this.currentBooking = res);
+    }
+
 
   loadAmenities() {
     this.dashboardService.getRoomAmenities(this.roomId)
-      .subscribe(res => this.amenities = res.amenities);
+    
+      .subscribe(res => this.amenities = res.Amenities);
   }
 
   loadUpcomingPayments() {
@@ -96,6 +106,7 @@ export class UserDashboardComponent implements OnInit {
     this.dashboardService.getMaintenanceRequests(this.userId)
       .subscribe(res => this.maintenanceRequests = res);
   }
+  
 
   // ================= ACTIONS =================
 

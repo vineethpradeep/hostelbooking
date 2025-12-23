@@ -15,13 +15,13 @@
 
   <!-- ================== TOP STATS ================== -->
   <div class="row g-3 mb-4">
-
+  
     <div class="col-md-3">
       <div class="card shadow-sm p-3">
-        <h6 class="text-uppercase text-muted small">Current Booking</h6>
-        <h5 class="fw-bold">{{ bookingSummary.bookingStatus }}</h5>
+        <h6 class="text-uppercase text-muted small">Booking</h6>
+        <h5 class="fw-bold">{{ bookingSummary.BookingStatus }}</h5>
         <span class="text-muted small">
-          Since {{ bookingSummary.moveInDate | date:'MMM d, y' }}
+          Since {{ bookingSummary.BookingSince | date:'MMM d, y' }}
         </span>
       </div>
     </div>
@@ -29,9 +29,9 @@
     <div class="col-md-3">
       <div class="card shadow-sm p-3">
         <h6 class="text-uppercase text-muted small">Monthly Rent</h6>
-        <h5 class="fw-bold">₹{{ bookingSummary.monthlyRent }}</h5>
+        <h5 class="fw-bold">₹{{ bookingSummary.MonthlyRent }}</h5>
         <span class="text-muted small">
-          Next due: {{ bookingSummary.nextDueDate | date:'MMM d, y' }}
+          Next due: {{ bookingSummary.NextDueDate | date:'MMM d, y' }}
         </span>
       </div>
     </div>
@@ -39,9 +39,9 @@
     <div class="col-md-3">
       <div class="card shadow-sm p-3">
         <h6 class="text-uppercase text-muted small">Pending Payments</h6>
-        <h5 class="fw-bold">{{ bookingSummary.pendingPaymentsCount }}</h5>
+        <h5 class="fw-bold">{{ bookingSummary.PendingCount }}</h5>
         <span class="text-muted small">
-          Total: ₹{{ bookingSummary.pendingAmount }}
+          Total: ₹{{ bookingSummary.PendingTotalAmount }}
         </span>
       </div>
     </div>
@@ -49,9 +49,9 @@
     <div class="col-md-3">
       <div class="card shadow-sm p-3">
         <h6 class="text-uppercase text-muted small">Stay Duration</h6>
-        <h5 class="fw-bold">{{ bookingSummary.stayDuration }} Months</h5>
+        <h5 class="fw-bold">{{ bookingSummary.StayDurationMonths }} Months</h5>
         <span class="text-muted small">
-          Since {{ bookingSummary.staySince | date:'MMM y' }}
+          Since {{ bookingSummary.StaySince | date:'MMM y' }}
         </span>
       </div>
     </div>
@@ -59,41 +59,46 @@
   </div>
 
   <!-- ================== CURRENT BOOKING DETAILS ================== -->
-  <div class="card shadow-sm p-4 mb-4">
-    <h5 class="fw-bold mb-3">Current Booking Details</h5>
+ <div class="booking-card" *ngIf="currentBooking">
+  <h3>Current Booking Details</h3>
 
-    <div class="row">
+  <div class="row">
+    <div class="col">
+      <p><strong>Property:</strong> {{ currentBooking.PropertyName }}</p>
+      <p><strong>Room No:</strong> {{ currentBooking.RoomNo }}</p>
+      <p><strong>Room Type:</strong> {{ currentBooking.RoomType }}</p>
+      <p><strong>Floor:</strong> {{ currentBooking.Floor }}</p>
+      <p><strong>Move-In Date:</strong>
+        {{ currentBooking.MoveInDate | date:'MMM d, yyyy' }}
+      </p>
+    </div>
 
-      <div class="col-md-6">
-        <p><strong>Property:</strong> {{ bookingSummary.propertyName }}</p>
-        <p><strong>Room No:</strong> {{ bookingSummary.roomNumber }}</p>
-        <p><strong>Room Type:</strong> {{ bookingSummary.roomType }}</p>
-        <p><strong>Floor:</strong> {{ bookingSummary.floor }}</p>
-        <p><strong>Move-In Date:</strong>
-          {{ bookingSummary.moveInDate | date:'MMM d, y' }}
-        </p>
-      </div>
-
-      <div class="col-md-6">
-        <p><strong>Contract:</strong> {{ bookingSummary.contractMonths }} Months</p>
-        <p><strong>Monthly Rent:</strong> ₹{{ bookingSummary.monthlyRent }}</p>
-        <p><strong>Security Deposit:</strong>
-          ₹{{ bookingSummary.securityDeposit }}
-          <span *ngIf="bookingSummary.depositPaid">(Paid)</span>
-        </p>
-        <p><strong>Address:</strong> {{ bookingSummary.address }}</p>
-        <p><strong>Owner Contact:</strong> {{ bookingSummary.ownerContact }}</p>
-      </div>
-
+    <div class="col">
+      <p><strong>Contract:</strong>
+        {{ currentBooking.ContractMonths }} Months
+      </p>
+      <p><strong>Monthly Rent:</strong>
+        ₹{{ currentBooking.MonthlyRent }}
+      </p>
+      <p><strong>Security Deposit:</strong>
+        ₹{{ currentBooking.SecurityDeposit }}
+      </p>
+      <p><strong>Address:</strong>
+        {{ currentBooking.Address }}
+      </p>
+      <p><strong>Owner Contact:</strong>
+        {{ currentBooking.OwnerContact }}
+      </p>
     </div>
   </div>
+</div>
 
   <!-- ================== AMENITIES ================== -->
   <div class="card shadow-sm p-4 mt-3 animate__animated animate__fadeInRight">
     <h5 class="fw-bold mb-3">Amenities Included</h5>
 
     <p *ngIf="amenities; else noAmenities">
-      {{ amenities }}
+      {{amenities }}
     </p>
 
     <ng-template #noAmenities>

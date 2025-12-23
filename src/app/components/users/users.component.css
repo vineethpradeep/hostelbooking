@@ -9,20 +9,30 @@ table tbody tr:hover {
 .badge {
   font-size: 13px;
 }
-/* Edit Button */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;               /* space between buttons */
+}
+
+/* EDIT */
 .btn-edit {
-  background: linear-gradient(45deg, #005CFF, #8A2BE2);
-  color: white;
-  padding: 6px 18px;
-  border-radius: 20px;
-  border: none;
-  font-weight: 600;
-  transition: 0.3s ease;
+  color: #0d6efd;
+  border: 2px solid #0d6efd;
+  background: transparent;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
 }
 
-.btn-edit:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
+/* DELETE */
+.btn-delete {
+  color: #dc3545;
+  border: 2px solid #dc3545;
+  background: transparent;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
 }
-
 

@@ -17,20 +17,24 @@
         <tr *ngFor="let p of paymentList; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ p.transactionId }}</td>
-          <td>{{ p.phoneNumber }}</td>
+          <td>{{ p.phone }}</td>
           <td>{{ p.amount }}</td>
           <td>
             <span
               class="badge"
               [ngClass]="{
-                'bg-success': p.paymentStatus === 'Success',
-                'bg-warning text-dark': p.paymentStatus === 'Pending',
-                'bg-danger': p.paymentStatus === 'Failed'
+                'bg-success': p.status === 'Success'|| p.status === 'Paid',
+                'bg-warning text-dark': p.status === 'Pending',
+                'bg-danger': p.status === 'Failed'
               }"
             >
-              {{ p.paymentStatus }}
+              {{ p.status }}
             </span>
           </td>
+        </tr>
+
+        <tr *ngIf="paymentList.length === 0">
+          <td colspan="5" class="text-center">No payments found</td>
         </tr>
       </tbody>
     </table>

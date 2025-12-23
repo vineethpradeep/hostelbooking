@@ -64,7 +64,7 @@ export class EditBookingComponent {
 
   propertyIdFixed = 3;
   bedIdFixed = 3;
-  userIdFixed = 1;
+  userIdFixed = 5;
 
   monthsList = [1,2,3,4,5,6,7,8,9,10,11,12];
 
@@ -72,6 +72,7 @@ export class EditBookingComponent {
 
 
   ngOnInit(): void {
+     console.log('✅ UserDashboardComponent loaded');
 
     this.bookingForm = this.fb.group({
       property: ['Property A'],

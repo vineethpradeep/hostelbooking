@@ -1,83 +1,60 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { PaymentService } from '../../services/payments.service';
+
+
+
+export interface PaymentDetails {
+  transactionId: string;
+  phone: string;
+  amount: number;
+  status: string;
+}
 
 @Component({
   selector: 'app-payment',
-  imports: [    CommonModule,RouterModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css'
 })
-export class PaymentComponent  implements OnInit{
+export class PaymentComponent implements OnInit {
 
-   paymentList=[
-    {
-      transactionId:'TUH67232788Z',
-     phoneNumber: '9876543210',
-     amount:'5000',
-     paymentStatus:'Success',
-    
-      
-    },
-    {
-     transactionId:'GQR78667M',
-     phoneNumber: '9123456780',
-     amount:'8000',
-     paymentStatus:'Pending',
-    
-    },
-    {
-     transactionId:'Jk324OFD',
-     phoneNumber: '998877665',
-     amount:'2500',
-     paymentStatus:'Failed',
-    
-      
-    },
-    {
-     transactionId:'XHDA8329O',
-     phoneNumber: '9012345678',
-     amount:'15000',
-     paymentStatus:'Success',
-    
-  
-    },
-    {
-      transactionId:'TUH67232788Z',
-     phoneNumber: '9876543210',
-     amount:'5000',
-     paymentStatus:'Success',
-    
-      
-    },
-    {
-     transactionId:'GQR78667M',
-     phoneNumber: '9123456780',
-     amount:'8000',
-     paymentStatus:'Pending',
-    
-    },
-    {
-     transactionId:'Jk324OFD',
-     phoneNumber: '998877665',
-     amount:'2500',
-     paymentStatus:'Failed',
-    
-      
-    },
-    {
-     transactionId:'XHDA8329O',
-     phoneNumber: '9012345678',
-     amount:'15000',
-     paymentStatus:'Success',
-    
-  
+  paymentList: PaymentDetails[] = [];
+  loading = false;
+  errorMessage = '';
+
+  constructor(private paymentService: PaymentService) {}
+
+  ngOnInit(): void {
+    this.loadPayments();
+  }
+
+  loadPayments() {
+    this.loading = true;
+
+this.paymentService.getPaymentDetails().subscribe({
+  next: (data: any[]) => {
+    this.paymentList = data.map(p => ({
+      transactionId: p.TransactionId,
+      phone: p.PhoneNumber,
+      amount: p.Amount,
+      status: p.Status
+    }));
+  },
+  error: () => {
+    console.error('Failed to load payments');
+  }
+});
+  }
+
+  getStatusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'success': return 'badge-success';
+      case 'pending': return 'badge-warning';
+      case 'failed': return 'badge-danger';
+      default: return 'badge-secondary';
     }
-  ];
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  }
 }
-
-

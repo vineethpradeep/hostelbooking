@@ -135,6 +135,7 @@ export class AdminHeaderComponent implements OnInit {
   constructor(private router: Router, private el: ElementRef, private authService: AuthService,) {}
 
   ngOnInit(): void {
+
     this.userName = this.authService.getUserName();
      const data = localStorage.getItem("HeaderMenus");
       data ? JSON.parse(data) : null;
@@ -167,7 +168,7 @@ export class AdminHeaderComponent implements OnInit {
       this.menuOpen = false;
     }
   }
-
+ 
   // Logout
   logout() {
     localStorage.clear();
