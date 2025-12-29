@@ -245,10 +245,10 @@
 </div>
  -->
 
- <div class="">
+ <div class="container">
 
-  <!-- STEP 1: BOOKING DETAILS -->
-  <div *ngIf="step === 1">
+  <!-- ================= STEP 1 : BOOKING DETAILS ================= -->
+  <div *ngIf="step === BookingStep.Booking">
     <div class="card shadow-sm mb-4">
       <div class="card-header bg-success text-white">
         <h5 class="mb-0">Step 1: Booking Details</h5>
@@ -259,13 +259,13 @@
 
           <div class="row g-3">
 
-            <!-- Property Hardcoded -->
+            <!-- Property -->
             <div class="col-md-6">
               <label class="form-label">Property</label>
               <input type="text" class="form-control" value="Property A" disabled />
             </div>
 
-            <!-- Room Type Hardcoded -->
+            <!-- Room Type -->
             <div class="col-md-6">
               <label class="form-label">Room Type</label>
               <input type="text" class="form-control" value="Single Bed" disabled />
@@ -273,55 +273,52 @@
 
             <!-- Move-in Date -->
             <div class="col-md-6">
-              <label class="form-label">Move-in Date <span class="text-danger">*</span></label>
+              <label class="form-label">
+                Move-in Date <span class="text-danger">*</span>
+              </label>
               <input
                 type="date"
                 class="form-control"
                 formControlName="moveInDate"
                 [class.is-invalid]="f['moveInDate'].touched && f['moveInDate'].invalid" />
-              <div class="invalid-feedback">Move-in date is required.</div>
+              <div class="invalid-feedback">
+                Move-in date is required
+              </div>
             </div>
 
-      
-
-            <!-- Duration Dropdown -->
+            <!-- Duration -->
             <div class="col-md-6">
-              <label class="form-label">Duration (Months) <span class="text-danger">*</span></label>
-              <select class="form-select"
-                      formControlName="duration"
-                      [class.is-invalid]="f['duration'].touched && f['duration'].invalid">
+              <label class="form-label">
+                Duration (Months) <span class="text-danger">*</span>
+              </label>
+              <select
+                class="form-select"
+                formControlName="duration"
+                [class.is-invalid]="f['duration'].touched && f['duration'].invalid">
                 <option value="">Select Duration</option>
-                <option *ngFor="let m of monthsList" [value]="m">{{ m }} Month(s)</option>
+                <option *ngFor="let m of monthsList" [value]="m">
+                  {{ m }} Month(s)
+                </option>
               </select>
-              <div class="invalid-feedback">Duration is required.</div>
+              <div class="invalid-feedback">
+                Duration is required
+              </div>
             </div>
 
-                <!-- Hidden Checkout Date (required for backend) -->
-            <input type="hidden" formControlName="checkOutDate">
-           
+            <!-- Hidden Checkout Date -->
+            <input type="hidden" formControlName="checkOutDate" />
 
-       
             <!-- Monthly Rent -->
             <div class="col-md-6">
               <label class="form-label">Monthly Rent  <span class="text-danger">*</span></label>
               <input type="number"
-                   
-                     class="form-control"
-                     formControlName="monthlyRent"
-                    readonly/>        
+                class="form-control"
+                formControlName="monthlyRent"
+                readonly />
             </div>
 
             <!-- Security Deposit -->
-          <!--   <div class="col-md-6">
-              <label class="form-label">Security Deposit <span class="text-danger">*</span></label>
-              <input type="number"
-                     class="form-control"
-                     placeholder="Enter security deposit"
-                     formControlName="securityDeposit"
-                     [class.is-invalid]="f['securityDeposit'].touched && f['securityDeposit'].invalid" />
-              <div class="invalid-feedback">Security deposit is required.</div>
-            </div> -->
-             <div class="col-md-6">
+            <div class="col-md-6">
               <label class="form-label">Security Deposit</label>
               <input type="text" class="form-control" value="2000" disabled />
             </div>
@@ -329,19 +326,20 @@
             <!-- Special Requirements -->
             <div class="col-12">
               <label class="form-label">Special Requirements</label>
-              <textarea rows="3"
-                        class="form-control"
-                        formControlName="specialReq"
-                        placeholder="Enter any special requirements (optional)">
+              <textarea
+                rows="3"
+                class="form-control"
+                formControlName="specialReq"
+                placeholder="Optional">
               </textarea>
             </div>
 
-          </div> <!-- END row -->
+          </div>
 
-          <!-- Continue button -->
-          <button type="button"
-                  class="btn btn-success mt-4 float-end"
-                  (click)="goToStep(2)">
+          <button
+            type="button"
+            class="btn btn-success mt-4 float-end"
+            (click)="goToStep(BookingStep.Payment)">
             Continue → Payment
           </button>
 
@@ -350,18 +348,19 @@
     </div>
   </div>
 
-  <!-- STEP 2: PAYMENT DETAILS -->
-  <div *ngIf="step === 2">
+  <!-- ================= STEP 2 : PAYMENT DETAILS ================= -->
+  <div *ngIf="step === BookingStep.Payment">
     <div class="card shadow-sm mb-4">
       <div class="card-header bg-warning">
         <h5 class="mb-0">Step 2: Payment Details</h5>
       </div>
 
       <div class="card-body">
-        <form [formGroup]="paymentForm"  (ngSubmit)="submitPayment()">
+        <form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
 
           <div class="row g-3">
 
+            <!-- Payment Method -->
             <div class="col-12">
               <label class="form-label">Payment Method</label>
               <select class="form-select" formControlName="paymentMethod">
@@ -372,57 +371,89 @@
               </select>
             </div>
 
+            <!-- Total Amount -->
             <div class="col-12">
               <label class="form-label">Total Amount</label>
-              <input type="text" class="form-control" value="₹30,000" disabled />
+              <input
+                type="number"
+                class="form-control"
+                formControlName="totalAmount"
+                readonly />
             </div>
 
+            <!-- Notes -->
             <div class="col-12">
-              <label class="form-label">Payment Notes</label>
-              <textarea class="form-control"
-                        rows="2"
-                        placeholder="Optional"
-                        formControlName="notes"></textarea>
+              <label class="form-label">Payment Notes(Optional)</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                placeholder="Optional"
+                formControlName="notes">
+              </textarea>
             </div>
 
           </div>
 
-          <!-- Back button -->
-          <button type="button"
-                  class="btn btn-secondary mt-4"
-                  (click)="goToStep(1)">
+          <button
+            type="button"
+            class="btn btn-secondary mt-4"
+            (click)="goToStep(BookingStep.Booking)">
             ← Back
           </button>
 
-          <!-- Make Payment button -->
-          <button type="button"
-                  class="btn btn-warning mt-4 float-end"
-                  (click)="submitPayment()">
+          <button
+            type="submit"
+            class="btn btn-warning mt-4 float-end">
             Make Payment
           </button>
 
         </form>
       </div>
-
     </div>
   </div>
 
-  <!-- STEP 3: CONFIRMATION -->
-  <div *ngIf="step === 3">
+  <!-- ================= STEP 3 : CONFIRMATION ================= -->
+  <div *ngIf="step === BookingStep.Confirmation">
     <div class="card shadow-sm mb-4">
       <div class="card-header bg-info text-white">
-        <h5 class="mb-0">Step 3: Booking Confirmed</h5>
+        <h5 class="mb-0">Booking Confirmed</h5>
       </div>
 
       <div class="card-body text-center">
         <div class="alert alert-success">
-          <h5 class="fw-bold">Booking Successful!</h5>
-          <p>Your booking has been recorded and confirmation email sent.</p>
+          <h5 class="fw-bold">Payment Successful 🎉</h5>
+          <p>Your booking has been completed successfully.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CONFIRM MODAL ================= -->
+  <div class="modal fade" id="confirmBookingModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Booking</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
-        <!-- <button class="btn btn-primary" (click)="goToStep(2)">← Back</button> -->
+        <div class="modal-body">
+          Are you sure you want to confirm this booking?
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button class="btn btn-primary" (click)="confirmBooking()">
+            Confirm
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
 
 </div>
+
