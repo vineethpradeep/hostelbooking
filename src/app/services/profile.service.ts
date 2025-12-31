@@ -14,4 +14,11 @@ export class ProfileService {
   getProfile(userId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${userId}`);
   }
+  updateProfile(payload: any) {
+  return this.http.put(
+    'https://localhost:7001/api/Profile',
+    payload
+  );
+}
+
 }

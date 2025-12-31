@@ -1,31 +1,141 @@
 <div class="container mt-4 d-flex justify-content-center">
-  <div class="profile-card">
-    <h4 class="profile-title">User Profile Summary</h4>
+  <div class="profile-card w-100" style="max-width: 520px">
+
+    <h4 class="profile-title text-center mb-4">
+      User Profile Summary
+    </h4>
 
     <div class="profile-details">
-      <div class="detail-item">
-        <span class="label">Name:</span>
+
+      <div class="detail-item d-flex justify-content-between mb-3">
+        <span class="label fw-semibold">Name:</span>
         <span class="value">{{ profile.name }}</span>
       </div>
 
-      <div class="detail-item">
-        <span class="label">Email:</span>
+      <div class="detail-item d-flex justify-content-between mb-3">
+        <span class="label fw-semibold">Email:</span>
         <span class="value">{{ profile.email }}</span>
       </div>
 
-      <div class="detail-item">
-        <span class="label">Phone:</span>
-        <span class="value">{{ profile.phone }}</span> 
+      <div class="detail-item d-flex justify-content-between mb-3">
+        <span class="label fw-semibold">Phone:</span>
+        <span class="value">{{ profile.phone }}</span>
       </div>
 
-      <div class="detail-item">
-        <span class="label">Total Bookings:</span>
+      <div class="detail-item d-flex justify-content-between mb-3">
+        <span class="label fw-semibold">Total Bookings:</span>
         <span class="value">{{ profile.totalBookings }}</span>
       </div>
 
-      <div class="detail-item">
-        <span class="label">Status:</span>
-        <span class="badge bg-success">Active</span>
+      <div class="detail-item d-flex justify-content-between mb-4">
+        <span class="label fw-semibold">Status:</span>
+        <span class="badge bg-success">
+          {{ profile.status || 'Active' }}
+        </span>
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-primary px-4" (click)="openEditModal()">
+          Edit
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= EDIT PROFILE MODAL ================= -->
+<div class="modal fade" id="editProfileModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Profile</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input class="form-control" [(ngModel)]="editProfile.name">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input class="form-control" [(ngModel)]="editProfile.email" readonly>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Phone</label>
+          <input class="form-control" [(ngModel)]="editProfile.phone">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button class="btn btn-primary" (click)="openConfirmModal()">
+          Save Changes
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= CONFIRM UPDATE MODAL ================= -->
+<div class="modal fade" id="confirmUpdateModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Update</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        Are you sure you want to update your profile?
+      </div>
+
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+        <button class="btn btn-primary" (click)="confirmSaveProfile()">
+          Yes
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= SUCCESS MODAL ================= -->
+<div class="modal fade" id="successModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content text-center">
+      <div class="modal-body py-4">
+        <h6 class="text-success mb-2">Success</h6>
+        <p>Profile updated successfully</p>
+        <button class="btn btn-primary px-4" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ERROR MODAL ================= -->
+<div class="modal fade" id="errorModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content text-center">
+      <div class="modal-body py-4">
+        <h6 class="text-danger mb-2">Error</h6>
+        <p>Failed to update profile</p>
+        <button class="btn btn-secondary px-4" data-bs-dismiss="modal">
+          OK
+        </button>
       </div>
     </div>
   </div>

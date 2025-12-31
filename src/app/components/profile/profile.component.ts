@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ProfileService } from '../../services/profile.service';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -17,11 +20,11 @@ export class ProfileComponent implements OnInit {
     email: '',
     phone: '',
     totalBookings: 0,
-    status:''
+    status: ''
   };
 
-  loading = false;
-  errorMessage = '';
+  editProfile: any = {};
+  saving = false;
 
   constructor(private profileService: ProfileService) {}
 
@@ -30,22 +33,73 @@ export class ProfileComponent implements OnInit {
   }
 
   loadProfile() {
-    this.loading = true;
-  debugger;
-    // 🔹 OPTION A: from localStorage
     const userId = Number(localStorage.getItem('userId')) || 3;
 
     this.profileService.getProfile(userId).subscribe(res => {
-      console.log('API Response:', res); // 🔍 debug
-
-      this.profile.name = res.Name;
-      this.profile.email = res.Email;
-      this.profile.phone = res.Phone;
-      this.profile.totalBookings = res.TotalBookings;
-      this.profile.status = res.Status;
-      
+      this.profile = {
+        name: res.Name,
+        email: res.Email,
+        phone: res.Phone,
+        totalBookings: res.TotalBookings,
+        status: res.Status
+      };
     });
-
   }
 
+  openEditModal() {
+    this.editProfile = { ...this.profile };
+    new bootstrap.Modal(
+      document.getElementById('editProfileModal')
+    ).show();
+  }
+
+  openConfirmModal() {
+    new bootstrap.Modal(
+      document.getElementById('confirmUpdateModal')
+    ).show();
+  }
+
+  confirmSaveProfile() {
+    this.saving = true;
+
+    const payload = {
+      userId: Number(localStorage.getItem('userId')) || 3,
+      name: this.editProfile.name,
+      phone: this.editProfile.phone,
+      email: this.editProfile.email
+    };
+
+    this.profileService.updateProfile(payload).subscribe({
+      next: () => {
+        this.profile = { ...this.editProfile };
+        this.saving = false;
+
+        bootstrap.Modal.getInstance(
+          document.getElementById('confirmUpdateModal')
+        )?.hide();
+
+        bootstrap.Modal.getInstance(
+          document.getElementById('editProfileModal')
+        )?.hide();
+
+        this.showSuccessModal();
+      },
+      error: () => {
+        this.saving = false;
+        this.showErrorModal();
+      }
+    });
+  }
+
+  showSuccessModal() {
+    new bootstrap.Modal(
+      document.getElementById('successModal')
+    ).show();
+  }
+
+  showErrorModal() {
+    new bootstrap.Modal(
+      document.getElementById('errorModal')
+    ).show();
+  }
 }

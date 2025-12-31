@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -40,4 +41,9 @@ export class UserDashboardService {
       `${this.baseUrl}/user/${userId}`
     );
   }
+ getRecentBookings(userId: number) {
+  return this.http.get<any[]>(
+    `${this.baseUrl}/Bookings/recent/${userId}`
+  );
+}
 }

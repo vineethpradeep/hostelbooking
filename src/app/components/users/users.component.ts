@@ -6,7 +6,7 @@ import { UsersService } from '../../services/user.service';
 import { ApiResponse } from '../../models/api-response.model';
 import { UserDto } from '../../models/user.model';
 
-declare var bootstrap: any;  // For modal
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-users',
@@ -20,8 +20,8 @@ export class UsersComponent implements OnInit {
   selectedPropertyId = 3;
   selectedUserType = 'Tenant';
 
-  // Holds edited user data
   selectedUser: UserDto = {} as UserDto;
+  deleteUserId?: number;
 
   constructor(private usersService: UsersService) {}
 
@@ -29,55 +29,74 @@ export class UsersComponent implements OnInit {
     this.loadUsers();
   }
 
+  // ================= LOAD USERS =================
   loadUsers() {
-    this.usersService.getUsers(this.selectedPropertyId, this.selectedUserType)
+    this.usersService
+      .getUsers(this.selectedPropertyId, this.selectedUserType)
       .subscribe({
         next: (res: ApiResponse<UserDto[]>) => {
           this.users = res.Data || [];
         },
-        error: (err) => console.error("API ERROR:", err)
+        error: err => console.error('API ERROR:', err)
       });
   }
 
-  // -------------------------
-  // OPEN EDIT POPUP
-  // -------------------------
+  // ================= OPEN EDIT MODAL =================
   editUser(user: UserDto) {
-    this.selectedUser = { ...user }; // copy user data into form
-    const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
-    modal.show();
+    this.selectedUser = { ...user };
+    new bootstrap.Modal(
+      document.getElementById('editUserModal')
+    ).show();
   }
 
-  // -------------------------
-  // SAVE UPDATED USER
-  // -------------------------
-  saveUser() {
+  // ================= OPEN CONFIRM UPDATE MODAL =================
+  openConfirmUpdateModal() {
+    new bootstrap.Modal(
+      document.getElementById('confirmUserUpdateModal')
+    ).show();
+  }
+
+  // ================= CONFIRM UPDATE =================
+  confirmSaveUser() {
     this.usersService.updateUser(this.selectedUser).subscribe({
       next: () => {
-        alert("User updated successfully!");
         this.loadUsers();
-      },
-      error: (err) => console.error("Update Error:", err)
-    });
 
-    const modal = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
-    modal.hide();
+        bootstrap.Modal.getInstance(
+          document.getElementById('confirmUserUpdateModal')
+        )?.hide();
+
+        bootstrap.Modal.getInstance(
+          document.getElementById('editUserModal')
+        )?.hide();
+      },
+      error: err => console.error('Update Error:', err)
+    });
   }
 
-  // -------------------------
-  // DELETE USER
-  // -------------------------
-  deleteUser(userId: number | undefined) {
+  // ================= OPEN CONFIRM DELETE MODAL =================
+  openConfirmDeleteModal(userId?: number) {
     if (!userId) return;
+    this.deleteUserId = userId;
 
-    if (confirm("Are you sure you want to delete this user?")) {
-      this.usersService.deleteUserById(userId).subscribe({
-        next: () => {
-          alert("User deleted successfully!");
-          this.loadUsers();
-        },
-        error: (err) => console.error("Delete Error:", err)
-      });
-    }
+    new bootstrap.Modal(
+      document.getElementById('confirmUserDeleteModal')
+    ).show();
+  }
+
+  // ================= CONFIRM DELETE =================
+  confirmDeleteUser() {
+    if (!this.deleteUserId) return;
+
+    this.usersService.deleteUserById(this.deleteUserId).subscribe({
+      next: () => {
+        this.loadUsers();
+
+        bootstrap.Modal.getInstance(
+          document.getElementById('confirmUserDeleteModal')
+        )?.hide();
+      },
+      error: err => console.error('Delete Error:', err)
+    });
   }
 }
