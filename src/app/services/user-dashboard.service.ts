@@ -17,9 +17,14 @@ export class UserDashboardService {
   }
 
   // ✅ CURRENT BOOKING DETAILS
-  getCurrentBooking() {
-    return this.http.get<any>(`${this.baseUrl}/current-booking`);
-  }
+  getCurrentBooking(userId: number): Observable<any> {
+  return this.http.get<any>(
+    `${this.baseUrl}/current-booking`,
+    {
+      params: { userId: userId.toString() }
+    }
+  );
+}
 
   // ✅ ROOM AMENITIES
   getRoomAmenities(roomId: number) {
@@ -38,12 +43,19 @@ export class UserDashboardService {
   // ✅ MAINTENANCE REQUESTS
   getMaintenanceRequests(userId: number) {
     return this.http.get<any[]>(
-      `${this.baseUrl}/user/${userId}`
+      `${this.baseUrl}/usermaintenance/${userId}`
     );
   }
- getRecentBookings(userId: number) {
+getRecentBookings(userId: number, take: number = 5): Observable<any[]> {
   return this.http.get<any[]>(
-    `${this.baseUrl}/Bookings/recent/${userId}`
+    `${this.baseUrl}/recent-bookings`,
+    {
+      params: {
+        userId: userId.toString(),
+        take: take.toString()
+      }
+    }
   );
 }
+
 }

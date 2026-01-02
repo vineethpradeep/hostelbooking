@@ -104,9 +104,12 @@ export class EditBookingComponent implements OnInit {
   /* 🔒 Temporary hardcoded values */
   propertyIdFixed = 3;
   bedIdFixed = 3;
-  userIdFixed = 8;
+  /* ✅ UserId from localStorage */
+  userId!: number;
 
-  @Input() monthlyRent!: number;
+
+ @Input() monthlyRent!: number;
+
 
   monthsList = [1,2,3,4,5,6,7,8,9,10,11,12];
 
@@ -120,11 +123,20 @@ export class EditBookingComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+     /* ✅ GET USER ID FROM AUTH SERVICE (LOCALSTORAGE) */
+    const storedUserId = localStorage.getItem('app_user_id');
+    if (!storedUserId) {
+      console.error('User not logged in');
+      return;
+    }
+    this.userId = Number(storedUserId);
+
     /* 🏠 BOOKING FORM */
     this.bookingForm = this.fb.group({
       moveInDate: ['', Validators.required],
       duration: ['', Validators.required],
-      monthlyRent: [8000, Validators.required],
+      monthlyRent: [{ value: '', disabled: true }, Validators.required],
       securityDeposit: [2000, Validators.required],
       checkOutDate: [''],
       specialReq: ['']
@@ -136,6 +148,14 @@ export class EditBookingComponent implements OnInit {
       totalAmount: [0, [Validators.required, Validators.min(1)]],
       notes:[]
     });
+
+      // ✅ PATCH MONTHLY RENT FROM PARENT
+  if (this.monthlyRent) {
+    this.bookingForm.patchValue({
+      monthlyRent: this.monthlyRent
+    });
+  }
+
 
      this.bookingForm.get('moveInDate')?.valueChanges
     .subscribe(() => this.updateCheckoutDate());
@@ -149,6 +169,7 @@ export class EditBookingComponent implements OnInit {
   const moveIn = this.bookingForm.get('moveInDate')?.value;
   const months = Number(this.bookingForm.get('duration')?.value);
   const rent = Number(this.bookingForm.get('monthlyRent')?.value);
+
   const deposit = Number(this.bookingForm.get('securityDeposit')?.value);
 
   if (!moveIn || !months) return;
@@ -220,10 +241,10 @@ save() {
     bookingNumber: 'BK' + Math.floor(100000 + Math.random() * 900000),
     propertyId: this.propertyIdFixed,
     bedId: this.bedIdFixed,
-    userId: this.userIdFixed,
+    userId: this.userId,   // ✅ FROM LOCALSTORAGE
     checkInDate: this.bookingForm.value.moveInDate,
     checkOutDate: this.bookingForm.value.checkOutDate,
-    monthlyRent: this.bookingForm.value.monthlyRent,
+    monthlyRent: this.bookingForm.get('monthlyRent')?.value,
     securityDeposit: this.bookingForm.value.securityDeposit,
     durationMonths: this.bookingForm.value.duration,
     status: 'Booked',

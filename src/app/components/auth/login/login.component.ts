@@ -48,6 +48,7 @@ export class LoginComponent {
       const user = res.Data.User;
       const role = user.Roles[0];       // <-- role from backend
       const firstName = user.FirstName;
+      const userId=user.userId;
 
       // Save token, role, firstname (your existing method)
       //this.authService.setTokenAfterLogin(token, role, firstName);

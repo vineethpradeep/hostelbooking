@@ -41,11 +41,12 @@ export class UserDashboardComponent implements OnInit {
   amenities: string = '';
   upcomingPayments: UpcomingPayment[] = [];
   maintenanceRequests: MaintenanceRequest[] = [];
+  recentBookings: any[] = [];
 
 
 
   // Normally from JWT
-  userId = 5;
+userId!: number;
   roomId = 5;
 
   constructor(
@@ -58,6 +59,14 @@ export class UserDashboardComponent implements OnInit {
 
     // Username
     this.userName = localStorage.getItem('app_user') ?? 'User';
+      // ✅ GET USER ID FROM LOCAL STORAGE (FROM LOGIN API)
+  const storedUserId = localStorage.getItem('app_user_id');
+  if (!storedUserId) {
+    console.error('UserId not found. Redirecting to login.');
+    this.logout();
+    return;
+  }
+    this.userId = Number(storedUserId);
 
     // Header Menus
     const menuData = localStorage.getItem('UserHeaderMenus');
@@ -75,6 +84,7 @@ export class UserDashboardComponent implements OnInit {
     this.loadAmenities();
     this.loadUpcomingPayments();
     this.loadMaintenanceRequests();
+   this.loadRecentBookings();
   }
 
   // ================= API LOADERS =================
@@ -85,10 +95,15 @@ export class UserDashboardComponent implements OnInit {
   }
   
   
-    loadCurrentBooking() {
-  this.dashboardService.getCurrentBooking()
-    .subscribe(res => this.currentBooking = res);
-    }
+   loadCurrentBooking() {
+  this.dashboardService.getCurrentBooking(this.userId)
+    .subscribe({
+      next: res => {
+        this.currentBooking = res;
+      },
+      error: err => console.error('Current Booking Error', err)
+    });
+}
 
 
   loadAmenities() {
@@ -106,6 +121,14 @@ export class UserDashboardComponent implements OnInit {
     this.dashboardService.getMaintenanceRequests(this.userId)
       .subscribe(res => this.maintenanceRequests = res);
   }
+ loadRecentBookings() {
+  this.dashboardService.getRecentBookings(this.userId, 5)
+    .subscribe({
+      next: res => this.recentBookings = res,
+      error: err => console.error(err)
+    });
+}
+
   
 
   // ================= ACTIONS =================

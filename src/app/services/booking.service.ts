@@ -37,4 +37,11 @@ export class BookingService {
  /*  deleteBooking(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   } */
+
+    getBedBookingDetails(bedId: number) {
+  return this.http.get<any>(
+    `${this.baseUrl}/beds/${bedId}/booking-details`
+  );
+}
+
 }

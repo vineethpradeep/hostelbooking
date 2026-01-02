@@ -21,7 +21,7 @@
         <h6 class="text-uppercase text-muted small">Booking</h6>
         <h5 class="fw-bold">{{ bookingSummary.BookingStatus }}</h5>
         <span class="text-muted small">
-          Since {{ bookingSummary.BookingSince | date:'MMM d, y' }}
+          Since {{ bookingSummary.StaySince | date:'MMM y' }}
         </span>
       </div>
     </div>
@@ -31,7 +31,7 @@
         <h6 class="text-uppercase text-muted small">Monthly Rent</h6>
         <h5 class="fw-bold">₹{{ bookingSummary.MonthlyRent }}</h5>
         <span class="text-muted small">
-          Next due: {{ bookingSummary.NextDueDate | date:'MMM d, y' }}
+          Next due: {{ bookingSummary.NextDueDate | date:'MMM d, y' }} 
         </span>
       </div>
     </div>
@@ -152,7 +152,45 @@
       </tbody>
     </table>
   </div>
+  
 
+  
+  <!-- ================== RECENT BOOKINGS ================== -->
+  <div class="card shadow-sm p-4 mt-4 animate__animated animate__fadeInRight">
+    <h5 class="fw-bold mb-3">Recent Bookings</h5>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Booking #</th>
+            <th>Property</th>
+            <th>Room</th>
+            <th>Move-In</th>
+            <th>Rent</th>
+          
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let b of recentBookings">
+            <td>#{{ b.BookingNumber }}</td>
+            <td>{{ b.PropertyName }}</td>
+            <td>{{ b.RoomNumber }}</td>
+            <td>{{ b.MoveInDate | date:'mediumDate' }}</td>
+            <td>₹{{ b.Rent }}</td>
+         
+          </tr>
+
+          <tr *ngIf="recentBookings.length === 0">
+            <td colspan="6" class="text-center text-muted">
+              No recent bookings found
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <!-- ================== MAINTENANCE ================== -->
   <div class="card shadow-sm p-4 mt-4 animate__animated animate__fadeInUp">
     <h5 class="fw-bold mb-3">Maintenance Requests</h5>

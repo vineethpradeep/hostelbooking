@@ -55,7 +55,7 @@ export class RoomDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private roomService: RoomService
   ) {}
-
+ 
   // =============================
   // INIT
   // =============================
