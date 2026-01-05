@@ -20,7 +20,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   submitting = false;
-  error: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +35,7 @@ export class LoginComponent {
    }
   
     submit() {
-  this.error = null;
+   this.errorMessage = '';
   if (this.loginForm.invalid) {
     this.loginForm.markAllAsTouched();
     return;
@@ -67,7 +67,7 @@ export class LoginComponent {
 
     error: (err) => {
       this.submitting = false;
-      this.error =
+      this.errorMessage =
         err?.error?.message || 'Invalid email or password. Try again.';
     }
   });

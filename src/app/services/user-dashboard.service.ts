@@ -12,9 +12,12 @@ export class UserDashboardService {
   constructor(private http: HttpClient) {}
 
   // ✅ DASHBOARD SUMMARY
-  getDashboard(userId: number) {
-    return this.http.get<any>(`${this.baseUrl}`);
-  }
+ getDashboard(userId: number) {
+  return this.http.get<any>(
+    `${this.baseUrl}?userId=${userId}`
+  );
+}
+
 
   // ✅ CURRENT BOOKING DETAILS
   getCurrentBooking(userId: number): Observable<any> {

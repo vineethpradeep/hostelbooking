@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
     name: '',
     email: '',
     phone: '',
-    totalBookings: 0,
+   
     status: ''
   };
 
@@ -33,14 +33,21 @@ export class ProfileComponent implements OnInit {
   }
 
   loadProfile() {
-    const userId = Number(localStorage.getItem('userId')) || 3;
+      const storedUserId = localStorage.getItem('app_user_id');
+
+  if (!storedUserId) {
+    console.error('UserId not found in localStorage');
+    return;
+  }
+
+  const userId = Number(storedUserId);
 
     this.profileService.getProfile(userId).subscribe(res => {
       this.profile = {
         name: res.Name,
         email: res.Email,
         phone: res.Phone,
-        totalBookings: res.TotalBookings,
+       
         status: res.Status
       };
     });

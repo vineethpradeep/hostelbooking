@@ -69,7 +69,8 @@ export const routes: Routes = [
 
       { path: 'about', component: AboutUsComponent },
       { path: 'facilities', component: FacilitiesComponent },
-      { path: 'contact', component: ContactUsComponent }
+      { path: 'contact', component: ContactUsComponent },
+      {path:'profile',component:ProfileComponent}
     ]
   },
 

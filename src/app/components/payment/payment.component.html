@@ -6,6 +6,7 @@
       <thead class="table-dark">
         <tr>
           <th>#</th>
+             <th>Booking Number</th>
           <th>Transaction ID</th>
           <th>Phone</th>
           <th>Amount</th>
@@ -16,6 +17,7 @@
       <tbody>
         <tr *ngFor="let p of paymentList; let i = index">
           <td>{{ i + 1 }}</td>
+         <td>{{ p.bookingNumber }}</td>
           <td>{{ p.transactionId }}</td>
           <td>{{ p.phone }}</td>
           <td>{{ p.amount }}</td>

@@ -6,6 +6,7 @@ import { PaymentService } from '../../services/payments.service';
 
 
 export interface PaymentDetails {
+  bookingNumber:string;
   transactionId: string;
   phone: string;
   amount: number;
@@ -37,6 +38,7 @@ export class PaymentComponent implements OnInit {
 this.paymentService.getPaymentDetails().subscribe({
   next: (data: any[]) => {
     this.paymentList = data.map(p => ({
+      bookingNumber:p.BookingNumber,
       transactionId: p.TransactionId,
       phone: p.PhoneNumber,
       amount: p.Amount,
