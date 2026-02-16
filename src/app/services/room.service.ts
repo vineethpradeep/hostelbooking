@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Rooms } from '../models/room.model';
+import { API_BASE_URL } from './api';
 
 
 
@@ -10,8 +11,7 @@ import { Rooms } from '../models/room.model';
   providedIn: 'root'
 })
 export class RoomService {
-
-  private apiUrl = 'https://localhost:7001/api/Room';
+  private apiUrl = `${API_BASE_URL}/Room`;
 
   constructor(private http: HttpClient) {}
 

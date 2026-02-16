@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from './api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  private baseUrl = 'https://localhost:7001/api/Profile';
+  private baseUrl = `${API_BASE_URL}/Profile`;
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +17,7 @@ export class ProfileService {
   }
   updateProfile(payload: any) {
   return this.http.put(
-    'https://localhost:7001/api/Profile',
+    this.baseUrl,
     payload
   );
 }

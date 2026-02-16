@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserDto } from '../models/user.model';
 import { ApiResponse } from '../models/api-response.model';
+import { API_BASE_URL } from './api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
   // set this to your API base
-  private baseUrl = 'https://localhost:7001/api/Users';
+    private baseUrl = `${API_BASE_URL}/Users`;
   deleteUser: any;
 
   constructor(private http: HttpClient) {}

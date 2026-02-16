@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { API_BASE_URL } from './api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
 
-  private apiUrl = 'https://localhost:7001/api/Contact';
+ private apiUrl = `${API_BASE_URL}/Contact`;
 
   constructor(private http: HttpClient) {}
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from './api';
 
 export interface Metric {
   value: number;
@@ -47,7 +48,7 @@ export interface SystemOverview {
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
 
-  private baseUrl = 'https://localhost:7001/api/dashboard';
+   private baseUrl = `${API_BASE_URL}/dashboard`;
 
   constructor(private http: HttpClient) {}
 

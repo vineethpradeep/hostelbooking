@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BookingFormDto } from '../models/booking-form.model';
+import { API_BASE_URL } from './api';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { BookingFormDto } from '../models/booking-form.model';
 })
 export class BookingService {
 
-  private baseUrl = 'https://localhost:7001/api/Booking';  // CHANGE THIS to your API URL
+  private baseUrl = `${API_BASE_URL}/booking`;  // CHANGE THIS to your API URL
 
   constructor(private http: HttpClient) {}
 

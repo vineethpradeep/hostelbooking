@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PaymentDetails } from '../components/payment/payment.component';
+import { API_BASE_URL } from './api';
 
 export interface CreatePaymentModel {
   bookingId: number;
@@ -14,8 +15,7 @@ export interface CreatePaymentModel {
 })
 export class PaymentService {
 
-  // ✅ Base API URL (ONE SOURCE OF TRUTH)
-  private apiUrl = 'https://localhost:7001/api/Payments';
+    private apiUrl = `${API_BASE_URL}/Payments`;
 
   constructor(private http: HttpClient) {}
 

@@ -1,69 +1,3 @@
-/* import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-
-@Component({
-  selector: 'app-edit-booking',
-  imports: [
-    CommonModule,
-  FormsModule,
-  ReactiveFormsModule
-],
-  templateUrl: './edit-booking.component.html',
-  styleUrl: './edit-booking.component.css'
-})
-export class EditBookingComponent {
- step = 1;
-  bookingForm: FormGroup;
-  paymentForm: FormGroup;
-  constructor(private fb: FormBuilder) {
-
-    this.bookingForm = this.fb.group({
-      roomType: ['Single Bed'],
-      moveInDate: [''],
-      duration: [''],
-      specialReq: ['']
-    });
-
-    this.paymentForm = this.fb.group({
-      paymentMethod: ['Cash'],
-      notes: ['']
-    });
-  } */
-/* import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-
-@Component({
-  selector: 'app-edit-booking',
-  imports: [
-    CommonModule,
-  FormsModule,
-  ReactiveFormsModule
-],
-  templateUrl: './edit-booking.component.html',
-  styleUrl: './edit-booking.component.css'
-})
-export class EditBookingComponent {
- step = 1;
-  bookingForm: FormGroup;
-  paymentForm: FormGroup;
-  constructor(private fb: FormBuilder) {
-
-    this.bookingForm = this.fb.group({
-      roomType: ['Single Bed'],
-      moveInDate: [''],
-      duration: [''],
-      specialReq: ['']
-    });
-
-    this.paymentForm = this.fb.group({
-      paymentMethod: ['Cash'],
-      notes: ['']
-    });
-  } */
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
@@ -73,6 +7,7 @@ import {
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { BookingService } from '../../services/booking.service';
 import { PaymentService } from '../../services/payments.service';
@@ -101,38 +36,26 @@ export class EditBookingComponent implements OnInit {
   bookingForm!: FormGroup;
   paymentForm!: FormGroup;
 
-  /* 🔒 Temporary hardcoded values */
   propertyIdFixed = 3;
   bedIdFixed = 3;
-  /* ✅ UserId from localStorage */
+
   userId!: number;
 
-
- @Input() monthlyRent!: number;
-
+  @Input() monthlyRent!: number;
 
   monthsList = [1,2,3,4,5,6,7,8,9,10,11,12];
-
   bookingId!: number;
 
   constructor(
     private fb: FormBuilder,
     private bookingService: BookingService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
 
-
-     /* ✅ GET USER ID FROM AUTH SERVICE (LOCALSTORAGE) */
-    const storedUserId = localStorage.getItem('app_user_id');
-    if (!storedUserId) {
-      console.error('User not logged in');
-      return;
-    }
-    this.userId = Number(storedUserId);
-
-    /* 🏠 BOOKING FORM */
+    /* -------------------- BOOKING FORM -------------------- */
     this.bookingForm = this.fb.group({
       moveInDate: ['', Validators.required],
       duration: ['', Validators.required],
@@ -142,63 +65,92 @@ export class EditBookingComponent implements OnInit {
       specialReq: ['']
     });
 
-    /* 💳 PAYMENT FORM */
+    /* -------------------- PAYMENT FORM -------------------- */
     this.paymentForm = this.fb.group({
       paymentMethod: ['Cash', Validators.required],
       totalAmount: [0, [Validators.required, Validators.min(1)]],
-      notes:[]
+      notes: []
     });
 
-      // ✅ PATCH MONTHLY RENT FROM PARENT
-  if (this.monthlyRent) {
-    this.bookingForm.patchValue({
-      monthlyRent: this.monthlyRent
-    });
+    /* Patch monthly rent */
+    if (this.monthlyRent) {
+      this.bookingForm.patchValue({
+        monthlyRent: this.monthlyRent
+      });
+    }
+
+    /* Auto update checkout + total */
+    this.bookingForm.get('moveInDate')?.valueChanges
+      .subscribe(() => this.updateCheckoutDate());
+
+    this.bookingForm.get('duration')?.valueChanges
+      .subscribe(() => this.updateCheckoutDate());
+
+    /* -------------------- RESTORE FORM AFTER LOGIN -------------------- */
+    const savedForm = sessionStorage.getItem('booking_form_data');
+    const savedStep = sessionStorage.getItem('booking_step');
+
+    if (savedForm) {
+      const data = JSON.parse(savedForm);
+
+      this.bookingForm.patchValue(data, { emitEvent: false });
+
+      setTimeout(() => {
+        this.updateCheckoutDate();
+      });
+
+      sessionStorage.removeItem('booking_form_data');
+    }
+
+    if (savedStep) {
+      this.step = Number(savedStep);
+      sessionStorage.removeItem('booking_step');
+    }
+
+    /* -------------------- AUTO LOGIN CHECK -------------------- */
+    const storedUserId = localStorage.getItem('app_user_id');
+    if (storedUserId) {
+      this.userId = Number(storedUserId);
+    }
   }
 
+  /* =========================================================
+     CONTINUE TO PAYMENT
+  ========================================================== */
+  continueToPayment() {
 
-     this.bookingForm.get('moveInDate')?.valueChanges
-    .subscribe(() => this.updateCheckoutDate());
+    if (this.bookingForm.invalid) {
+      this.bookingForm.markAllAsTouched();
+      return;
+    }
 
-  this.bookingForm.get('duration')?.valueChanges
-    .subscribe(() => this.updateCheckoutDate());
+    const storedUserId = localStorage.getItem('app_user_id');
 
+    /* 🔴 NOT LOGGED IN */
+    if (!storedUserId) {
+
+      // Save form + step
+      sessionStorage.setItem(
+        'booking_form_data',
+        JSON.stringify(this.bookingForm.getRawValue())
+      );
+
+      //sessionStorage.setItem('booking_step', BookingStep.Payment.toString());
+
+      this.router.navigate(['/auth/login'], {
+        queryParams: { returnUrl: this.router.url }
+      });
+
+      return;
+    }
+
+    /* 🟢 LOGGED IN */
+    this.userId = Number(storedUserId);
+    this.step = BookingStep.Payment;
   }
 
- updateCheckoutDate() {
-  const moveIn = this.bookingForm.get('moveInDate')?.value;
-  const months = Number(this.bookingForm.get('duration')?.value);
-  const rent = Number(this.bookingForm.get('monthlyRent')?.value);
+  /* ========================================================= */
 
-  const deposit = Number(this.bookingForm.get('securityDeposit')?.value);
-
-  if (!moveIn || !months) return;
-
-  // 📅 Calculate checkout date
-  const d = new Date(moveIn);
-  d.setMonth(d.getMonth() + months);
-
-  // 💰 Calculate total amount
-  const totalAmount = (rent * months) + deposit;
-
-  // 🔥 IMPORTANT: stop infinite loop
-  this.bookingForm.patchValue(
-    {
-      checkOutDate: d.toISOString().split('T')[0]
-    },
-    { emitEvent: false }
-  );
-
-  this.paymentForm.patchValue(
-    {
-      totalAmount: totalAmount
-    },
-    { emitEvent: false }
-  );
-}
-
-
-  /* ➡️ Step navigation */
   goToStep(step: BookingStep) {
     if (step === BookingStep.Payment && this.bookingForm.invalid) {
       this.bookingForm.markAllAsTouched();
@@ -207,7 +159,30 @@ export class EditBookingComponent implements OnInit {
     this.step = step;
   }
 
-  /* ✅ Called from payment form submit */
+  updateCheckoutDate() {
+    const moveIn = this.bookingForm.get('moveInDate')?.value;
+    const months = Number(this.bookingForm.get('duration')?.value);
+    const rent = Number(this.bookingForm.get('monthlyRent')?.value);
+    const deposit = Number(this.bookingForm.get('securityDeposit')?.value);
+
+    if (!moveIn || !months) return;
+
+    const d = new Date(moveIn);
+    d.setMonth(d.getMonth() + months);
+
+    const totalAmount = (rent * months) + deposit;
+
+    this.bookingForm.patchValue(
+      { checkOutDate: d.toISOString().split('T')[0] },
+      { emitEvent: false }
+    );
+
+    this.paymentForm.patchValue(
+      { totalAmount },
+      { emitEvent: false }
+    );
+  }
+
   submitPayment() {
     if (this.paymentForm.invalid) {
       this.paymentForm.markAllAsTouched();
@@ -216,7 +191,6 @@ export class EditBookingComponent implements OnInit {
     this.openConfirmModal();
   }
 
-  /* 🧾 Open confirmation modal */
   openConfirmModal() {
     const modal = new bootstrap.Modal(
       document.getElementById('confirmBookingModal')
@@ -224,67 +198,57 @@ export class EditBookingComponent implements OnInit {
     modal.show();
   }
 
-  /* ✅ Confirm button in modal */
   confirmBooking() {
     const modal = bootstrap.Modal.getInstance(
       document.getElementById('confirmBookingModal')
     );
     modal?.hide();
-
     this.save();
   }
 
-save() {
+  /* =========================================================
+     SAVE BOOKING + PAYMENT
+  ========================================================== */
+  save() {
 
-  const bookingDto: BookingFormDto = {
-    bookingId: 0,
-    bookingNumber: 'BK' + Math.floor(100000 + Math.random() * 900000),
-    propertyId: this.propertyIdFixed,
-    bedId: this.bedIdFixed,
-    userId: this.userId,   // ✅ FROM LOCALSTORAGE
-    checkInDate: this.bookingForm.value.moveInDate,
-    checkOutDate: this.bookingForm.value.checkOutDate,
-    monthlyRent: this.bookingForm.get('monthlyRent')?.value,
-    securityDeposit: this.bookingForm.value.securityDeposit,
-    durationMonths: this.bookingForm.value.duration,
-    status: 'Booked',
-    specialRequests: this.bookingForm.value.specialReq
-  };
+    const bookingDto: BookingFormDto = {
+      bookingId: 0,
+      bookingNumber: 'BK' + Math.floor(100000 + Math.random() * 900000),
+      propertyId: this.propertyIdFixed,
+      bedId: this.bedIdFixed,
+      userId: this.userId,
+      checkInDate: this.bookingForm.value.moveInDate,
+      checkOutDate: this.bookingForm.value.checkOutDate,
+      monthlyRent: this.bookingForm.get('monthlyRent')?.value,
+      securityDeposit: this.bookingForm.value.securityDeposit,
+      durationMonths: this.bookingForm.value.duration,
+      status: 'Booked',
+      specialRequests: this.bookingForm.value.specialReq
+    };
 
-  this.bookingService.createBooking(bookingDto).subscribe({
-    next: (booking: any) => {
+    this.bookingService.createBooking(bookingDto).subscribe({
+      next: (booking: any) => {
 
-      // ✅ FIX IS HERE
-      this.bookingId = booking.BookingId;
+        this.bookingId = booking.BookingId;
 
-      console.log('BOOKING ID FROM API 👉', this.bookingId);
+        const paymentDto = {
+          bookingId: this.bookingId,
+          paymentMethod: this.paymentForm.value.paymentMethod,
+          totalAmount: Number(this.paymentForm.value.totalAmount)
+        };
 
-      const paymentDto = {
-        bookingId: this.bookingId,
-        paymentMethod: this.paymentForm.value.paymentMethod,
-        totalAmount: Number(this.paymentForm.value.totalAmount)
-      };
-
-      console.log('FINAL PAYMENT PAYLOAD 👉', paymentDto);
-
-      this.paymentService.createPayment(paymentDto).subscribe({
-        next: () => {
-          this.step = BookingStep.Confirmation;
-        },
-        error: err => console.error('Payment Error', err)
-      });
-    },
-    error: err => console.error('Booking Error', err)
-  });
-}
-
-
-
+        this.paymentService.createPayment(paymentDto).subscribe({
+          next: () => {
+            this.step = BookingStep.Confirmation;
+          },
+          error: err => console.error('Payment Error', err)
+        });
+      },
+      error: err => console.error('Booking Error', err)
+    });
+  }
 
   get f() {
     return this.bookingForm.controls;
   }
 }
-
-
- 

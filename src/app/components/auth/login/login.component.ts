@@ -1,76 +1,101 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
-  Validators, 
+  Validators,
   ReactiveFormsModule
 } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   submitting = false;
   errorMessage: string | null = null;
+  returnUrl: string = '/';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-
     this.loginForm = this.fb.group({
       userName: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
-   }
-  
-    submit() {
-   this.errorMessage = '';
-  if (this.loginForm.invalid) {
-    this.loginForm.markAllAsTouched();
-    return;
   }
-  this.submitting = true;
-  this.authService.login(this.loginForm.value).subscribe({
-    next: (res) => {
-      this.submitting = false;
-      const token = res.Data.AccessToken;
-      const user = res.Data.User;
-      const role = user.Roles[0];       // <-- role from backend
-      const firstName = user.FirstName;
-      const userId=user.userId;
 
-      // Save token, role, firstname (your existing method)
-      //this.authService.setTokenAfterLogin(token, role, firstName);
+  ngOnInit() {
+    // ✅ Read returnUrl from query params
+    this.route.queryParams.subscribe(params => {
+      this.returnUrl = params['returnUrl'] || '/';
+    });
+  }
 
-      // ⭐ ROLE-BASED REDIRECTION
-      if (role === 'Admin') {
-        this.router.navigate(['/dashboard']);
-      } else if(role=='Tenant')
-      {
-        this.router.navigate(['/user-dashboard']);
-      }
-      else{
-        this.router.navigate(['/auth/login']);
-      }
-    },
+  submit() {
 
-    error: (err) => {
-      this.submitting = false;
-      this.errorMessage =
-        err?.error?.message || 'Invalid email or password. Try again.';
+    this.errorMessage = '';
+
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
     }
-  });
-}
 
+    this.submitting = true;
+
+    this.authService.login(this.loginForm.value).subscribe({
+
+      next: (res) => {
+
+        this.submitting = false;
+
+        const token = res.Data.AccessToken;
+        const user = res.Data.User;
+        const role = user.Roles[0];
+        const firstName = user.FirstName;
+        const userId = user.UserId;
+
+        // ✅ Save to localStorage
+        localStorage.setItem('app_token', token);
+        localStorage.setItem('app_role', role);
+        localStorage.setItem('app_user_id', userId);
+        localStorage.setItem('app_first_name', firstName);
+
+        /* ================================
+           🔥 RETURN URL LOGIC
+        ================================= */
+
+        debugger;
+
+        
+
+        // Otherwise normal role redirect
+        if (role === 'Admin') {
+          this.router.navigate(['/dashboard']);
+        }
+        else if (role === 'Tenant') {
+          this.router.navigate(['/user-dashboard']);
+        }
+        else {
+          this.router.navigate(['/']);
+        }
+      },
+
+      error: (err) => {
+        this.submitting = false;
+        this.errorMessage =
+          err?.error?.message || 'Invalid email or password. Try again.';
+      }
+    });
+  }
 }

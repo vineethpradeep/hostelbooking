@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { API_BASE_URL } from './api';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class AuthService {
   // -----------------------------
   // API Base URL
   // -----------------------------
-  private readonly baseUrl = 'https://localhost:7001/api/Auth';
+  //private readonly baseUrl = 'https://localhost:7001/api/Auth';
+  private readonly baseUrl = `${API_BASE_URL}/Auth`;
 
   constructor(private http: HttpClient) {}
 
