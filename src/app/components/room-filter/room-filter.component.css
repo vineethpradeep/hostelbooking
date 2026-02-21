@@ -1,63 +1,81 @@
+/* ── Room Filter Sidebar ── */
 .room-filter {
-    /* background: var(--bg-color); */
-    background: #1f52ae;
-    border-radius: 1rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    font-family: var(--app-font-family);
-    transition: all 0.3s ease;
-
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    font-family: "Inter", sans-serif;
     position: sticky;
     top: 80px;
-    z-index: 1000;
-}
-
-.room-filter:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    z-index: 100;
 }
 
 .room-filter h6 {
-    font-size: 1.1rem;
+    font-size: 0.82rem;
     font-weight: 700;
-    margin-bottom: 1rem;
-    color: var(--font-white-color);
-    letter-spacing: 0.5px;
+    color: #0f172a;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-.room-filter .form-control {
+.room-filter label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.35rem;
+    display: block;
+}
+
+.room-filter .form-control,
+.room-filter .form-select {
+    border: 1.5px solid #e2e8f0;
     border-radius: 10px;
-    border: 1px solid #e5e7eb;
-    padding: 10px 14px;
-    font-size: 0.95rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.875rem;
+    color: #1e293b;
     margin-bottom: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: "Inter", sans-serif;
 }
 
-.room-filter .form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.2);
+.room-filter .form-control:focus,
+.room-filter .form-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
     outline: none;
 }
 
 .room-filter .btn {
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-    color: #fff;
-    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, #2563eb, #7c3aed) !important;
+    color: #fff !important;
+    border-radius: 50px !important;
     font-weight: 600;
-    padding: 10px 16px;
+    font-size: 0.875rem;
+    padding: 0.65rem 1rem;
     width: 100%;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: none !important;
+    cursor: pointer;
+    transition: all 0.25s ease;
 }
 
 .room-filter .btn:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    opacity: 0.95;
 }
 
 @media (max-width: 768px) {
     .room-filter {
-        margin-top: 1rem;
+        position: static;
+        margin-bottom: 1.5rem;
     }
 }

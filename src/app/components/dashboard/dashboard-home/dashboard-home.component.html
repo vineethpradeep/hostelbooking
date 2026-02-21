@@ -1,151 +1,138 @@
-<!-- Load Bootstrap, Icons & Animations -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-
 <div class="container py-4">
 
   <!-- Page Header -->
   <div class="mb-4">
-    <h2 class="fw-bold text-dark animate__animated animate__fadeInDown">
+    <h2 class="fw-bold" style="font-family:'Lora',serif;color:#0f172a;">
       Admin Dashboard
     </h2>
-    <p class="text-muted animate__animated animate__fadeIn">
-      Complete system overview and management
-    </p>
+    <p class="text-muted" style="font-size:0.9rem;">Complete system overview and management</p>
   </div>
 
-  <!-- ================= TOP METRICS ================= -->
+  <!-- ── TOP METRICS ── -->
   <div class="row g-4">
 
     <!-- Total Properties -->
-    <div class="col-md-3">
-      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card
-                  animate__animated animate__fadeInUp">
-        <h6 class="text-muted">Total Properties</h6>
-        <h2 class="fw-bold">{{ summary?.TotalProperties?.Value }}</h2>
-        <span class="badge bg-success bg-opacity-10 text-success">
-          +{{ summary?.TotalProperties?.GrowthPercentage }}% from last month
-        </span>
+    <div class="col-xl-3 col-md-6">
+      <div class="metric-card border-blue-accent">
+        <div class="metric-icon bg-blue-soft">
+          <i class="bi bi-building"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value">{{ summary?.TotalProperties?.Value }}</div>
+          <div class="metric-label">Total Properties</div>
+          <span class="badge bg-success mt-1">
+            +{{ summary?.TotalProperties?.GrowthPercentage }}% this month
+          </span>
+        </div>
       </div>
     </div>
 
     <!-- Total Users -->
-    <div class="col-md-3">
-      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card
-                  animate__animated animate__fadeInUp animate__delay-1s">
-        <h6 class="text-muted">Total Users</h6>
-        <h2 class="fw-bold">{{ summary?.TotalUsers?.Value }}</h2>
-        <span class="badge bg-primary bg-opacity-10 text-primary">
-          +{{ summary?.TotalUsers?.GrowthPercentage }}% from last month
-        </span>
+    <div class="col-xl-3 col-md-6">
+      <div class="metric-card border-green-accent">
+        <div class="metric-icon bg-green-soft">
+          <i class="bi bi-people"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value">{{ summary?.TotalUsers?.Value }}</div>
+          <div class="metric-label">Total Users</div>
+          <span class="badge bg-primary mt-1">
+            +{{ summary?.TotalUsers?.GrowthPercentage }}% this month
+          </span>
+        </div>
       </div>
     </div>
 
     <!-- Active Tenants -->
-    <div class="col-md-3">
-      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card
-                  animate__animated animate__fadeInUp animate__delay-2s">
-        <h6 class="text-muted">Active Tenants</h6>
-        <h2 class="fw-bold">{{ summary?.ActiveTenants?.Value }}</h2>
-        <span class="badge bg-warning bg-opacity-10 text-warning">
-          +{{ summary?.ActiveTenants?.GrowthPercentage }}% from last month
-        </span>
+    <div class="col-xl-3 col-md-6">
+      <div class="metric-card border-purple-accent">
+        <div class="metric-icon bg-purple-soft">
+          <i class="bi bi-person-check"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value">{{ summary?.ActiveTenants?.Value }}</div>
+          <div class="metric-label">Active Tenants</div>
+          <span class="badge bg-warning mt-1">
+            +{{ summary?.ActiveTenants?.GrowthPercentage }}% this month
+          </span>
+        </div>
       </div>
     </div>
 
     <!-- Monthly Revenue -->
-    <div class="col-md-3">
-      <div class="card border-0 shadow-lg rounded-4 p-4 metric-card
-                  animate__animated animate__fadeInUp animate__delay-3s">
-        <h6 class="text-muted">Monthly Revenue</h6>
-        <h2 class="fw-bold">
-          ₹{{ summary?.MonthlyRevenue?.Value | number }}
-        </h2>
-        <span class="badge bg-danger bg-opacity-10 text-danger">
-          +{{ summary?.MonthlyRevenue?.GrowthPercentage }}% from last month
-        </span>
+    <div class="col-xl-3 col-md-6">
+      <div class="metric-card border-orange-accent">
+        <div class="metric-icon bg-orange-soft">
+          <i class="bi bi-currency-rupee"></i>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value">₹{{ summary?.MonthlyRevenue?.Value | number }}</div>
+          <div class="metric-label">Monthly Revenue</div>
+          <span class="badge bg-danger mt-1">
+            +{{ summary?.MonthlyRevenue?.GrowthPercentage }}% this month
+          </span>
+        </div>
       </div>
     </div>
 
   </div>
 
-  <!-- ================= SYSTEM OVERVIEW & BOOKINGS ================= -->
+  <!-- ── SYSTEM OVERVIEW & RECENT BOOKINGS ── -->
   <div class="row mt-4 g-4">
 
     <!-- System Overview -->
-    <div class="col-lg-6">
-      <div class="card shadow-lg rounded-4 border-0
-                  animate__animated animate__fadeInLeft">
-        <div class="card-header bg-white border-0 rounded-top-4 px-4 py-3">
-          <h5 class="fw-bold">System Overview</h5>
+    <div class="col-lg-5">
+      <div class="card border-0 h-100">
+        <div class="card-header bg-white border-0 px-4 py-3">
+          <h5 class="fw-bold mb-0">System Overview</h5>
         </div>
-
-        <div class="card-body px-4 py-3">
+        <div class="card-body px-4 py-2">
           <ul class="list-group list-group-flush elegant-list">
-
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>Total Properties</span>
               <strong>{{ systemOverview?.TotalProperties }}</strong>
             </li>
-
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>Active Properties</span>
               <strong>{{ systemOverview?.ActiveProperties }}</strong>
             </li>
-
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>Total Rooms</span>
               <strong>{{ systemOverview?.TotalRooms }}</strong>
             </li>
-
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>Occupied Rooms</span>
-              <strong>
-                {{ systemOverview?.OccupiedRooms }}
-                ({{ systemOverview?.OccupancyPercentage }}%)
-              </strong>
+              <strong>{{ systemOverview?.OccupiedRooms }} ({{ systemOverview?.OccupancyPercentage }}%)</strong>
             </li>
-
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>Available Rooms</span>
               <strong>{{ systemOverview?.AvailableRooms }}</strong>
             </li>
-
-            <!-- <li class="list-group-item d-flex justify-content-between">
-              <span>Pending Bookings</span>
-              <strong>{{ systemOverview?.PendingBookings }}</strong>
-            </li>
- -->
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>Total Revenue</span>
               <strong>₹{{ systemOverview?.TotalRevenue | number }}</strong>
             </li>
-
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <span>Pending Payments</span>
               <strong>{{ systemOverview?.PendingPayments }}</strong>
             </li>
-
           </ul>
         </div>
       </div>
     </div>
 
     <!-- Recent Bookings -->
-    <div class="col-lg-6">
-      <div class="card shadow-lg rounded-4 border-0
-                  animate__animated animate__fadeInRight">
-        <div class="card-header bg-white border-0 rounded-top-4 px-4 py-3">
-          <h5 class="fw-bold">Recent Bookings</h5>
+    <div class="col-lg-7">
+      <div class="card border-0 h-100">
+        <div class="card-header bg-white border-0 px-4 py-3">
+          <h5 class="fw-bold mb-0">Recent Bookings</h5>
         </div>
-
-        <div class="card-body">
+        <div class="card-body p-0">
           <div class="table-responsive">
-            <table class="table align-middle elegant-table">
+            <table class="table table-hover align-middle elegant-table mb-0">
               <thead>
                 <tr>
-                  <th>Booking ID</th>
+                  <th>ID</th>
                   <th>Tenant</th>
                   <th>Property</th>
                   <th>Room</th>
@@ -155,70 +142,60 @@
               </thead>
               <tbody>
                 <tr *ngFor="let b of recentBookings">
-                  <td>#{{ b.BookingNumber }}</td>
+                  <td><span class="fw-600">#{{ b.BookingNumber }}</span></td>
                   <td>{{ b.TenantName }}</td>
                   <td>{{ b.PropertyName }}</td>
                   <td>{{ b.RoomNumber }}</td>
                   <td>{{ b.MoveInDate | date:'mediumDate' }}</td>
                   <td>₹{{ b.Rent }}</td>
                 </tr>
-
                 <tr *ngIf="recentBookings?.length === 0">
-                  <td colspan="6" class="text-center text-muted">
-                    No recent bookings
-                  </td>
+                  <td colspan="6" class="text-center text-muted py-4">No recent bookings</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-
       </div>
     </div>
 
   </div>
 
-  <!-- ================= RECENT PAYMENTS ================= -->
+  <!-- ── RECENT PAYMENTS ── -->
   <div class="mt-4">
-    <div class="card shadow-lg rounded-4 border-0
-                animate__animated animate__fadeInUp">
-      <div class="card-header bg-white border-0 rounded-top-4 px-4 py-3">
-        <h5 class="fw-bold">Recent Payments</h5>
+    <div class="card border-0">
+      <div class="card-header bg-white border-0 px-4 py-3">
+        <h5 class="fw-bold mb-0">Recent Payments</h5>
       </div>
-
-      <div class="card-body">
+      <div class="card-body p-0">
         <div class="table-responsive">
-          <table class="table elegant-table align-middle">
+          <table class="table table-hover align-middle elegant-table mb-0">
             <thead>
               <tr>
                 <th>Payment ID</th>
                 <th>Tenant</th>
                 <th>Property</th>
-                <th>Payment Type</th>
+                <th>Type</th>
                 <th>Amount</th>
-                <th>Payment Date</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let p of recentPayments">
-                <td>#{{ p.PaymentNumber }}</td>
+                <td><span class="fw-600">#{{ p.PaymentNumber }}</span></td>
                 <td>{{ p.TenantName }}</td>
                 <td>{{ p.PropertyName }}</td>
                 <td>{{ p.PaymentType }}</td>
                 <td>₹{{ p.Amount }}</td>
                 <td>{{ p.PaymentDate | date:'mediumDate' }}</td>
               </tr>
-
               <tr *ngIf="recentPayments?.length === 0">
-                <td colspan="6" class="text-center text-muted">
-                  No recent payments
-                </td>
+                <td colspan="6" class="text-center text-muted py-4">No recent payments</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-
     </div>
   </div>
 

@@ -1,44 +1,128 @@
-<div class="container-fluid mt-4">
-  <h3 class="page-title">Payment Details</h3>
+<div class="payments-page">
 
-  <div class="table-responsive mt-3">
-    <table class="table table-bordered table-hover">
-      <thead class="table-dark">
-        <tr>
-          <th>#</th>
-             <th>Booking Number</th>
-          <th>Transaction ID</th>
-          <th>Phone</th>
-          <th>Amount</th>
-          <th>Status</th>
-        </tr>
-      </thead>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-icon">
+        <i class="bi bi-credit-card-2-front-fill"></i>
+      </div>
+      <div>
+        <h1 class="page-title">Payments</h1>
+        <p class="page-subtitle">View all payment transactions</p>
+      </div>
+    </div>
+    <div class="page-header-right">
+      <div class="total-badge">
+        <i class="bi bi-receipt me-1"></i>
+        {{ filteredPayments.length }} Transactions
+      </div>
+    </div>
+  </div>
 
-      <tbody>
-        <tr *ngFor="let p of paymentList; let i = index">
-          <td>{{ i + 1 }}</td>
-         <td>{{ p.bookingNumber }}</td>
-          <td>{{ p.transactionId }}</td>
-          <td>{{ p.phone }}</td>
-          <td>{{ p.amount }}</td>
-          <td>
-            <span
-              class="badge"
-              [ngClass]="{
-                'bg-success': p.status === 'Success'|| p.status === 'Paid',
-                'bg-warning text-dark': p.status === 'Pending',
-                'bg-danger': p.status === 'Failed'
-              }"
-            >
-              {{ p.status }}
-            </span>
-          </td>
-        </tr>
+  <!-- Table Card -->
+  <div class="table-card">
 
-        <tr *ngIf="paymentList.length === 0">
-          <td colspan="5" class="text-center">No payments found</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-card-header">
+      <div class="table-title">
+        <i class="bi bi-table me-2"></i>All Transactions
+      </div>
+      <!-- Search -->
+      <div class="search-wrap">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Search by booking no, txn ID, status…"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()" />
+        <button *ngIf="searchTerm" class="search-clear" (click)="searchTerm=''; onSearchChange()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="payments-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Booking No</th>
+            <th>Transaction ID</th>
+            <th>Phone</th>
+            <th>Amount</th>
+            <th class="text-center">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of pagedPayments; let i = index">
+            <td>
+              <span class="row-num">{{ startIndex + i }}</span>
+            </td>
+            <td>
+              <span class="booking-ref">
+                <i class="bi bi-hash text-muted me-1"></i>{{ p.bookingNumber }}
+              </span>
+            </td>
+            <td>
+              <span class="txn-id">
+                <i class="bi bi-tag me-1"></i>{{ p.transactionId }}
+              </span>
+            </td>
+            <td>
+              <span class="phone-cell">
+                <i class="bi bi-telephone me-1"></i>{{ p.phone || '—' }}
+              </span>
+            </td>
+            <td>
+              <span class="amount-cell">
+                <i class="bi bi-currency-rupee"></i>{{ p.amount | number:'1.2-2' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <span class="status-badge"
+                [class.status-success]="p.status === 'Success' || p.status === 'Paid'"
+                [class.status-pending]="p.status === 'Pending'"
+                [class.status-failed]="p.status === 'Failed'">
+                <i class="bi"
+                  [class.bi-check-circle-fill]="p.status === 'Success' || p.status === 'Paid'"
+                  [class.bi-clock-fill]="p.status === 'Pending'"
+                  [class.bi-x-circle-fill]="p.status === 'Failed'">
+                </i>
+                {{ p.status }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="filteredPayments.length === 0">
+            <td colspan="6" class="empty-row">
+              <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+              {{ searchTerm ? 'No results for "' + searchTerm + '"' : 'No transactions found' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Footer -->
+    <div class="pagination-footer" *ngIf="filteredPayments.length > 0">
+      <span class="pagination-info">
+        Showing <strong>{{ startIndex }}–{{ endIndex }}</strong> of <strong>{{ filteredPayments.length }}</strong> transactions
+      </span>
+      <div class="pagination-controls">
+        <button class="page-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button
+          *ngFor="let p of pageNumbers"
+          class="page-btn"
+          [class.active]="p === currentPage"
+          (click)="goToPage(p)">
+          {{ p }}
+        </button>
+        <button class="page-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>

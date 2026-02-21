@@ -1,35 +1,118 @@
-<div class="card p-3 shadow-sm">
-  <h5 class="mb-3">Booking Details</h5>
+<div class="bookings-page">
 
-  <table class="table table-bordered table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th>#</th>
-        <th>BookingNo</th>
-       <!-- <th>Booking Type</th> -->
-        <th>Check-In</th>
-        <th>Check-Out</th>
-        <th>Booking Status</th>
-      </tr>
-    </thead>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-icon">
+        <i class="bi bi-calendar-check-fill"></i>
+      </div>
+      <div>
+        <h1 class="page-title">Bookings</h1>
+        <p class="page-subtitle">View and manage all booking records</p>
+      </div>
+    </div>
+    <div class="page-header-right">
+      <div class="total-badge">
+        <i class="bi bi-journal-check me-1"></i>
+        {{ filteredBookings.length }} Bookings
+      </div>
+    </div>
+  </div>
 
-    <tbody>
-      <tr *ngFor="let b of BookingList; let i = index">
-        <td>{{ i + 1 }}</td>
+  <!-- Table Card -->
+  <div class="table-card">
 
-        <td>{{ b.BookingNumber }}</td>
-        <!-- <td>{{ b.BookingType }}</td> -->
+    <div class="table-card-header">
+      <div class="table-title">
+        <i class="bi bi-table me-2"></i>All Bookings
+      </div>
+      <!-- Search -->
+      <div class="search-wrap">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Search by booking no or status…"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()" />
+        <button *ngIf="searchTerm" class="search-clear" (click)="searchTerm=''; onSearchChange()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
 
-        <td>{{ b.CheckInDate | date:'dd-MM-yyyy' }}</td>
+    <div class="table-responsive">
+      <table class="bookings-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Booking No</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th class="text-center">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let b of pagedBookings; let i = index">
+            <td>
+              <span class="row-num">{{ startIndex + i }}</span>
+            </td>
+            <td>
+              <div class="booking-num-cell">
+                <i class="bi bi-hash text-muted me-1"></i>
+                <span class="fw-600">{{ b.BookingNumber }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="date-cell">
+                <i class="bi bi-calendar-event me-1"></i>{{ b.CheckInDate | date:'dd MMM yyyy' }}
+              </span>
+            </td>
+            <td>
+              <span class="date-cell">
+                <i class="bi bi-calendar2-check me-1"></i>{{ b.CheckOutDate | date:'dd MMM yyyy' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <span class="status-badge"
+                [class.status-confirmed]="b.Status === 'Confirmed'"
+                [class.status-pending]="b.Status === 'Pending'"
+                [class.status-cancelled]="b.Status === 'Cancelled'">
+                {{ b.Status }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="filteredBookings.length === 0">
+            <td colspan="5" class="empty-row">
+              <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+              {{ searchTerm ? 'No results for "' + searchTerm + '"' : 'No bookings found' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-        <td>
-          {{ b.CheckOutDate | date:'dd-MM-yyyy' }}
-        </td>
+    <!-- Pagination Footer -->
+    <div class="pagination-footer" *ngIf="filteredBookings.length > 0">
+      <span class="pagination-info">
+        Showing <strong>{{ startIndex }}–{{ endIndex }}</strong> of <strong>{{ filteredBookings.length }}</strong> bookings
+      </span>
+      <div class="pagination-controls">
+        <button class="page-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button
+          *ngFor="let p of pageNumbers"
+          class="page-btn"
+          [class.active]="p === currentPage"
+          (click)="goToPage(p)">
+          {{ p }}
+        </button>
+        <button class="page-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+    </div>
 
-        <td>
-         {{b.Status}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  </div>
 </div>

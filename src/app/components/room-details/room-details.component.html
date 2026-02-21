@@ -1,74 +1,49 @@
-<section class="room-details-section py-5" *ngIf="room">
+<section class="room-details-section" *ngIf="room">
   <div class="container">
     <div class="row g-4">
+
+      <!-- Room Info Card -->
       <div class="col-lg-4">
-        <div
-          class="room-details-item shadow-lg rounded overflow-hidden position-relative"
-        >
-          <div class="room-image position-relative">
-            <img [src]="room.Image" [alt]="room.Name" class="img-fluid" />
-            <div
-              class="book-now-overlay d-flex justify-content-center align-items-center"
-            >
-              <p
-                class="text-center text-white fw-semibold px-4 py-2 bg-dark bg-opacity-75 rounded-pill"
-              >
-                <!-- {{ room.services[0] }} -->
-              </p>
-            </div>
+        <div class="room-details-item">
+          <div class="room-image">
+            <img [src]="room.Image" [alt]="room.Name" />
           </div>
 
-          <div class="rd-text p-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <h3 class="room-name mb-0">{{ room.Name }}</h3>
+          <div class="rd-text">
+            <h3 class="room-name mb-1">{{ room.Name }}</h3>
+
+            <div class="room-price text-primary fw-bold mb-3">
+              ₹{{ room.RentPerBed }} <span class="text-muted">/Month</span>
             </div>
 
-            <h5 class="room-price text-primary fw-bold mb-3">
-              ₹{{ room.RentPerBed }} <span class="text-muted fs-6">/Month</span>
-            </h5>
+            <div class="room-size d-flex align-items-center flex-wrap mb-3">
+              <span><i class="bi bi-bed text-primary"></i> {{ room.Size }}</span>
+              <span class="ms-3">
+                <i class="bi bi-people-fill text-primary"></i> {{ room.Capacity }} Person
+              </span>
+            </div>
 
-            <h4
-              class="room-size text-muted fw-normal mb-3 d-flex align-items-center gap-2"
-            >
-              <i class="bi bi-bed text-primary"></i> {{ room.Size }}
-              <span class="ms-3"
-                ><i class="bi bi-people-fill text-primary"></i>
-                {{ room.Capacity }} Person</span
-              >
-            </h4>
-
-            <ul class="list-unstyled room-features d-flex flex-wrap gap-3 mb-3">
-              <li class="d-flex align-items-center">
-                <i class="bi bi-snow text-info me-2"></i> <span>AC</span>
-              </li>
-              <li class="d-flex align-items-center">
-                <i class="bi bi-droplet text-primary me-2"></i>
-                <span>Bathroom</span>
-              </li>
-              <li class="d-flex align-items-center">
-                <i class="bi bi-book text-warning me-2"></i>
-                <span>Study Table</span>
-              </li>
-              <li class="d-flex align-items-center">
-                <i class="bi bi-box text-secondary me-2"></i>
-                <span>Wardrobe</span>
-              </li>
+            <ul class="room-features mb-3">
+              <li><i class="bi bi-snow text-info"></i> AC</li>
+              <li><i class="bi bi-droplet text-primary"></i> Bathroom</li>
+              <li><i class="bi bi-book text-warning"></i> Study Table</li>
+              <li><i class="bi bi-box text-secondary"></i> Wardrobe</li>
             </ul>
 
             <p class="text-muted small">
-              {{
-                room.Description || "Perfect stay with all amenities included."
-              }}
+              {{ room.Description || "Perfect stay with all amenities included." }}
             </p>
           </div>
         </div>
       </div>
 
+      <!-- Booking Form -->
       <div class="col-lg-8">
-        <div class="room-booking shadow-sm rounded">
-          <app-edit-booking  [monthlyRent]="room.RentPerBed"></app-edit-booking>
+        <div class="room-booking">
+          <app-edit-booking [monthlyRent]="room.RentPerBed"></app-edit-booking>
         </div>
       </div>
+
     </div>
   </div>
 </section>

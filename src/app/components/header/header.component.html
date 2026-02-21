@@ -1,13 +1,22 @@
 <header class="header-section" [class.sticky]="isSticky">
-  <div class="container-fluid px-4">
-    <div class="d-flex justify-content-between align-items-center py-3">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center py-2">
+
+      <!-- Logo -->
       <a routerLink="/" class="logo">
-        <img src="assets/img/logo.png" alt="Logo" />
+        <img src="assets/img/logo.png" alt="Karthick PG Logo" />
       </a>
+
+      <!-- Desktop Nav -->
       <nav class="nav-menu" [class.active]="menuOpen">
-        <div class="menu-close d-md-none text-end mb-4" (click)="toggleMenu()">
-          <i class="bi bi-x-lg fs-4"></i>
+        <!-- Mobile panel header -->
+        <div class="d-lg-none d-flex justify-content-between align-items-center mb-4">
+          <span class="mobile-brand">Karthick PG</span>
+          <button class="menu-close-btn" (click)="toggleMenu()" aria-label="Close menu">
+            <i class="bi bi-x-lg"></i>
+          </button>
         </div>
+
         <ul class="mainmenu list-unstyled mb-0">
           <li
             *ngFor="let item of menu"
@@ -16,7 +25,7 @@
           >
             <a [routerLink]="item.url" (click)="onNavigate()" class="nav-link">
               {{ item.label }}
-              <i *ngIf="item.children" class="bi bi-chevron-down ms-1"></i>
+              <i *ngIf="item.children" class="bi bi-chevron-down ms-1" style="font-size:0.7rem;"></i>
             </a>
             <ul
               class="dropdown list-unstyled"
@@ -35,27 +44,35 @@
           </li>
         </ul>
 
-        <div class="mobile-login d-md-none mt-4 text-center">
-          <button
-            class="btn btn-primary w-100 login-btn"
-            routerLink="/auth/login"
-          >
-            Login
-          </button>
+        <!-- Mobile auth buttons -->
+        <div class="mobile-login d-lg-none mt-3">
+          <a routerLink="/auth/register" class="btn register-btn w-100 mb-2" (click)="toggleMenu()">
+            <i class="bi bi-person-plus me-2"></i>Register
+          </a>
+          <a routerLink="/auth/login" class="btn login-btn w-100" (click)="toggleMenu()">
+            <i class="bi bi-person-circle me-2"></i>Login
+          </a>
         </div>
       </nav>
 
+      <!-- Desktop CTA -->
       <div class="actions">
-        <button class="btn btn-primary login-btn" routerLink="/auth/login">
-          Login
-        </button>
+        <a routerLink="/auth/register" class="btn register-btn">
+          <i class="bi bi-person-plus me-1"></i> Register
+        </a>
+        <a routerLink="/auth/login" class="btn login-btn">
+          <i class="bi bi-person-circle me-1"></i> Login
+        </a>
       </div>
 
-      <div class="canvas-open d-md-none" (click)="toggleMenu()">
+      <!-- Hamburger -->
+      <div class="canvas-open d-lg-none" (click)="toggleMenu()">
         <i class="bi bi-list fs-3"></i>
       </div>
     </div>
   </div>
+
+  <!-- Mobile overlay -->
   <div
     class="offcanvas-overlay"
     [class.active]="menuOpen"

@@ -1,269 +1,287 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-
 <div class="container py-4">
 
-  <!-- HEADER -->
-  <h2 class="fw-bold mb-1 animate__animated animate__fadeInDown">
-    User / Tenant Dashboard
-  </h2>
-
-  <p class="text-muted mb-4 animate__animated animate__fadeIn">
-    Welcome back, {{ userName }}! Here's your booking overview.
-  </p>
-
-  <!-- ================== TOP STATS ================== -->
-  <div class="row g-3 mb-4">
-  
-    <div class="col-md-3">
-      <div class="card shadow-sm p-3">
-        <h6 class="text-uppercase text-muted small">Booking</h6>
-        <h5 class="fw-bold">{{ bookingSummary.BookingStatus }}</h5>
-        <span class="text-muted small">
-          Since {{ bookingSummary.BookingSince | date:'MMM y' }}
-        </span>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card shadow-sm p-3">
-        <h6 class="text-uppercase text-muted small">Monthly Rent</h6>
-        <h5 class="fw-bold">₹{{ bookingSummary.MonthlyRent }}</h5>
-        <span class="text-muted small">
-          Next due: {{ bookingSummary.NextDueDate | date:'MMM d, y' }} 
-        </span>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card shadow-sm p-3">
-        <h6 class="text-uppercase text-muted small">Pending Payments</h6>
-        <h5 class="fw-bold">{{ bookingSummary.PendingCount }}</h5>
-        <span class="text-muted small">
-          Total: ₹{{ bookingSummary.PendingTotalAmount }}
-        </span>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card shadow-sm p-3">
-        <h6 class="text-uppercase text-muted small">Stay Duration</h6>
-        <h5 class="fw-bold">{{ bookingSummary.StayDurationMonths }} Months</h5>
-        <span class="text-muted small">
-          Since {{ bookingSummary.StaySince | date:'MMM y' }}
-        </span>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ================== CURRENT BOOKING DETAILS ================== -->
- <div class="booking-card" *ngIf="currentBooking">
-  <h3>Current Booking Details</h3>
-
-  <div class="row">
-    <div class="col">
-      <p><strong>Property:</strong> {{ currentBooking.PropertyName }}</p>
-      <p><strong>Room No:</strong> {{ currentBooking.RoomNo }}</p>
-      <p><strong>Room Type:</strong> {{ currentBooking.RoomType }}</p>
-      <p><strong>Floor:</strong> {{ currentBooking.Floor }}</p>
-      <p><strong>Move-In Date:</strong>
-        {{ currentBooking.MoveInDate | date:'MMM d, yyyy' }}
-      </p>
-    </div>
-
-    <div class="col">
-      <p><strong>Contract:</strong>
-        {{ currentBooking.ContractMonths }} Months
-      </p>
-      <p><strong>Monthly Rent:</strong>
-        ₹{{ currentBooking.MonthlyRent }}
-      </p>
-      <p><strong>Security Deposit:</strong>
-        ₹{{ currentBooking.SecurityDeposit }}
-      </p>
-      <p><strong>Address:</strong>
-        {{ currentBooking.Address }}
-      </p>
-      <p><strong>Owner Contact:</strong>
-        {{ currentBooking.OwnerContact }}
-      </p>
-    </div>
-  </div>
-</div>
-
-  <!-- ================== AMENITIES ================== -->
-  <div class="card shadow-sm p-4 mt-3 animate__animated animate__fadeInRight">
-    <h5 class="fw-bold mb-3">Amenities Included</h5>
-
-    <p *ngIf="amenities; else noAmenities">
-      {{amenities }}
+  <!-- Header -->
+  <div class="mb-4">
+    <h2 class="fw-bold mb-1" style="font-family:'Lora',serif;color:#0f172a;">
+      Tenant Dashboard
+    </h2>
+    <p class="text-muted" style="font-size:0.9rem;">
+      Welcome back, <strong>{{ userName }}</strong>! Here's your booking overview.
     </p>
-
-    <ng-template #noAmenities>
-      <span class="text-muted">No amenities available</span>
-    </ng-template>
   </div>
 
-  <!-- ================== UPCOMING PAYMENTS ================== -->
-  <div class="card shadow-sm p-4 mt-4 animate__animated animate__fadeInUp">
-    <h5 class="fw-bold mb-3">Upcoming Payments</h5>
+  <!-- ── TOP STATS ── -->
+  <div class="row g-4">
 
-    <table class="table table-bordered">
-      <thead class="table-light">
-        <tr>
-          <th>Payment Type</th>
-          <th>Amount</th>
-          <th>Due Date</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+    <div class="col-md-3 col-sm-6">
+      <div class="metric-card border-blue-accent">
+        <div class="metric-icon bg-blue-soft">
+          <i class="bi bi-house-door"></i>
+        </div>
+        <div>
+          <div class="metric-value" style="font-size:1.1rem;">{{ bookingSummary.BookingStatus }}</div>
+          <div class="metric-label">Booking Status</div>
+          <div class="text-muted" style="font-size:0.75rem;margin-top:0.2rem;">
+            Since {{ bookingSummary.BookingSince | date:'MMM y' }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <tbody>
-        <tr *ngFor="let p of upcomingPayments">
-          <td>{{ p.paymentType }}</td>
-          <td>₹{{ p.amount }}</td>
-          <td>{{ p.dueDate | date:'MMM d, y' }}</td>
-          <td>
-            <span class="badge"
-              [ngClass]="{
-                'bg-warning text-dark': p.status === 'Due Soon',
-                'bg-secondary': p.status === 'Upcoming',
-                'bg-danger': p.status === 'Overdue'
-              }">
-              {{ p.status }}
-            </span>
-          </td>
-          <td>
-            <button class="btn btn-success btn-sm"
-                    (click)="payNow(p)">
-              <i class="bi bi-cash-coin"></i> Pay Now
-            </button>
-          </td>
-        </tr>
+    <div class="col-md-3 col-sm-6">
+      <div class="metric-card border-green-accent">
+        <div class="metric-icon bg-green-soft">
+          <i class="bi bi-currency-rupee"></i>
+        </div>
+        <div>
+          <div class="metric-value">₹{{ bookingSummary.MonthlyRent }}</div>
+          <div class="metric-label">Monthly Rent</div>
+          <div class="text-muted" style="font-size:0.75rem;margin-top:0.2rem;">
+            Due: {{ bookingSummary.NextDueDate | date:'MMM d, y' }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <tr *ngIf="upcomingPayments.length === 0">
-          <td colspan="5" class="text-center text-muted">
-            No upcoming payments
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="col-md-3 col-sm-6">
+      <div class="metric-card border-orange-accent">
+        <div class="metric-icon bg-orange-soft">
+          <i class="bi bi-exclamation-circle"></i>
+        </div>
+        <div>
+          <div class="metric-value">{{ bookingSummary.PendingCount }}</div>
+          <div class="metric-label">Pending Payments</div>
+          <div class="text-muted" style="font-size:0.75rem;margin-top:0.2rem;">
+            Total: ₹{{ bookingSummary.PendingTotalAmount }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+      <div class="metric-card border-purple-accent">
+        <div class="metric-icon bg-purple-soft">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+        <div>
+          <div class="metric-value">{{ bookingSummary.StayDurationMonths }}<small style="font-size:0.9rem;font-weight:500;"> mo</small></div>
+          <div class="metric-label">Stay Duration</div>
+          <div class="text-muted" style="font-size:0.75rem;margin-top:0.2rem;">
+            Since {{ bookingSummary.StaySince | date:'MMM y' }}
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  
 
-  
-  <!-- ================== RECENT BOOKINGS ================== -->
-  <div class="card shadow-sm p-4 mt-4 animate__animated animate__fadeInRight">
-    <h5 class="fw-bold mb-3">Recent Bookings</h5>
+  <!-- ── CURRENT BOOKING DETAILS ── -->
+  <div class="dashboard-section-card" *ngIf="currentBooking">
+    <div class="section-card-header">
+      <h5><i class="bi bi-journal-bookmark-fill text-primary me-2"></i>Current Booking Details</h5>
+    </div>
+    <div class="section-card-body">
+      <div class="booking-info-grid">
+        <div class="booking-info-item">
+          <span class="label">Property</span>
+          <span class="value">{{ currentBooking.PropertyName }}</span>
+        </div>
+        <div class="booking-info-item">
+          <span class="label">Contract</span>
+          <span class="value">{{ currentBooking.ContractMonths }} Months</span>
+        </div>
+        <div class="booking-info-item">
+          <span class="label">Room No</span>
+          <span class="value">{{ currentBooking.RoomNo }}</span>
+        </div>
+        <div class="booking-info-item">
+          <span class="label">Monthly Rent</span>
+          <span class="value">₹{{ currentBooking.MonthlyRent }}</span>
+        </div>
+        <div class="booking-info-item">
+          <span class="label">Room Type</span>
+          <span class="value">{{ currentBooking.RoomType }}</span>
+        </div>
+        <div class="booking-info-item">
+          <span class="label">Security Deposit</span>
+          <span class="value">₹{{ currentBooking.SecurityDeposit }}</span>
+        </div>
+        <div class="booking-info-item">
+          <span class="label">Floor</span>
+          <span class="value">{{ currentBooking.Floor }}</span>
+        </div>
+        <div class="booking-info-item">
+          <span class="label">Owner Contact</span>
+          <span class="value">{{ currentBooking.OwnerContact }}</span>
+        </div>
+        <div class="booking-info-item">
+          <span class="label">Move-In Date</span>
+          <span class="value">{{ currentBooking.MoveInDate | date:'MMM d, yyyy' }}</span>
+        </div>
+        <div class="booking-info-item">
+          <span class="label">Address</span>
+          <span class="value">{{ currentBooking.Address }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- ── AMENITIES ── -->
+  <div class="dashboard-section-card">
+    <div class="section-card-header">
+      <h5><i class="bi bi-stars text-warning me-2"></i>Amenities Included</h5>
+    </div>
+    <div class="section-card-body">
+      <p class="mb-0" style="font-size:0.9rem;color:#475569;" *ngIf="amenities; else noAmenities">
+        {{ amenities }}
+      </p>
+      <ng-template #noAmenities>
+        <span class="text-muted">No amenities available</span>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- ── UPCOMING PAYMENTS ── -->
+  <div class="dashboard-section-card">
+    <div class="section-card-header">
+      <h5><i class="bi bi-calendar2-event text-danger me-2"></i>Upcoming Payments</h5>
+    </div>
     <div class="table-responsive">
-      <table class="table table-hover align-middle">
-        <thead class="table-light">
+      <table class="table table-hover align-middle user-table mb-0">
+        <thead>
+          <tr>
+            <th>Payment Type</th>
+            <th>Amount</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of upcomingPayments">
+            <td>{{ p.paymentType }}</td>
+            <td>₹{{ p.amount }}</td>
+            <td>{{ p.dueDate | date:'MMM d, y' }}</td>
+            <td>
+              <span class="badge rounded-pill"
+                [ngClass]="{
+                  'bg-warning text-dark': p.status === 'Due Soon',
+                  'bg-secondary': p.status === 'Upcoming',
+                  'bg-danger': p.status === 'Overdue'
+                }">
+                {{ p.status }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-success rounded-pill px-3" (click)="payNow(p)">
+                <i class="bi bi-cash-coin me-1"></i> Pay Now
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="upcomingPayments.length === 0">
+            <td colspan="5" class="text-center text-muted py-4">No upcoming payments</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── RECENT BOOKINGS ── -->
+  <div class="dashboard-section-card">
+    <div class="section-card-header">
+      <h5><i class="bi bi-clock-history text-primary me-2"></i>Recent Bookings</h5>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle user-table mb-0">
+        <thead>
           <tr>
             <th>Booking #</th>
             <th>Property</th>
             <th>Room</th>
             <th>Move-In</th>
             <th>Rent</th>
-          
           </tr>
         </thead>
-
         <tbody>
           <tr *ngFor="let b of recentBookings">
-            <td>#{{ b.BookingNumber }}</td>
+            <td><strong>#{{ b.BookingNumber }}</strong></td>
             <td>{{ b.PropertyName }}</td>
             <td>{{ b.RoomNumber }}</td>
             <td>{{ b.MoveInDate | date:'mediumDate' }}</td>
             <td>₹{{ b.Rent }}</td>
-         
           </tr>
-
           <tr *ngIf="recentBookings.length === 0">
-            <td colspan="6" class="text-center text-muted">
-              No recent bookings found
-            </td>
+            <td colspan="5" class="text-center text-muted py-4">No recent bookings found</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <!-- ================== MAINTENANCE ================== -->
-  <div class="card shadow-sm p-4 mt-4 animate__animated animate__fadeInUp">
-    <h5 class="fw-bold mb-3">Maintenance Requests</h5>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Issue</th>
-          <th>Description</th>
-          <th>Date Raised</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr *ngFor="let m of maintenanceRequests">
-          <td>#MR-{{ m.maintenanceRequestId }}</td>
-          <td>{{ m.issue }}</td>
-          <td>{{ m.description }}</td>
-          <td>{{ m.dateRaised | date:'MMM d, y' }}</td>
-          <td>
-            <span class="badge"
-              [ngClass]="{
-                'bg-success': m.status === 'Resolved',
-                'bg-warning': m.status === 'Open',
-                'bg-info': m.status === 'In Progress'
-              }">
-              {{ m.status }}
-            </span>
-          </td>
-        </tr>
-
-        <tr *ngIf="maintenanceRequests.length === 0">
-          <td colspan="5" class="text-center text-muted">
-            No maintenance requests
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <button class="btn btn-warning text-dark mt-3"
-            (click)="requestMaintenance()">
-      <i class="bi bi-tools"></i> Request Maintenance
-    </button>
+  <!-- ── MAINTENANCE ── -->
+  <div class="dashboard-section-card">
+    <div class="section-card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0"><i class="bi bi-tools text-warning me-2"></i>Maintenance Requests</h5>
+      <button class="btn btn-sm btn-outline-warning rounded-pill" (click)="requestMaintenance()">
+        <i class="bi bi-plus-circle me-1"></i> New Request
+      </button>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle user-table mb-0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Issue</th>
+            <th>Description</th>
+            <th>Date Raised</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of maintenanceRequests">
+            <td>#MR-{{ m.maintenanceRequestId }}</td>
+            <td>{{ m.issue }}</td>
+            <td>{{ m.description }}</td>
+            <td>{{ m.dateRaised | date:'MMM d, y' }}</td>
+            <td>
+              <span class="badge rounded-pill"
+                [ngClass]="{
+                  'bg-success': m.status === 'Resolved',
+                  'bg-warning text-dark': m.status === 'Open',
+                  'bg-info text-dark': m.status === 'In Progress'
+                }">
+                {{ m.status }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="maintenanceRequests.length === 0">
+            <td colspan="5" class="text-center text-muted py-4">No maintenance requests</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <!-- ================== QUICK ACTIONS ================== -->
-  <div class="card shadow-sm p-4 mt-4 mb-5 animate__animated animate__fadeInUp">
-    <h5 class="fw-bold mb-3">Quick Actions</h5>
-
-    <div class="d-flex gap-3 flex-wrap">
-
-      <button class="btn btn-primary action-btn"
-              (click)="payNow(upcomingPayments[0])">
-        <i class="bi bi-credit-card"></i> PAY NOW
-      </button>
-
-      <button class="btn btn-secondary action-btn"
-              (click)="downloadReceipt()">
-        <i class="bi bi-download"></i> Download Receipt
-      </button>
-
-      <button class="btn btn-warning text-dark action-btn"
-              (click)="requestMaintenance()">
-        <i class="bi bi-tools"></i> Request Maintenance
-      </button>
-
-      <button class="btn btn-info text-white action-btn"
-              (click)="extendBooking()">
-        <i class="bi bi-arrow-repeat"></i> Extend Booking
-      </button>
-
+  <!-- ── QUICK ACTIONS ── -->
+  <div class="dashboard-section-card mb-5">
+    <div class="section-card-header">
+      <h5><i class="bi bi-lightning-charge text-info me-2"></i>Quick Actions</h5>
+    </div>
+    <div class="section-card-body">
+      <div class="d-flex flex-wrap gap-3">
+        <button class="btn btn-primary action-btn" (click)="payNow(upcomingPayments[0])">
+          <i class="bi bi-credit-card"></i> Pay Now
+        </button>
+        <button class="btn btn-secondary action-btn" (click)="downloadReceipt()">
+          <i class="bi bi-download"></i> Download Receipt
+        </button>
+        <button class="btn btn-warning action-btn" (click)="requestMaintenance()">
+          <i class="bi bi-tools"></i> Request Maintenance
+        </button>
+        <button class="btn btn-info text-white action-btn" (click)="extendBooking()">
+          <i class="bi bi-arrow-repeat"></i> Extend Booking
+        </button>
+      </div>
     </div>
   </div>
 

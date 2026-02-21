@@ -1,36 +1,168 @@
+/* ── Admin Dashboard ── */
+
+/* Metric Cards */
 .metric-card {
-  background: #ffffff;
-  transition: all 0.2s ease-in-out;
-}
-.metric-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-left: 4px solid #2563eb;
+    transition: all 0.25s ease;
+    animation: fadeInUp 0.5s ease forwards;
 }
 
+.metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+}
+
+.metric-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.metric-value {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    line-height: 1;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin: 0.2rem 0 0;
+    text-transform: uppercase;
+    letter-spacing: 0.75px;
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+}
+
+/* Section cards */
+.card {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+.card-header {
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.card-header h5 {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+/* Tables */
 .elegant-table thead {
-  background: #f9fafb;
-  font-weight: 600;
-  color: #4a4a4a;
+    background: #f8fafc;
+}
+
+.elegant-table thead th {
+    font-family: "Inter", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.75px;
+    color: #64748b;
+    border-bottom: 2px solid #e2e8f0;
+    padding: 0.85rem 1rem;
+    white-space: nowrap;
+    background: #f8fafc;
 }
 
 .elegant-table td {
-  padding: 12px 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    color: #334155;
+    padding: 0.85rem 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
 }
 
+.elegant-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* System overview list */
 .elegant-list .list-group-item {
-  border: none;
-  padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 0.8rem 0;
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    color: #475569;
 }
 
-.elegant-actions .list-group-item {
-  border-radius: 12px;
-  margin-bottom: 8px;
-  background: #f8f9fa;
-  border: none;
-  font-weight: 500;
-  transition: 0.2s;
+.elegant-list .list-group-item:last-child {
+    border-bottom: none;
 }
-.elegant-actions .list-group-item:hover {
-  background: #eef2ff;
-  color: #4338ca;
+
+.elegant-list .list-group-item strong {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+/* Badge adjustments */
+.badge.bg-success {
+    background: #f0fdf4 !important;
+    color: #16a34a !important;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border-radius: 50px;
+    padding: 0.3rem 0.7rem;
+}
+
+.badge.bg-primary {
+    background: #eff6ff !important;
+    color: #2563eb !important;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border-radius: 50px;
+    padding: 0.3rem 0.7rem;
+}
+
+.badge.bg-warning {
+    background: #fffbeb !important;
+    color: #d97706 !important;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border-radius: 50px;
+    padding: 0.3rem 0.7rem;
+}
+
+.badge.bg-danger {
+    background: #fef2f2 !important;
+    color: #dc2626 !important;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border-radius: 50px;
+    padding: 0.3rem 0.7rem;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

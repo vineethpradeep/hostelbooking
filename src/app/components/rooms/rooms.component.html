@@ -1,17 +1,20 @@
-<section class="rooms-section py-5">
+<section class="rooms-section">
   <div class="container">
-    <nav aria-label="breadcrumb" class="mb-3">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-2">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <button class="btn btn-link p-0" (click)="goBack()">
-            <i class="bi bi-arrow-left me-1"></i> Back to
+            <i class="bi bi-arrow-left me-1"></i> Back
           </button>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Rooms</li>
       </ol>
     </nav>
 
-    <div class="section-header mb-4">
+    <!-- Section header -->
+    <div class="section-header">
       <h2 class="section-heading">Discover Your Perfect Stay</h2>
       <p class="section-description">
         Browse through our curated list of modern, comfortable, and affordable
@@ -20,67 +23,58 @@
       </p>
     </div>
 
-    <div class="row">
-        <!-- FILTER -->
-      <div class="col-lg-3 col-md-4 mb-4">
-        <app-room-filter
-          (filterChanged)="onFilterChanged($event)">
-        </app-room-filter>
+    <div class="row g-4">
+      <!-- Filter sidebar -->
+      <div class="col-lg-3 col-md-4">
+        <app-room-filter (filterChanged)="onFilterChanged($event)"></app-room-filter>
       </div>
+
+      <!-- Room cards -->
       <div class="col-lg-9 col-md-8">
         <div class="row g-4">
           <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let room of rooms">
             <div class="room-card">
+
+              <!-- Image -->
               <div
                 class="room-image"
                 [ngStyle]="{ 'background-image': 'url(' + room.Image + ')' }"
               >
                 <div class="overlay">
                   <button class="view-btn" (click)="onViewDetails(room.RoomId)">
-                    <i class="bi bi-eye me-2"></i> View Details
+                    <i class="bi bi-eye"></i> View Details
                   </button>
                 </div>
               </div>
 
-              <div class="room-content text-center">
+              <!-- Content -->
+              <div class="room-content">
                 <h4 class="room-title">{{ room.Name }}</h4>
                 <p class="room-size">
-                  <i class="bi bi-aspect-ratio me-2"></i> {{ room.TotalBeds }} Bed{{ room.TotalBeds > 1 ? 's' : '' }}
+                  <i class="bi bi-door-open"></i>
+                  {{ room.TotalBeds }} Bed{{ room.TotalBeds > 1 ? 's' : '' }}
                 </p>
 
                 <div class="room-price-offer">
-                  <span class="discounted-price"
-                    >₹{{ room.RentPerBed | number }}</span
-                  >
+                  <span class="discounted-price">
+                    ₹{{ room.RentPerBed | number }}<small>/mo</small>
+                  </span>
                 </div>
 
                 <div class="room-icons">
-                  <span
-                    ><i class="bi bi-person-fill"></i> Max
-                    {{ room.Capacity }}</span
-                  >
+                  <span><i class="bi bi-person-fill"></i> Max {{ room.Capacity }}</span>
                   <span><i class="bi bi-snow"></i> AC</span>
                   <span><i class="bi bi-droplet"></i> Bathroom</span>
                   <span><i class="bi bi-book"></i> Study Table</span>
                   <span><i class="bi bi-box"></i> Wardrobe</span>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
-
-        <!-- <nav class="pagination-nav mt-4">
-          <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-              <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item active"><a class="page-link">1</a></li>
-            <li class="page-item"><a class="page-link">2</a></li>
-            <li class="page-item"><a class="page-link">3</a></li>
-            <li class="page-item"><a class="page-link">Next</a></li>
-          </ul>
-        </nav> -->
       </div>
     </div>
+
   </div>
 </section>

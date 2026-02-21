@@ -1,62 +1,119 @@
+/* ── About Us ── */
 .aboutus-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
-    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    padding: 5rem 0 4rem;
+    background: #ffffff;
+    font-family: "Inter", sans-serif;
+}
+
+.section-title {
+    text-align: left;
+    margin-bottom: 1.5rem;
 }
 
 .section-title span {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #9333ea;
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #2563eb;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.5rem;
+    letter-spacing: 2.5px;
+    background: #eff6ff;
+    padding: 0.3rem 0.9rem;
+    border-radius: 50px;
+    margin-bottom: 0.75rem;
 }
 
 .section-title h2 {
-    font-size: 2rem;
+    font-family: "Lora", Georgia, serif;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
     font-weight: 700;
-    color: #0078d4;
-    margin-bottom: 1.5rem;
+    color: #0f172a;
+    margin-bottom: 0;
+    line-height: 1.25;
 }
 
 .about-text {
-    text-align: left;
-    padding: 0 20px;
+    padding: 0;
 }
 
-.about-text p {
-    color: #374151;
-    font-size: 1rem;
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
+.about-text .s-para {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 1.75rem;
+    margin-top: 1rem;
 }
 
 .about-btn {
-    display: inline-block;
-    background: linear-gradient(90deg, #0078d4, #9333ea);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
     color: #fff !important;
     font-weight: 600;
-    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    padding: 0.7rem 1.75rem;
     border-radius: 50px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 .about-btn:hover {
-    opacity: 0.9;
     transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    opacity: 0.95;
 }
 
+/* Images — staggered layout */
 .about-pic img {
     width: 100%;
-    border-radius: 1rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .about-pic img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    transform: scale(1.03);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.13);
+}
+
+.about-pic .col-sm-6:last-child img {
+    margin-top: 2.5rem;
+}
+
+/* Stats row */
+.about-stats {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 3rem;
+    margin-top: 4rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1.75rem 1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.stat-item:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
+}
+
+.stat-item h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #2563eb;
+    margin-bottom: 0.35rem;
+    line-height: 1;
+}
+
+.stat-item p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+    font-weight: 500;
 }

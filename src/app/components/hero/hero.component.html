@@ -1,4 +1,5 @@
 <section class="hero-section">
+  <!-- Background carousel -->
   <owl-carousel-o [options]="customOptions" class="hero-bg-carousel">
     <ng-template carouselSlide *ngFor="let slide of slides">
       <div class="hero-slide">
@@ -10,45 +11,53 @@
     </ng-template>
   </owl-carousel-o>
 
+  <!-- Content overlay -->
   <div class="hero-overlay">
     <div class="container hero-content">
       <div class="row hero-row">
         <div class="col-lg-7 col-md-10 hero-text-col">
-          <div class="hero-text text-white">
-            <span class="hero-subtitle">Welcome to Karthick PG</span>
-            <h1>Your Home Away From Home</h1>
+          <div class="hero-text">
+
+            <!-- Label badge -->
+            <div class="hero-label-badge">
+              <span class="hero-dot"></span>
+              Welcome to Karthick PG
+            </div>
+
+            <h1>Your Home Away<br />From Home</h1>
+
             <p>
               Comfortable, affordable, and fully-furnished paying guest
               accommodations in prime locations. Experience convenience and
               community living like never before.
             </p>
-            <div class="hero-buttons">
-              <a
-                routerLink="/get-started"
-                class="primary-btn btn-content-center"
-                >Get Started</a
-              >
-              <a
-                routerLink="/learn-more"
-                class="secondary-btn btn-content-center"
-                >Learn More</a
-              >
+
+            <!-- CTA Buttons -->
+            <div class="hero-buttons d-flex flex-wrap gap-3 mt-4">
+              <a routerLink="/rooms" class="primary-btn">
+                <i class="bi bi-search me-2"></i>Explore Rooms
+              </a>
+              <a routerLink="/about" class="hero-secondary-btn">
+                Learn More <i class="bi bi-arrow-right ms-1"></i>
+              </a>
             </div>
 
-            <div class="hero-features d-flex flex-wrap mt-4">
-              <div class="feature-item">
-                <i class="bi bi-wifi"></i>
-                <span>Free Wi-Fi</span>
-              </div>
-              <div class="feature-item">
-                <i class="bi bi-shield-check"></i>
-                <span>Safe & Secure</span>
-              </div>
-              <div class="feature-item">
-                <i class="bi bi-geo-alt"></i>
-                <span>Prime Locations</span>
-              </div>
+            <!-- Feature badges -->
+            <div class="hero-features d-flex flex-wrap gap-2 mt-4">
+              <span class="hero-badge">
+                <i class="bi bi-wifi"></i> Free Wi-Fi
+              </span>
+              <span class="hero-badge">
+                <i class="bi bi-shield-check"></i> Safe &amp; Secure
+              </span>
+              <span class="hero-badge">
+                <i class="bi bi-geo-alt"></i> Prime Locations
+              </span>
+              <span class="hero-badge">
+                <i class="bi bi-cup-hot"></i> Meals Included
+              </span>
             </div>
+
           </div>
         </div>
       </div>
