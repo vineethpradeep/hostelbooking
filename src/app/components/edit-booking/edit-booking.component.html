@@ -1,191 +1,291 @@
 <div class="booking-wrapper">
 
-  <!-- ── Step Progress Indicator ── -->
-  <div class="booking-steps">
-    <div class="step" [class.active]="step === BookingStep.Booking || step === BookingStep.Payment || step === BookingStep.Confirmation" [class.completed]="step === BookingStep.Payment || step === BookingStep.Confirmation">
-      <div class="step-circle">
+  <!-- ══════════════════════════════════
+       STEP PROGRESS INDICATOR
+  ══════════════════════════════════ -->
+  <div class="steps-bar">
+
+    <!-- Step 1 -->
+    <div class="step-item"
+         [class.step-active]="step === BookingStep.Booking"
+         [class.step-done]="step === BookingStep.Payment || step === BookingStep.Confirmation">
+      <div class="step-bubble">
         <i class="bi bi-check-lg" *ngIf="step === BookingStep.Payment || step === BookingStep.Confirmation"></i>
         <span *ngIf="step === BookingStep.Booking">1</span>
+        <span *ngIf="step !== BookingStep.Booking && step !== BookingStep.Payment && step !== BookingStep.Confirmation">1</span>
       </div>
-      <span>Booking</span>
+      <div class="step-info">
+        <div class="step-num">Step 1</div>
+        <div class="step-name">Booking</div>
+      </div>
     </div>
-    <div class="step-line"></div>
-    <div class="step" [class.active]="step === BookingStep.Payment || step === BookingStep.Confirmation" [class.completed]="step === BookingStep.Confirmation">
-      <div class="step-circle">
+
+    <div class="step-connector" [class.connector-done]="step === BookingStep.Payment || step === BookingStep.Confirmation"></div>
+
+    <!-- Step 2 -->
+    <div class="step-item"
+         [class.step-active]="step === BookingStep.Payment"
+         [class.step-done]="step === BookingStep.Confirmation">
+      <div class="step-bubble">
         <i class="bi bi-check-lg" *ngIf="step === BookingStep.Confirmation"></i>
         <span *ngIf="step !== BookingStep.Confirmation">2</span>
       </div>
-      <span>Payment</span>
+      <div class="step-info">
+        <div class="step-num">Step 2</div>
+        <div class="step-name">Payment</div>
+      </div>
     </div>
-    <div class="step-line"></div>
-    <div class="step" [class.active]="step === BookingStep.Confirmation" [class.completed]="step === BookingStep.Confirmation">
-      <div class="step-circle">3</div>
-      <span>Confirm</span>
+
+    <div class="step-connector" [class.connector-done]="step === BookingStep.Confirmation"></div>
+
+    <!-- Step 3 -->
+    <div class="step-item"
+         [class.step-active]="step === BookingStep.Confirmation"
+         [class.step-done]="step === BookingStep.Confirmation">
+      <div class="step-bubble">
+        <i class="bi bi-check-lg" *ngIf="step === BookingStep.Confirmation"></i>
+        <span *ngIf="step !== BookingStep.Confirmation">3</span>
+      </div>
+      <div class="step-info">
+        <div class="step-num">Step 3</div>
+        <div class="step-name">Confirm</div>
+      </div>
     </div>
+
   </div>
 
-  <!-- ── STEP 1: BOOKING DETAILS ── -->
-  <div *ngIf="step === BookingStep.Booking">
-    <div class="card mb-4">
-      <div class="card-header">
-        <i class="bi bi-journal-plus me-2 text-primary"></i> Step 1 — Booking Details
+  <!-- ══════════════════════════════════
+       STEP 1: BOOKING DETAILS
+  ══════════════════════════════════ -->
+  <div *ngIf="step === BookingStep.Booking" class="step-panel">
+
+    <div class="panel-header">
+      <div class="panel-header-icon blue">
+        <i class="bi bi-journal-plus"></i>
       </div>
-      <div class="card-body p-4">
-        <form [formGroup]="bookingForm">
-          <div class="row g-3">
-
-            <!-- Property -->
-            <div class="col-md-6">
-              <label class="form-label">Property</label>
-              <input type="text" class="form-control" value="Property A" disabled />
-            </div>
-
-            <!-- Room Type -->
-            <div class="col-md-6">
-              <label class="form-label">Room Type</label>
-              <input type="text" class="form-control" value="Single Bed" disabled />
-            </div>
-
-            <!-- Move-in Date -->
-            <div class="col-md-6">
-              <label class="form-label">
-                Move-in Date <span class="text-danger">*</span>
-              </label>
-              <input
-                type="date"
-                class="form-control"
-                formControlName="moveInDate"
-                [class.is-invalid]="f['moveInDate'].touched && f['moveInDate'].invalid" />
-              <div class="invalid-feedback">Move-in date is required</div>
-            </div>
-
-            <!-- Duration -->
-            <div class="col-md-6">
-              <label class="form-label">
-                Duration (Months) <span class="text-danger">*</span>
-              </label>
-              <select
-                class="form-select"
-                formControlName="duration"
-                [class.is-invalid]="f['duration'].touched && f['duration'].invalid">
-                <option value="">Select Duration</option>
-                <option *ngFor="let m of monthsList" [value]="m">{{ m }} Month(s)</option>
-              </select>
-              <div class="invalid-feedback">Duration is required</div>
-            </div>
-
-            <!-- Hidden Checkout -->
-            <input type="hidden" formControlName="checkOutDate" />
-
-            <!-- Monthly Rent -->
-            <div class="col-md-6">
-              <label class="form-label">Monthly Rent <span class="text-danger">*</span></label>
-              <input type="number" class="form-control" formControlName="monthlyRent" readonly />
-            </div>
-
-            <!-- Security Deposit -->
-            <div class="col-md-6">
-              <label class="form-label">Security Deposit</label>
-              <input type="text" class="form-control" value="2000" disabled />
-            </div>
-
-            <!-- Special Requirements -->
-            <div class="col-12">
-              <label class="form-label">Special Requirements</label>
-              <textarea rows="3" class="form-control" formControlName="specialReq" placeholder="Optional — e.g. dietary preferences, accessibility needs"></textarea>
-            </div>
-
-          </div>
-
-          <div class="d-flex justify-content-end mt-4">
-            <button type="button" class="btn btn-success" (click)="continueToPayment()">
-              Continue <i class="bi bi-arrow-right ms-1"></i>
-            </button>
-          </div>
-        </form>
+      <div>
+        <div class="panel-title">Booking Details</div>
+        <div class="panel-sub">Fill in your move-in preferences</div>
       </div>
     </div>
-  </div>
 
-  <!-- ── STEP 2: PAYMENT DETAILS ── -->
-  <div *ngIf="step === BookingStep.Payment">
-    <div class="card mb-4">
-      <div class="card-header">
-        <i class="bi bi-credit-card me-2 text-primary"></i> Step 2 — Payment Details
-      </div>
-      <div class="card-body p-4">
-        <form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
-          <div class="row g-3">
+    <form [formGroup]="bookingForm" class="booking-form">
 
-            <!-- Payment Method -->
-            <div class="col-12">
-              <label class="form-label">Payment Method</label>
-              <select class="form-select" formControlName="paymentMethod">
-                <option>Cash</option>
-                <option>UPI</option>
-                <option>Credit/Debit Card</option>
-                <option>Bank Transfer</option>
-              </select>
-            </div>
-
-            <!-- Total Amount -->
-            <div class="col-12">
-              <label class="form-label">Total Amount</label>
-              <input type="number" class="form-control" formControlName="totalAmount" readonly />
-            </div>
-
-            <!-- Notes -->
-            <div class="col-12">
-              <label class="form-label">Payment Notes <small class="text-muted fw-normal">(Optional)</small></label>
-              <textarea class="form-control" rows="2" placeholder="Optional notes" formControlName="notes"></textarea>
-            </div>
-
+      <!-- Row: Property + Room Type -->
+      <div class="form-row">
+        <div class="form-col">
+          <label class="field-label">Property</label>
+          <div class="field-static">
+            <i class="bi bi-building"></i>
+            <span>Property A</span>
           </div>
-
-          <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-secondary" (click)="goToStep(BookingStep.Booking)">
-              <i class="bi bi-arrow-left me-1"></i> Back
-            </button>
-            <button type="submit" class="btn btn-warning">
-              <i class="bi bi-lock-fill me-1"></i> Make Payment
-            </button>
-          </div>
-
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── STEP 3: CONFIRMATION ── -->
-  <div *ngIf="step === BookingStep.Confirmation">
-    <div class="card mb-4">
-      <div class="card-body p-5 text-center">
-        <div class="confirmation-icon">
-          <i class="bi bi-check-circle-fill"></i>
         </div>
-        <div class="alert-success p-4">
-          <h4 class="fw-bold mb-2">Payment Successful! 🎉</h4>
-          <p class="mb-0">Your booking has been completed successfully. You'll receive a confirmation shortly.</p>
+        <div class="form-col">
+          <label class="field-label">Room Type</label>
+          <div class="field-static">
+            <i class="bi bi-door-open"></i>
+            <span>Single Bed</span>
+          </div>
         </div>
       </div>
+
+      <!-- Row: Move-in Date + Duration -->
+      <div class="form-row">
+        <div class="form-col">
+          <label class="field-label">Move-in Date <span class="req">*</span></label>
+          <div class="field-input-wrap">
+            <i class="bi bi-calendar3"></i>
+            <input
+              type="date"
+              class="field-input"
+              formControlName="moveInDate"
+              [class.field-error]="f['moveInDate'].touched && f['moveInDate'].invalid" />
+          </div>
+          <div class="error-msg" *ngIf="f['moveInDate'].touched && f['moveInDate'].invalid">
+            Move-in date is required
+          </div>
+        </div>
+        <div class="form-col">
+          <label class="field-label">Duration (Months) <span class="req">*</span></label>
+          <div class="field-input-wrap">
+            <i class="bi bi-clock"></i>
+            <select
+              class="field-input"
+              formControlName="duration"
+              [class.field-error]="f['duration'].touched && f['duration'].invalid">
+              <option value="">Select Duration</option>
+              <option *ngFor="let m of monthsList" [value]="m">{{ m }} Month{{ m > 1 ? 's' : '' }}</option>
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="f['duration'].touched && f['duration'].invalid">
+            Duration is required
+          </div>
+        </div>
+      </div>
+
+      <!-- Row: Monthly Rent + Security Deposit -->
+      <div class="form-row">
+        <div class="form-col">
+          <label class="field-label">Monthly Rent <span class="req">*</span></label>
+          <div class="field-input-wrap">
+            <i class="bi bi-currency-rupee"></i>
+            <input type="number" class="field-input" formControlName="monthlyRent" readonly />
+          </div>
+        </div>
+        <div class="form-col">
+          <label class="field-label">Security Deposit</label>
+          <div class="field-input-wrap">
+            <i class="bi bi-shield-lock"></i>
+            <input type="text" class="field-input" value="2000" disabled />
+          </div>
+        </div>
+      </div>
+
+      <!-- Special Requirements -->
+      <div class="form-col-full">
+        <label class="field-label">Special Requirements <span class="optional">(Optional)</span></label>
+        <textarea
+          class="field-textarea"
+          formControlName="specialReq"
+          rows="3"
+          placeholder="e.g. dietary preferences, accessibility needs, preferred floor...">
+        </textarea>
+      </div>
+
+      <input type="hidden" formControlName="checkOutDate" />
+
+      <!-- Action -->
+      <div class="form-actions">
+        <button type="button" class="btn-next" (click)="continueToPayment()">
+          Continue to Payment <i class="bi bi-arrow-right ms-1"></i>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- ══════════════════════════════════
+       STEP 2: PAYMENT DETAILS
+  ══════════════════════════════════ -->
+  <div *ngIf="step === BookingStep.Payment" class="step-panel">
+
+    <div class="panel-header">
+      <div class="panel-header-icon purple">
+        <i class="bi bi-credit-card"></i>
+      </div>
+      <div>
+        <div class="panel-title">Payment Details</div>
+        <div class="panel-sub">Choose payment method and review total</div>
+      </div>
+    </div>
+
+    <form [formGroup]="paymentForm" (ngSubmit)="submitPayment()" class="booking-form">
+
+      <!-- Payment Method -->
+      <div class="form-col-full">
+        <label class="field-label">Payment Method</label>
+        <div class="pay-method-grid">
+          <label class="pay-method-option" *ngFor="let method of ['Cash','UPI','Credit/Debit Card','Bank Transfer']">
+            <input type="radio" formControlName="paymentMethod" [value]="method" class="pay-radio" />
+            <span class="pay-method-label">
+              <i class="bi"
+                [class.bi-cash-coin]="method==='Cash'"
+                [class.bi-phone]="method==='UPI'"
+                [class.bi-credit-card-2-front]="method==='Credit/Debit Card'"
+                [class.bi-bank]="method==='Bank Transfer'"></i>
+              {{ method }}
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Amount Summary Card -->
+      <div class="amount-summary">
+        <div class="amount-row">
+          <span>Monthly Rent</span>
+          <span>₹{{ bookingForm.get('monthlyRent')?.value | number }}</span>
+        </div>
+        <div class="amount-row">
+          <span>Duration</span>
+          <span>{{ bookingForm.get('duration')?.value }} Month(s)</span>
+        </div>
+        <div class="amount-row">
+          <span>Security Deposit</span>
+          <span>₹2,000</span>
+        </div>
+        <div class="amount-divider"></div>
+        <div class="amount-row amount-total">
+          <span>Total Amount</span>
+          <span>₹{{ paymentForm.get('totalAmount')?.value | number }}</span>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="form-col-full">
+        <label class="field-label">Payment Notes <span class="optional">(Optional)</span></label>
+        <textarea class="field-textarea" rows="2" placeholder="Optional notes" formControlName="notes"></textarea>
+      </div>
+
+      <div class="form-actions space-between">
+        <button type="button" class="btn-back" (click)="goToStep(BookingStep.Booking)">
+          <i class="bi bi-arrow-left me-1"></i> Back
+        </button>
+        <button type="submit" class="btn-next btn-pay">
+          <i class="bi bi-lock-fill me-1"></i> Make Payment
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- ══════════════════════════════════
+       STEP 3: CONFIRMATION
+  ══════════════════════════════════ -->
+  <div *ngIf="step === BookingStep.Confirmation" class="step-panel confirm-panel">
+    <div class="confirm-icon-wrap">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+    <h4 class="confirm-title">Booking Confirmed!</h4>
+    <p class="confirm-msg">
+      Your room has been booked successfully.<br/>
+      You will receive a confirmation on your registered email.
+    </p>
+    <div class="confirm-details">
+      <div class="confirm-detail-item">
+        <i class="bi bi-house-fill text-primary"></i>
+        <span>Property A — Single Bed</span>
+      </div>
+      <div class="confirm-detail-item">
+        <i class="bi bi-calendar-check-fill text-success"></i>
+        <span>Move-in: {{ bookingForm.get('moveInDate')?.value | date:'MMM d, yyyy' }}</span>
+      </div>
+      <div class="confirm-detail-item">
+        <i class="bi bi-currency-rupee text-warning"></i>
+        <span>₹{{ paymentForm.get('totalAmount')?.value | number }} paid</span>
+      </div>
     </div>
   </div>
 
-  <!-- ── Confirm Modal ── -->
+  <!-- ══════════════════════════════════
+       CONFIRM MODAL
+  ══════════════════════════════════ -->
   <div class="modal fade" id="confirmBookingModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold">Confirm Booking</h5>
+          <div class="modal-icon-wrap">
+            <i class="bi bi-shield-check text-primary"></i>
+          </div>
+          <h5 class="modal-title">Confirm Booking</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="color:#475569;font-size:0.9rem;">
+        <div class="modal-body">
           Are you sure you want to confirm this booking? This action cannot be undone.
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button class="btn btn-primary" (click)="confirmBooking()">
-            <i class="bi bi-check2-circle me-1"></i> Confirm
+          <button class="modal-btn-cancel" data-bs-dismiss="modal">Cancel</button>
+          <button class="modal-btn-confirm" (click)="confirmBooking()">
+            <i class="bi bi-check2-circle me-1"></i> Confirm Booking
           </button>
         </div>
       </div>

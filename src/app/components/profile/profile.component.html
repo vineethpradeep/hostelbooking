@@ -1,126 +1,290 @@
-<div class="container profile-container mt-4">
-  <div class="profile-card">
+<div class="prof-page">
 
-    <!-- Banner -->
-    <div class="profile-banner"></div>
-
-    <!-- Avatar -->
-    <div class="profile-avatar-wrap">
-      <div class="profile-avatar">
-        {{ profile.name?.charAt(0)?.toUpperCase() || 'U' }}
-      </div>
+  <!-- ── Page Header ── -->
+  <div class="prof-page-header mb-3">
+    <div>
+      <h2 class="prof-page-title">My Profile</h2>
+      <p class="prof-page-sub">Manage your personal information and account settings</p>
     </div>
-
-    <!-- Body -->
-    <div class="profile-body">
-      <h4 class="profile-title">{{ profile.name }}</h4>
-      <p class="profile-subtitle">{{ profile.email }}</p>
-
-      <div class="profile-details">
-        <div class="detail-item">
-          <span class="label">Full Name</span>
-          <span class="value">{{ profile.name }}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Email</span>
-          <span class="value">{{ profile.email }}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Phone</span>
-          <span class="value">{{ profile.phone }}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Status</span>
-          <span class="badge bg-success">{{ profile.status || 'Active' }}</span>
-        </div>
-      </div>
-
-      <button class="btn edit-btn" (click)="openEditModal()">
-        <i class="bi bi-pencil-square me-2"></i>Edit Profile
-      </button>
-    </div>
-
+    <button class="prof-edit-top-btn" (click)="openEditModal()">
+      <i class="bi bi-pencil-square me-1"></i> Edit Profile
+    </button>
   </div>
+
+  <div class="row g-3">
+
+    <!-- ══ LEFT: Profile Identity Card ══ -->
+    <div class="col-lg-4">
+      <div class="prof-identity-card">
+
+        <!-- Gradient Banner with decorative circles -->
+        <div class="prof-banner">
+          <div class="prof-circle prof-circle-1"></div>
+          <div class="prof-circle prof-circle-2"></div>
+          <div class="prof-circle prof-circle-3"></div>
+        </div>
+
+        <!-- Avatar overlapping banner -->
+        <div class="prof-avatar-wrap">
+          <div class="prof-avatar">
+            {{ profile.name?.charAt(0)?.toUpperCase() || 'U' }}
+          </div>
+          <div class="prof-avatar-verified">
+            <i class="bi bi-patch-check-fill"></i>
+          </div>
+        </div>
+
+        <!-- Identity Info -->
+        <div class="prof-identity-body">
+          <h3 class="prof-name">{{ profile.name || '—' }}</h3>
+          <p class="prof-email-tag">{{ profile.email || '—' }}</p>
+
+          <div class="prof-status-row">
+            <span class="prof-status-pill">
+              <span class="status-dot"></span>
+              {{ profile.status || 'Active' }}
+            </span>
+            <span class="prof-role-pill">
+              <i class="bi bi-house-fill me-1"></i>Tenant
+            </span>
+          </div>
+
+          <!-- Quick Info Strips -->
+          <div class="prof-quick-info">
+            <div class="pqi-item">
+              <div class="pqi-icon blue"><i class="bi bi-telephone-fill"></i></div>
+              <div class="pqi-text">
+                <span class="pqi-label">Phone</span>
+                <span class="pqi-value">{{ profile.phone || 'Not set' }}</span>
+              </div>
+            </div>
+            <div class="pqi-item">
+              <div class="pqi-icon green"><i class="bi bi-shield-check-fill"></i></div>
+              <div class="pqi-text">
+                <span class="pqi-label">Account</span>
+                <span class="pqi-value">Verified</span>
+              </div>
+            </div>
+            <div class="pqi-item">
+              <div class="pqi-icon purple"><i class="bi bi-calendar-check-fill"></i></div>
+              <div class="pqi-text">
+                <span class="pqi-label">Member Since</span>
+                <span class="pqi-value">2024</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Button -->
+          <button class="prof-edit-btn" (click)="openEditModal()">
+            <i class="bi bi-pencil-square me-1"></i> Edit Profile
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ RIGHT: Details Cards ══ -->
+    <div class="col-lg-8">
+
+      <!-- Personal Information -->
+      <div class="prof-detail-card mb-3">
+        <div class="prof-detail-header">
+          <div class="pdc-icon blue"><i class="bi bi-person-fill"></i></div>
+          <div>
+            <div class="pdc-title">Personal Information</div>
+            <div class="pdc-sub">Your registered account details</div>
+          </div>
+        </div>
+        <div class="prof-fields">
+
+          <div class="prof-field">
+            <div class="pf-left">
+              <div class="pf-icon"><i class="bi bi-person"></i></div>
+              <span class="pf-label">Full Name</span>
+            </div>
+            <span class="pf-value">{{ profile.name || '—' }}</span>
+          </div>
+
+          <div class="prof-field">
+            <div class="pf-left">
+              <div class="pf-icon pf-icon-green"><i class="bi bi-envelope-fill"></i></div>
+              <span class="pf-label">Email Address</span>
+            </div>
+            <span class="pf-value">{{ profile.email || '—' }}</span>
+          </div>
+
+          <div class="prof-field">
+            <div class="pf-left">
+              <div class="pf-icon pf-icon-amber"><i class="bi bi-telephone-fill"></i></div>
+              <span class="pf-label">Phone Number</span>
+            </div>
+            <span class="pf-value">{{ profile.phone || 'Not provided' }}</span>
+          </div>
+
+          <div class="prof-field no-border">
+            <div class="pf-left">
+              <div class="pf-icon pf-icon-purple"><i class="bi bi-activity"></i></div>
+              <span class="pf-label">Account Status</span>
+            </div>
+            <span class="pf-status-chip">
+              <span class="status-dot"></span>
+              {{ profile.status || 'Active' }}
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Security & Account -->
+      <div class="prof-detail-card">
+        <div class="prof-detail-header">
+          <div class="pdc-icon green"><i class="bi bi-shield-lock-fill"></i></div>
+          <div>
+            <div class="pdc-title">Security & Account</div>
+            <div class="pdc-sub">Privacy and login information</div>
+          </div>
+        </div>
+        <div class="prof-fields">
+
+          <div class="prof-field">
+            <div class="pf-left">
+              <div class="pf-icon pf-icon-red"><i class="bi bi-key-fill"></i></div>
+              <span class="pf-label">Password</span>
+            </div>
+            <span class="pf-password">••••••••••</span>
+          </div>
+
+          <div class="prof-field">
+            <div class="pf-left">
+              <div class="pf-icon pf-icon-green"><i class="bi bi-shield-check"></i></div>
+              <span class="pf-label">Verification</span>
+            </div>
+            <span class="pf-status-chip">
+              <span class="status-dot"></span>Verified
+            </span>
+          </div>
+
+          <div class="prof-field no-border">
+            <div class="pf-left">
+              <div class="pf-icon"><i class="bi bi-clock-history"></i></div>
+              <span class="pf-label">Last Login</span>
+            </div>
+            <span class="pf-value">Today</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
-<!-- ── EDIT PROFILE MODAL ── -->
+<!-- ══════════════════════════════════
+     EDIT PROFILE MODAL
+══════════════════════════════════ -->
 <div class="modal fade" id="editProfileModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title fw-bold">Edit Profile</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="modal-content prof-modal">
+
+      <div class="prof-modal-header">
+        <div class="prof-modal-icon">
+          <i class="bi bi-pencil-square"></i>
+        </div>
+        <div>
+          <div class="prof-modal-title">Edit Profile</div>
+          <div class="prof-modal-sub">Update your personal information</div>
+        </div>
+        <button class="prof-modal-close" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
       </div>
-      <div class="modal-body p-4">
-        <div class="mb-3">
-          <label class="form-label">Name</label>
-          <input class="form-control" [(ngModel)]="editProfile.name" />
+
+      <div class="prof-modal-body">
+
+        <div class="prof-modal-field">
+          <label class="prof-field-label">
+            <i class="bi bi-person me-1"></i> Full Name
+          </label>
+          <input class="prof-field-input" [(ngModel)]="editProfile.name" placeholder="Your full name" />
         </div>
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input class="form-control" [(ngModel)]="editProfile.email" readonly />
+
+        <div class="prof-modal-field">
+          <label class="prof-field-label">
+            <i class="bi bi-envelope me-1"></i> Email Address
+          </label>
+          <input class="prof-field-input prof-field-readonly" [(ngModel)]="editProfile.email" readonly />
+          <span class="prof-field-note">Email cannot be changed</span>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Phone</label>
-          <input class="form-control" [(ngModel)]="editProfile.phone" />
+
+        <div class="prof-modal-field">
+          <label class="prof-field-label">
+            <i class="bi bi-telephone me-1"></i> Phone Number
+          </label>
+          <input class="prof-field-input" [(ngModel)]="editProfile.phone" placeholder="Your phone number" />
         </div>
+
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary" (click)="openConfirmModal()">
+
+      <div class="prof-modal-footer">
+        <button class="prof-modal-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button class="prof-modal-save" (click)="openConfirmModal()">
           <i class="bi bi-check2 me-1"></i> Save Changes
         </button>
       </div>
+
     </div>
   </div>
 </div>
 
-<!-- ── CONFIRM UPDATE MODAL ── -->
+<!-- Confirm Modal -->
 <div class="modal fade" id="confirmUpdateModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title fw-bold">Confirm Update</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body text-center py-3" style="font-size:0.9rem;color:#475569;">
-        Are you sure you want to save these changes?
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <button class="btn btn-primary" (click)="confirmSaveProfile()">Yes, Save</button>
+    <div class="modal-content prof-modal">
+      <div class="prof-confirm-body">
+        <div class="prof-confirm-icon confirm-blue">
+          <i class="bi bi-shield-check"></i>
+        </div>
+        <h5 class="prof-confirm-title">Confirm Update</h5>
+        <p class="prof-confirm-msg">Are you sure you want to save these changes?</p>
+        <div class="prof-confirm-actions">
+          <button class="prof-modal-cancel" data-bs-dismiss="modal">No, Cancel</button>
+          <button class="prof-modal-save" (click)="confirmSaveProfile()">
+            <i class="bi bi-check2 me-1"></i> Yes, Save
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── SUCCESS MODAL ── -->
+<!-- Success Modal -->
 <div class="modal fade" id="successModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-sm">
-    <div class="modal-content text-center">
-      <div class="modal-body py-4 px-4">
-        <div style="font-size:2.5rem;color:#16a34a;margin-bottom:0.75rem;">
+    <div class="modal-content prof-modal">
+      <div class="prof-confirm-body">
+        <div class="prof-confirm-icon confirm-green">
           <i class="bi bi-check-circle-fill"></i>
         </div>
-        <h6 class="fw-bold mb-1" style="color:#0f172a;">Success!</h6>
-        <p style="font-size:0.875rem;color:#64748b;margin-bottom:1.25rem;">Profile updated successfully.</p>
-        <button class="btn btn-primary px-4" data-bs-dismiss="modal">OK</button>
+        <h5 class="prof-confirm-title">Profile Updated!</h5>
+        <p class="prof-confirm-msg">Your profile has been saved successfully.</p>
+        <button class="prof-modal-save px-full" data-bs-dismiss="modal">Done</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── ERROR MODAL ── -->
+<!-- Error Modal -->
 <div class="modal fade" id="errorModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-sm">
-    <div class="modal-content text-center">
-      <div class="modal-body py-4 px-4">
-        <div style="font-size:2.5rem;color:#dc2626;margin-bottom:0.75rem;">
+    <div class="modal-content prof-modal">
+      <div class="prof-confirm-body">
+        <div class="prof-confirm-icon confirm-red">
           <i class="bi bi-x-circle-fill"></i>
         </div>
-        <h6 class="fw-bold mb-1" style="color:#0f172a;">Update Failed</h6>
-        <p style="font-size:0.875rem;color:#64748b;margin-bottom:1.25rem;">Failed to update profile. Please try again.</p>
-        <button class="btn btn-secondary px-4" data-bs-dismiss="modal">OK</button>
+        <h5 class="prof-confirm-title">Update Failed</h5>
+        <p class="prof-confirm-msg">Something went wrong. Please try again.</p>
+        <button class="prof-modal-cancel w100" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

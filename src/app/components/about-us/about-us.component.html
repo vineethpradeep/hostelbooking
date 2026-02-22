@@ -1,76 +1,184 @@
-<section class="aboutus-section">
-  <div class="container">
+<div class="ab-page">
 
-    <!-- Main Content Row -->
-    <div class="row align-items-center g-5">
-      <div class="col-lg-6">
-        <div class="about-text">
-          <div class="section-title">
-            <span>About Us</span>
-            <h2>About Karthick PG</h2>
+  <!-- Page Header -->
+  <div class="ab-header mb-4">
+    <div class="ab-header-left">
+      <div class="ab-header-icon">
+        <i class="bi bi-building"></i>
+      </div>
+      <div>
+        <h2 class="ab-title">About Karthick PG</h2>
+        <p class="ab-sub">Trusted student accommodation since 2015</p>
+      </div>
+    </div>
+    <span class="ab-verified-badge">
+      <i class="bi bi-patch-check-fill me-1"></i>Verified PG
+    </span>
+  </div>
+
+  <div class="row g-3">
+
+    <!-- LEFT: Story Card -->
+    <div class="col-lg-7">
+      <div class="ab-card h-100">
+        <div class="ab-card-header">
+          <div class="ab-story-tag">
+            <i class="bi bi-book-fill me-1"></i>Our Story
           </div>
-          <p class="s-para">
-            Karthick PG has been providing quality accommodations to students
-            and working professionals since 2015. Our mission is to create a
-            home-like environment where residents can focus on their studies or
-            careers without worrying about daily necessities. Located in prime
-            areas of the city, our properties offer easy access to educational
+        </div>
+        <div class="ab-card-body">
+          <p class="ab-para">
+            Karthick PG has been providing quality accommodations to students and working
+            professionals since 2015. Our mission is to create a home-like environment where
+            residents can focus on their studies or careers without worrying about daily necessities.
+            Located in prime areas of the city, our properties offer easy access to educational
             institutions, IT parks, and public transportation.
           </p>
-          <p class="s-para">
-            We pride ourselves on maintaining clean, safe, and comfortable
-            living spaces with all modern amenities. With over 200 happy
-            residents and a dedicated management team, we ensure that every
-            aspect of your stay is taken care of — from timely maintenance to
-            quality food.
+          <p class="ab-para mb-0">
+            We pride ourselves on maintaining clean, safe, and comfortable living spaces with
+            all modern amenities. With over 200 happy residents and a dedicated management team,
+            we ensure that every aspect of your stay is taken care of — from timely maintenance
+            to quality food.
           </p>
-          <a routerLink="/contact" class="primary-btn about-btn">
-            <i class="bi bi-chat-dots me-1"></i> Get in Touch
-          </a>
-        </div>
-      </div>
 
-      <div class="col-lg-6">
-        <div class="about-pic">
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <img src="assets/img/about-1.jpg" alt="About Karthick PG" />
+          <!-- Highlight Items -->
+          <div class="ab-highlights mt-3">
+            <div class="ab-hl-item">
+              <div class="ab-hl-icon blue">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+              <div>
+                <div class="ab-hl-label">Location</div>
+                <div class="ab-hl-value">Prime City Areas</div>
+              </div>
             </div>
-            <div class="col-sm-6">
-              <img src="assets/img/about-2.jpg" alt="Our Facilities" />
+            <div class="ab-hl-item">
+              <div class="ab-hl-icon green">
+                <i class="bi bi-shield-check"></i>
+              </div>
+              <div>
+                <div class="ab-hl-label">Safety</div>
+                <div class="ab-hl-value">24/7 CCTV Security</div>
+              </div>
             </div>
+            <div class="ab-hl-item">
+              <div class="ab-hl-icon purple">
+                <i class="bi bi-people-fill"></i>
+              </div>
+              <div>
+                <div class="ab-hl-label">Community</div>
+                <div class="ab-hl-value">200+ Residents</div>
+              </div>
+            </div>
+            <div class="ab-hl-item">
+              <div class="ab-hl-icon amber">
+                <i class="bi bi-star-fill"></i>
+              </div>
+              <div>
+                <div class="ab-hl-label">Rating</div>
+                <div class="ab-hl-value">4.8 / 5.0 Stars</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ab-actions mt-3">
+            <a routerLink="/contact" class="ab-contact-btn">
+              <i class="bi bi-chat-dots me-1"></i> Get in Touch
+            </a>
+            <a routerLink="/user-dashboard/facilities" class="ab-facilities-btn">
+              <i class="bi bi-stars me-1"></i> View Facilities
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Stats Strip -->
-    <div class="row g-4 about-stats">
-      <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <h3>200+</h3>
-          <p>Happy Residents</p>
+    <!-- RIGHT: Stats + Images -->
+    <div class="col-lg-5">
+
+      <!-- Stat Boxes -->
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <div class="ab-stat ab-stat-blue">
+            <div class="ab-stat-icon"><i class="bi bi-people-fill"></i></div>
+            <div class="ab-stat-val">200+</div>
+            <div class="ab-stat-label">Happy Residents</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="ab-stat ab-stat-green">
+            <div class="ab-stat-icon"><i class="bi bi-calendar-check-fill"></i></div>
+            <div class="ab-stat-val">5+</div>
+            <div class="ab-stat-label">Years of Trust</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="ab-stat ab-stat-purple">
+            <div class="ab-stat-icon"><i class="bi bi-buildings-fill"></i></div>
+            <div class="ab-stat-val">10+</div>
+            <div class="ab-stat-label">Properties</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="ab-stat ab-stat-amber">
+            <div class="ab-stat-icon"><i class="bi bi-star-fill"></i></div>
+            <div class="ab-stat-val">4.8★</div>
+            <div class="ab-stat-label">Average Rating</div>
+          </div>
         </div>
       </div>
-      <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <h3>5+</h3>
-          <p>Years of Trust</p>
+
+      <!-- Photos -->
+      <div class="row g-2">
+        <div class="col-6">
+          <div class="ab-img-wrap">
+            <img src="assets/img/single.jpg" class="ab-img" alt="Single Bed Room" />
+            <div class="ab-img-overlay">
+              <span class="ab-img-tag"><i class="bi bi-person-fill me-1"></i>Single Bed</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="ab-img-wrap ab-img-offset">
+            <img src="assets/img/double.jpg" class="ab-img" alt="Double Bed Room" />
+            <div class="ab-img-overlay">
+              <span class="ab-img-tag"><i class="bi bi-people-fill me-1"></i>Double Bed</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <h3>10+</h3>
-          <p>Properties</p>
-        </div>
+
+    </div>
+  </div>
+
+  <!-- Values Strip -->
+  <div class="ab-values-strip mt-4">
+    <div class="ab-values-title">
+      <i class="bi bi-heart-fill me-1" style="color:#ef4444"></i>
+      Why Choose Karthick PG?
+    </div>
+    <div class="ab-values-list">
+      <div class="ab-val-item">
+        <i class="bi bi-check-circle-fill"></i>
+        <span>Home-cooked meals 3x daily</span>
       </div>
-      <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <h3>4.8★</h3>
-          <p>Average Rating</p>
-        </div>
+      <div class="ab-val-item">
+        <i class="bi bi-check-circle-fill"></i>
+        <span>Zero security deposit options</span>
+      </div>
+      <div class="ab-val-item">
+        <i class="bi bi-check-circle-fill"></i>
+        <span>Flexible monthly billing</span>
+      </div>
+      <div class="ab-val-item">
+        <i class="bi bi-check-circle-fill"></i>
+        <span>24/7 maintenance support</span>
+      </div>
+      <div class="ab-val-item">
+        <i class="bi bi-check-circle-fill"></i>
+        <span>High-speed WiFi included</span>
       </div>
     </div>
-
   </div>
-</section>
+
+</div>

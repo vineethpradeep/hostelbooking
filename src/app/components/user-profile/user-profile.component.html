@@ -1,0 +1,331 @@
+<div class="up-page">
+
+  <!-- ── Page Header ── -->
+  <div class="up-page-header">
+    <button class="up-back-btn" (click)="goBack()">
+      <i class="bi bi-arrow-left me-1"></i> Back to Users
+    </button>
+    <div class="up-header-title">
+      <i class="bi bi-person-lines-fill me-2"></i>User Profile
+    </div>
+  </div>
+
+  <!-- No data guard -->
+  <div class="up-no-data" *ngIf="!user">
+    <i class="bi bi-person-x fs-1 text-muted d-block mb-2"></i>
+    <p class="text-muted">User data not available. Please go back and try again.</p>
+    <button class="up-back-btn mt-2" (click)="goBack()">
+      <i class="bi bi-arrow-left me-1"></i> Back
+    </button>
+  </div>
+
+  <div class="row g-3" *ngIf="user">
+
+    <!-- ══ LEFT: Identity Card ══ -->
+    <div class="col-lg-4">
+      <div class="up-identity-card">
+
+        <!-- Banner -->
+        <div class="up-banner">
+          <div class="up-circle up-c1"></div>
+          <div class="up-circle up-c2"></div>
+          <div class="up-circle up-c3"></div>
+        </div>
+
+        <!-- Avatar -->
+        <div class="up-avatar-wrap">
+          <div class="up-avatar">{{ getInitials(user) }}</div>
+          <div class="up-avatar-badge" [class.badge-active]="user.IsActive" [class.badge-inactive]="!user.IsActive">
+            <i class="bi" [class.bi-check-lg]="user.IsActive" [class.bi-x-lg]="!user.IsActive"></i>
+          </div>
+        </div>
+
+        <!-- Identity Body -->
+        <div class="up-identity-body">
+          <h3 class="up-name">{{ user.FirstName }} {{ user.LastName }}</h3>
+          <p class="up-email-tag">{{ user.EmailAddress }}</p>
+
+          <div class="up-status-row">
+            <span class="up-status-pill" [class.pill-active]="user.IsActive" [class.pill-inactive]="!user.IsActive">
+              <span class="status-dot"></span>
+              {{ user.IsActive ? 'Active' : 'Inactive' }}
+            </span>
+            <span class="up-role-pill">
+              <i class="bi bi-person-badge me-1"></i>{{ user.UserType || 'Tenant' }}
+            </span>
+          </div>
+
+          <!-- Quick info strips -->
+          <div class="up-quick-info">
+            <div class="uqi-item">
+              <div class="uqi-icon blue"><i class="bi bi-telephone-fill"></i></div>
+              <div class="uqi-text">
+                <span class="uqi-label">Phone</span>
+                <span class="uqi-value">{{ user.PhoneNumber || 'Not set' }}</span>
+              </div>
+            </div>
+            <div class="uqi-item" *ngIf="user.Gender">
+              <div class="uqi-icon purple"><i class="bi bi-gender-ambiguous"></i></div>
+              <div class="uqi-text">
+                <span class="uqi-label">Gender</span>
+                <span class="uqi-value">{{ user.Gender }}</span>
+              </div>
+            </div>
+            <div class="uqi-item">
+              <div class="uqi-icon green"><i class="bi bi-calendar-check-fill"></i></div>
+              <div class="uqi-text">
+                <span class="uqi-label">Joined</span>
+                <span class="uqi-value">{{ user.CreatedDate ? (user.CreatedDate | date:'dd MMM yyyy') : '—' }}</span>
+              </div>
+            </div>
+            <div class="uqi-item" *ngIf="user.PropertyName">
+              <div class="uqi-icon amber"><i class="bi bi-building-fill"></i></div>
+              <div class="uqi-text">
+                <span class="uqi-label">Property</span>
+                <span class="uqi-value">{{ user.PropertyName }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Onboarded Badge -->
+          <div class="up-onboarded-strip" *ngIf="user.RoomNumber">
+            <i class="bi bi-house-fill me-2"></i>
+            Currently staying in Room <strong>{{ user.RoomNumber }}</strong>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ RIGHT: Detail Cards ══ -->
+    <div class="col-lg-8">
+
+      <!-- Personal Information -->
+      <div class="up-detail-card mb-3">
+        <div class="up-detail-header">
+          <div class="updc-icon blue"><i class="bi bi-person-fill"></i></div>
+          <div>
+            <div class="updc-title">Personal Information</div>
+            <div class="updc-sub">Basic contact and identity details</div>
+          </div>
+        </div>
+        <div class="up-fields">
+
+          <div class="up-field">
+            <div class="upf-left">
+              <div class="upf-icon"><i class="bi bi-person"></i></div>
+              <span class="upf-label">Full Name</span>
+            </div>
+            <span class="upf-value">{{ user.FirstName }} {{ user.LastName }}</span>
+          </div>
+
+          <div class="up-field">
+            <div class="upf-left">
+              <div class="upf-icon upf-green"><i class="bi bi-envelope-fill"></i></div>
+              <span class="upf-label">Email Address</span>
+            </div>
+            <span class="upf-value">{{ user.EmailAddress || '—' }}</span>
+          </div>
+
+          <div class="up-field">
+            <div class="upf-left">
+              <div class="upf-icon upf-amber"><i class="bi bi-telephone-fill"></i></div>
+              <span class="upf-label">Phone Number</span>
+            </div>
+            <span class="upf-value">{{ user.PhoneNumber || '—' }}</span>
+          </div>
+
+          <div class="up-field" *ngIf="user.AlternatePhoneNumber">
+            <div class="upf-left">
+              <div class="upf-icon upf-amber"><i class="bi bi-telephone"></i></div>
+              <span class="upf-label">Alternate Phone</span>
+            </div>
+            <span class="upf-value">{{ user.AlternatePhoneNumber }}</span>
+          </div>
+
+          <div class="up-field" *ngIf="user.Gender">
+            <div class="upf-left">
+              <div class="upf-icon upf-purple"><i class="bi bi-gender-ambiguous"></i></div>
+              <span class="upf-label">Gender</span>
+            </div>
+            <span class="upf-value">{{ user.Gender }}</span>
+          </div>
+
+          <div class="up-field" *ngIf="user.DateOfBirth">
+            <div class="upf-left">
+              <div class="upf-icon upf-purple"><i class="bi bi-cake2-fill"></i></div>
+              <span class="upf-label">Date of Birth</span>
+            </div>
+            <span class="upf-value">{{ user.DateOfBirth | date:'dd MMM yyyy' }}</span>
+          </div>
+
+          <div class="up-field no-border" *ngIf="user.BloodGroup">
+            <div class="upf-left">
+              <div class="upf-icon upf-red"><i class="bi bi-droplet-fill"></i></div>
+              <span class="upf-label">Blood Group</span>
+            </div>
+            <span class="upf-blood-chip">{{ user.BloodGroup }}</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Identity & Occupation -->
+      <div class="up-detail-card mb-3">
+        <div class="up-detail-header">
+          <div class="updc-icon amber"><i class="bi bi-briefcase-fill"></i></div>
+          <div>
+            <div class="updc-title">Identity & Occupation</div>
+            <div class="updc-sub">Government ID and work details</div>
+          </div>
+        </div>
+        <div class="up-fields">
+
+          <div class="up-field" *ngIf="user.AadharNumber">
+            <div class="upf-left">
+              <div class="upf-icon upf-blue"><i class="bi bi-credit-card-2-front-fill"></i></div>
+              <span class="upf-label">Aadhar Number</span>
+            </div>
+            <span class="upf-value upf-mono">{{ user.AadharNumber }}</span>
+          </div>
+
+          <div class="up-field" *ngIf="user.PanNumber">
+            <div class="upf-left">
+              <div class="upf-icon upf-blue"><i class="bi bi-card-heading"></i></div>
+              <span class="upf-label">PAN Number</span>
+            </div>
+            <span class="upf-value upf-mono">{{ user.PanNumber }}</span>
+          </div>
+
+          <div class="up-field" *ngIf="user.Occupation">
+            <div class="upf-left">
+              <div class="upf-icon upf-green"><i class="bi bi-tools"></i></div>
+              <span class="upf-label">Occupation</span>
+            </div>
+            <span class="upf-value">{{ user.Occupation }}</span>
+          </div>
+
+          <div class="up-field no-border" *ngIf="user.Company">
+            <div class="upf-left">
+              <div class="upf-icon upf-amber"><i class="bi bi-building"></i></div>
+              <span class="upf-label">Company / Institution</span>
+            </div>
+            <span class="upf-value">{{ user.Company }}</span>
+          </div>
+
+          <div class="up-field no-border" *ngIf="!user.AadharNumber && !user.PanNumber && !user.Occupation && !user.Company">
+            <span class="upf-empty">No identity or occupation details provided.</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="up-detail-card mb-3">
+        <div class="up-detail-header">
+          <div class="updc-icon green"><i class="bi bi-geo-alt-fill"></i></div>
+          <div>
+            <div class="updc-title">Address Details</div>
+            <div class="updc-sub">Current and permanent address</div>
+          </div>
+        </div>
+        <div class="up-fields">
+
+          <div class="up-field" *ngIf="user.CurrentAddress">
+            <div class="upf-left">
+              <div class="upf-icon upf-blue"><i class="bi bi-house-fill"></i></div>
+              <span class="upf-label">Current Address</span>
+            </div>
+            <span class="upf-value upf-wrap">{{ user.CurrentAddress }}</span>
+          </div>
+
+          <div class="up-field no-border" *ngIf="user.PermanentAddress">
+            <div class="upf-left">
+              <div class="upf-icon upf-green"><i class="bi bi-geo-alt"></i></div>
+              <span class="upf-label">Permanent Address</span>
+            </div>
+            <span class="upf-value upf-wrap">{{ user.PermanentAddress }}</span>
+          </div>
+
+          <div class="up-field no-border" *ngIf="!user.CurrentAddress && !user.PermanentAddress">
+            <span class="upf-empty">No address details provided.</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Emergency Contact -->
+      <div class="up-detail-card mb-3">
+        <div class="up-detail-header">
+          <div class="updc-icon red"><i class="bi bi-heart-pulse-fill"></i></div>
+          <div>
+            <div class="updc-title">Emergency Contact</div>
+            <div class="updc-sub">Person to contact in emergencies</div>
+          </div>
+        </div>
+        <div class="up-fields">
+
+          <div class="up-field" *ngIf="user.EmergencyContactName">
+            <div class="upf-left">
+              <div class="upf-icon upf-red"><i class="bi bi-person-heart"></i></div>
+              <span class="upf-label">Contact Name</span>
+            </div>
+            <span class="upf-value">{{ user.EmergencyContactName }}</span>
+          </div>
+
+          <div class="up-field no-border" *ngIf="user.EmergencyContactNumber">
+            <div class="upf-left">
+              <div class="upf-icon upf-red"><i class="bi bi-telephone-forward-fill"></i></div>
+              <span class="upf-label">Contact Number</span>
+            </div>
+            <span class="upf-value">{{ user.EmergencyContactNumber }}</span>
+          </div>
+
+          <div class="up-field no-border" *ngIf="!user.EmergencyContactName && !user.EmergencyContactNumber">
+            <span class="upf-empty">No emergency contact provided.</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Booking / Stay Info (only if onboarded) -->
+      <div class="up-detail-card" *ngIf="user.RoomNumber || user.CheckInDate || user.RentAmount">
+        <div class="up-detail-header">
+          <div class="updc-icon purple"><i class="bi bi-house-door-fill"></i></div>
+          <div>
+            <div class="updc-title">Stay Information</div>
+            <div class="updc-sub">Current room and booking details</div>
+          </div>
+        </div>
+        <div class="up-fields">
+
+          <div class="up-field" *ngIf="user.RoomNumber">
+            <div class="upf-left">
+              <div class="upf-icon upf-blue"><i class="bi bi-door-closed-fill"></i></div>
+              <span class="upf-label">Room Number</span>
+            </div>
+            <span class="upf-room-chip">{{ user.RoomNumber }}</span>
+          </div>
+
+          <div class="up-field" *ngIf="user.CheckInDate">
+            <div class="upf-left">
+              <div class="upf-icon upf-green"><i class="bi bi-box-arrow-in-right"></i></div>
+              <span class="upf-label">Check-In Date</span>
+            </div>
+            <span class="upf-value">{{ user.CheckInDate | date:'dd MMM yyyy' }}</span>
+          </div>
+
+          <div class="up-field no-border" *ngIf="user.RentAmount">
+            <div class="upf-left">
+              <div class="upf-icon upf-amber"><i class="bi bi-currency-rupee"></i></div>
+              <span class="upf-label">Monthly Rent</span>
+            </div>
+            <span class="upf-rent">₹{{ user.RentAmount | number:'1.0-0' }}</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

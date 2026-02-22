@@ -1,103 +1,187 @@
-<section class="contact">
-  <div class="container">
-    <div class="grid">
-      <div class="info">
-        <h1>Contact Us</h1>
-        <p>
-          Have questions or need help with a booking? We’re happy to assist.
-        </p>
+<div class="ct-page">
 
-        <ul class="info-list" aria-label="Contact information">
-          <li>
-            <i class="bi bi-geo-alt-fill"></i>
-            <strong>Address:</strong> 123 RS Puram, Coimbatore - India
-          </li>
-          <li>
-            <i class="bi bi-telephone-fill"></i>
-            <strong>Phone:</strong> +91-9876543210
-          </li>
-          <li>
-            <i class="bi bi-envelope-fill"></i>
-            <strong>Email:</strong> info&#64;karthickpg.com
-          </li>
-        </ul>
+  <!-- Page Header -->
+  <div class="ct-header mb-4">
+    <div class="ct-header-left">
+      <div class="ct-header-icon">
+        <i class="bi bi-chat-dots-fill"></i>
+      </div>
+      <div>
+        <h2 class="ct-title">Contact Us</h2>
+        <p class="ct-sub">Have questions? We're happy to assist you anytime</p>
+      </div>
+    </div>
+    <span class="ct-online-badge">
+      <span class="ct-live-dot"></span> We're Online
+    </span>
+  </div>
 
-        <div class="map-card">
+  <div class="row g-3">
+
+    <!-- LEFT: Info + Map -->
+    <div class="col-lg-5">
+      <div class="ct-info-card">
+
+        <!-- Gradient Banner -->
+        <div class="ct-banner">
+          <div class="ct-circle ct-circle-1"></div>
+          <div class="ct-circle ct-circle-2"></div>
+          <div class="ct-circle ct-circle-3"></div>
+          <div class="ct-banner-content">
+            <div class="ct-banner-icon"><i class="bi bi-building"></i></div>
+            <div>
+              <div class="ct-banner-title">Karthick PG</div>
+              <div class="ct-banner-sub">Coimbatore, Tamil Nadu</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Details -->
+        <div class="ct-info-body">
+          <div class="ct-info-item">
+            <div class="ct-item-icon blue"><i class="bi bi-geo-alt-fill"></i></div>
+            <div class="ct-item-text">
+              <div class="ct-item-label">Address</div>
+              <div class="ct-item-value">123 RS Puram, Coimbatore — India</div>
+            </div>
+          </div>
+          <div class="ct-info-item">
+            <div class="ct-item-icon green"><i class="bi bi-telephone-fill"></i></div>
+            <div class="ct-item-text">
+              <div class="ct-item-label">Phone</div>
+              <div class="ct-item-value">+91-9876543210</div>
+            </div>
+          </div>
+          <div class="ct-info-item">
+            <div class="ct-item-icon purple"><i class="bi bi-envelope-fill"></i></div>
+            <div class="ct-item-text">
+              <div class="ct-item-label">Email</div>
+              <div class="ct-item-value">info&#64;karthickpg.com</div>
+            </div>
+          </div>
+          <div class="ct-info-item ct-no-border">
+            <div class="ct-item-icon amber"><i class="bi bi-clock-fill"></i></div>
+            <div class="ct-item-text">
+              <div class="ct-item-label">Office Hours</div>
+              <div class="ct-item-value">Mon – Sat, 9:00 AM – 7:00 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="ct-map">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.234567890!2d76.955832!3d11.016844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859f123456789%3A0xabcdef123456789!2sRS%20Puram%2C%20Coimbatore%2C%20India!5e0!3m2!1sen!2sin!4v1700000000000"
             width="100%"
-            height="250"
-            style="border: 0"
+            height="200"
+            style="border:0"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
-      </div>
 
-      <div class="form-card">
-        <form
-          [formGroup]="form"
-          (ngSubmit)="onSubmit()"
-          novalidate
-          aria-label="Contact form"
-        >
-          <div class="field">
-            <label for="name">Your Name *</label>
-            <input
-              id="name"
-              type="text"
-              formControlName="name"
-              placeholder="Enter your name"
-            />
-          </div>
-
-          <div class="field">
-            <label for="email">Email Address *</label>
-            <input
-              id="email"
-              type="email"
-              formControlName="email"
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <div class="field">
-            <label for="subject">Subject</label>
-            <input
-              id="subject"
-              type="text"
-              formControlName="subject"
-              placeholder="Subject (optional)"
-            />
-          </div>
-
-          <div class="field">
-            <label for="message">Message *</label>
-            <textarea
-              id="message"
-              rows="6"
-              formControlName="message"
-              placeholder="Write your message"
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            [disabled]="form.invalid || submitting"
-            class=""
-          >
-            {{ submitting ? "Sending…" : "Send Message" }}
-          </button>
-
-          <p class="success" *ngIf="submitSuccess" aria-live="polite">
-            Thanks! Your message has been sent.
-          </p>
-          <p class="error" *ngIf="submitError" aria-live="assertive">
-            {{ submitError }}
-          </p>
-        </form>
       </div>
     </div>
+
+    <!-- RIGHT: Form -->
+    <div class="col-lg-7">
+      <div class="ct-form-card">
+
+        <!-- Form Header -->
+        <div class="ct-form-header">
+          <div class="ct-form-icon"><i class="bi bi-send-fill"></i></div>
+          <div>
+            <div class="ct-form-title">Send Us a Message</div>
+            <div class="ct-form-sub">We'll get back to you within 24 hours</div>
+          </div>
+        </div>
+
+        <!-- Form Body -->
+        <div class="ct-form-body">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+            <!-- Name + Email row -->
+            <div class="row g-2 mb-2">
+              <div class="col-sm-6">
+                <div class="ct-field">
+                  <label class="ct-label">Your Name <span class="ct-req">*</span></label>
+                  <div class="ct-input-wrap">
+                    <i class="bi bi-person ct-input-icon"></i>
+                    <input
+                      type="text"
+                      class="ct-input"
+                      formControlName="name"
+                      placeholder="Enter your name"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="ct-field">
+                  <label class="ct-label">Email Address <span class="ct-req">*</span></label>
+                  <div class="ct-input-wrap">
+                    <i class="bi bi-envelope ct-input-icon"></i>
+                    <input
+                      type="email"
+                      class="ct-input"
+                      formControlName="email"
+                      placeholder="Enter your email"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Subject -->
+            <div class="ct-field mb-2">
+              <label class="ct-label">Subject</label>
+              <div class="ct-input-wrap">
+                <i class="bi bi-tag ct-input-icon"></i>
+                <input
+                  type="text"
+                  class="ct-input"
+                  formControlName="subject"
+                  placeholder="Subject (optional)"
+                />
+              </div>
+            </div>
+
+            <!-- Message -->
+            <div class="ct-field mb-3">
+              <label class="ct-label">Message <span class="ct-req">*</span></label>
+              <div class="ct-textarea-wrap">
+                <i class="bi bi-chat-left-text ct-textarea-icon"></i>
+                <textarea
+                  class="ct-textarea"
+                  rows="5"
+                  formControlName="message"
+                  placeholder="Write your message here…"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="ct-submit-btn" [disabled]="form.invalid || submitting">
+              <i class="bi" [ngClass]="submitting ? 'bi-hourglass-split' : 'bi-send-fill'"></i>
+              {{ submitting ? 'Sending…' : 'Send Message' }}
+            </button>
+
+            <!-- Feedback -->
+            <div class="ct-success-alert mt-2" *ngIf="submitSuccess">
+              <i class="bi bi-check-circle-fill me-2"></i>
+              Thanks! Your message has been sent. We'll get back to you soon.
+            </div>
+            <div class="ct-error-alert mt-2" *ngIf="submitError">
+              <i class="bi bi-exclamation-circle-fill me-2"></i>
+              {{ submitError }}
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+
   </div>
-</section>
+</div>

@@ -1,80 +1,106 @@
-<section class="rooms-section">
-  <div class="container">
+<div class="rooms-page">
 
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="mb-2">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <button class="btn btn-link p-0" (click)="goBack()">
-            <i class="bi bi-arrow-left me-1"></i> Back
-          </button>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Rooms</li>
-      </ol>
-    </nav>
-
-    <!-- Section header -->
-    <div class="section-header">
-      <h2 class="section-heading">Discover Your Perfect Stay</h2>
-      <p class="section-description">
-        Browse through our curated list of modern, comfortable, and affordable
-        rooms. Use the filters on the left to find the one that matches your
-        lifestyle and budget.
+  <!-- ── Page Header ── -->
+  <div class="rooms-header mb-3">
+    <div>
+      <h2 class="rooms-title">Discover Your Perfect Stay</h2>
+      <p class="rooms-subtitle">
+        <i class="bi bi-geo-alt-fill me-1"></i>Karthick PG
+        &nbsp;·&nbsp; <strong>{{ rooms.length }}</strong> rooms available
+        &nbsp;·&nbsp; Use filters to narrow your search
       </p>
     </div>
+    <button class="back-btn" (click)="goBack()">
+      <i class="bi bi-arrow-left me-1"></i> Back
+    </button>
+  </div>
 
-    <div class="row g-4">
-      <!-- Filter sidebar -->
-      <div class="col-lg-3 col-md-4">
-        <app-room-filter (filterChanged)="onFilterChanged($event)"></app-room-filter>
+  <div class="row g-3">
+
+    <!-- ── Filter Sidebar ── -->
+    <div class="col-lg-3 col-md-4">
+      <app-room-filter (filterChanged)="onFilterChanged($event)"></app-room-filter>
+    </div>
+
+    <!-- ── Room Cards Grid ── -->
+    <div class="col-lg-9 col-md-8">
+
+      <!-- Empty state -->
+      <div class="rooms-empty" *ngIf="rooms.length === 0">
+        <i class="bi bi-house-slash"></i>
+        <p>No rooms match your filters.</p>
+        <span>Try adjusting the price range or capacity.</span>
       </div>
 
-      <!-- Room cards -->
-      <div class="col-lg-9 col-md-8">
-        <div class="row g-4">
-          <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let room of rooms">
-            <div class="room-card">
+      <div class="row g-3" *ngIf="rooms.length > 0">
+        <div class="col-xl-4 col-md-6" *ngFor="let room of rooms">
+          <div class="room-card">
 
-              <!-- Image -->
-              <div
-                class="room-image"
-                [ngStyle]="{ 'background-image': 'url(' + room.Image + ')' }"
-              >
-                <div class="overlay">
-                  <button class="view-btn" (click)="onViewDetails(room.RoomId)">
-                    <i class="bi bi-eye"></i> View Details
-                  </button>
-                </div>
+            <!-- ── Image Zone ── -->
+            <div class="room-img-wrap"
+                 [style.background-image]="'url(' + room.Image + ')'">
+
+              <div class="img-badge-avail">
+                <i class="bi bi-patch-check-fill me-1"></i>Available
+              </div>
+              <div class="img-badge-type">
+                {{ room.TotalBeds }} Bed{{ room.TotalBeds > 1 ? 's' : '' }}
               </div>
 
-              <!-- Content -->
-              <div class="room-content">
-                <h4 class="room-title">{{ room.Name }}</h4>
-                <p class="room-size">
-                  <i class="bi bi-door-open"></i>
-                  {{ room.TotalBeds }} Bed{{ room.TotalBeds > 1 ? 's' : '' }}
-                </p>
+              <div class="img-price-overlay">
+                <span class="img-price">₹{{ room.RentPerBed | number }}</span>
+                <span class="img-price-label">/mo</span>
+              </div>
 
-                <div class="room-price-offer">
-                  <span class="discounted-price">
-                    ₹{{ room.RentPerBed | number }}<small>/mo</small>
-                  </span>
-                </div>
+              <div class="img-hover-overlay">
+                <button class="overlay-eye-btn" (click)="onViewDetails(room.RoomId)">
+                  <i class="bi bi-eye me-1"></i>Quick View
+                </button>
+              </div>
 
-                <div class="room-icons">
-                  <span><i class="bi bi-person-fill"></i> Max {{ room.Capacity }}</span>
-                  <span><i class="bi bi-snow"></i> AC</span>
-                  <span><i class="bi bi-droplet"></i> Bathroom</span>
-                  <span><i class="bi bi-book"></i> Study Table</span>
-                  <span><i class="bi bi-box"></i> Wardrobe</span>
-                </div>
+            </div>
+
+            <!-- ── Card Body ── -->
+            <div class="room-body">
+
+              <div class="room-body-top">
+                <h4 class="rc-name">{{ room.Name }}</h4>
+                <span class="rc-capacity">
+                  <i class="bi bi-people-fill"></i> {{ room.Capacity }}
+                </span>
+              </div>
+
+              <!-- Amenity chips -->
+              <div class="rc-amenities">
+                <span class="rc-chip rc-chip-blue"><i class="bi bi-snow"></i> AC</span>
+                <span class="rc-chip rc-chip-cyan"><i class="bi bi-droplet-fill"></i> Bath</span>
+                <span class="rc-chip rc-chip-amber"><i class="bi bi-book-fill"></i> Study</span>
+                <span class="rc-chip rc-chip-slate"><i class="bi bi-box-fill"></i> Wardrobe</span>
+                <span class="rc-chip rc-chip-green"><i class="bi bi-wifi"></i> WiFi</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="rc-actions" *ngIf="isUserDashboard">
+                <button class="rc-btn-details" (click)="onViewDetails(room.RoomId)">
+                  <i class="bi bi-eye"></i> Details
+                </button>
+                <button class="rc-btn-book" (click)="onViewDetails(room.RoomId)">
+                  <i class="bi bi-calendar-check-fill"></i> Book Now
+                </button>
+              </div>
+
+              <div class="rc-actions" *ngIf="!isUserDashboard">
+                <button class="rc-btn-book rc-btn-full" (click)="onViewDetails(room.RoomId)">
+                  <i class="bi bi-eye me-1"></i> View Details
+                </button>
               </div>
 
             </div>
           </div>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
-</section>
+
+</div>

@@ -26,7 +26,8 @@ enum BookingStep {
   selector: 'app-edit-booking',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './edit-booking.component.html'
+  templateUrl: './edit-booking.component.html',
+  styleUrls: ['./edit-booking.component.css']
 })
 export class EditBookingComponent implements OnInit {
 

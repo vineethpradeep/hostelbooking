@@ -1,6 +1,33 @@
 .menu-item {
-    background: var(--bg-color);
+    background: #ffffff;
     border-bottom: 1px solid #e5e7eb;
+}
+
+.logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-text-block {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.logo-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #2563eb;
+    letter-spacing: 0.5px;
+}
+
+.logo-tagline {
+    font-size: 10px;
+    font-weight: 600;
+    color: #2563eb;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .menu-item .mainmenu li {

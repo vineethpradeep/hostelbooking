@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* ══════════════════════════════════════════
+   UNIFIED ADMIN FONT SYSTEM
+   Target: dashboard, users, bookings, properties pages
+══════════════════════════════════════════ */
+
+/* Base font for all admin page wrappers */
+.dash-wrapper,
+.users-page,
+.bookings-page,
+.prop-page {
+    font-family: "Inter", sans-serif;
+    font-size: 0.82rem;
+}
+
+/* ── Unified Page Titles ── */
+.page-title,
+.dash-title {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+}
+
+/* ── Unified Page Subtitles ── */
+.page-subtitle,
+.dash-subtitle {
+    font-size: 0.72rem !important;
+}
+
+/* ── Unified Table Headers ── */
+.users-table thead th,
+.bookings-table thead th {
+    font-size: 0.68rem !important;
+    padding: 0.5rem 0.9rem !important;
+}
+
+/* ── Unified Table Body ── */
+.users-table tbody td,
+.bookings-table tbody td {
+    font-size: 0.8rem !important;
+    padding: 0.55rem 0.9rem !important;
+}
+
+/* ── Unified Table Card Headers ── */
+.table-title {
+    font-size: 0.8rem !important;
+}
+
+/* ── Page icon size ── */
+.users-page .page-icon,
+.bookings-page .page-icon {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 1.1rem !important;
+}

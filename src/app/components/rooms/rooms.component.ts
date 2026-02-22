@@ -58,6 +58,10 @@ rooms: Rooms[] = [];
   }
 
 
+  get isUserDashboard(): boolean {
+    return this.router.url.startsWith('/user-dashboard');
+  }
+
   goBack() {
     this.router.navigate(['/rooms']);
   }

@@ -22,4 +22,9 @@ export class RoomFilterComponent {
   applyFilters() {
     this.filterChanged.emit(this.filters);
   }
+
+  resetFilters() {
+    this.filters = { search: '', minPrice: null, maxPrice: null, capacity: null };
+    this.filterChanged.emit(this.filters);
+  }
 }

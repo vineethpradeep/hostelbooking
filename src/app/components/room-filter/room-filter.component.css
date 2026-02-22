@@ -1,81 +1,153 @@
-/* ── Room Filter Sidebar ── */
-.room-filter {
+/* ══════════════════════════════════════════
+   ROOM FILTER SIDEBAR — Compact Modern Style
+══════════════════════════════════════════ */
+
+.rf-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    padding: 0.85rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
     font-family: "Inter", sans-serif;
     position: sticky;
     top: 80px;
-    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
 }
 
-.room-filter h6 {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #e2e8f0;
+/* ── Header ── */
+.rf-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid #f1f5f9;
 }
 
-.room-filter label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 0.35rem;
-    display: block;
-}
-
-.room-filter .form-control,
-.room-filter .form-select {
-    border: 1.5px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 0.65rem 1rem;
-    font-size: 0.875rem;
-    color: #1e293b;
-    margin-bottom: 1rem;
-    background: #fff;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    font-family: "Inter", sans-serif;
-}
-
-.room-filter .form-control:focus,
-.room-filter .form-select:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-    outline: none;
-}
-
-.room-filter .btn {
+.rf-header-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
-    background: linear-gradient(135deg, #2563eb, #7c3aed) !important;
-    color: #fff !important;
-    border-radius: 50px !important;
-    font-weight: 600;
-    font-size: 0.875rem;
-    padding: 0.65rem 1rem;
-    width: 100%;
-    border: none !important;
-    cursor: pointer;
-    transition: all 0.25s ease;
+    color: #fff;
+    font-size: 0.8rem;
+    flex-shrink: 0;
 }
 
-.room-filter .btn:hover {
+.rf-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.rf-sub {
+    font-size: 0.62rem;
+    color: #94a3b8;
+    margin-top: 0.05rem;
+}
+
+/* ── Filter Fields ── */
+.rf-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.rf-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    letter-spacing: 0.2px;
+}
+
+.rf-label i { color: #94a3b8; font-size: 0.7rem; }
+
+.rf-input-wrap { position: relative; }
+
+.rf-input {
+    width: 100%;
+    padding: 0.48rem 0.75rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-family: "Inter", sans-serif;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.rf-input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    background: #fff;
+}
+
+.rf-input::placeholder { color: #cbd5e1; }
+
+/* ── Apply Button ── */
+.rf-apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.55rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: "Inter", sans-serif;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    box-shadow: 0 3px 10px rgba(37,99,235,0.28);
+    width: 100%;
+}
+
+.rf-apply-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 6px 16px rgba(37,99,235,0.38);
     opacity: 0.95;
 }
 
+/* ── Reset Button ── */
+.rf-reset-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.45rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.rf-reset-btn:hover {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
-    .room-filter {
+    .rf-card {
         position: static;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0.75rem;
     }
 }

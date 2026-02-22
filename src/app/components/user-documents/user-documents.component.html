@@ -1,0 +1,362 @@
+<div class="docs-page">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <button class="btn-back" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      <div class="page-icon">
+        <i class="bi bi-folder2-open"></i>
+      </div>
+      <div>
+        <h1 class="page-title">User Documents</h1>
+        <p class="page-subtitle" *ngIf="userName">
+          <i class="bi bi-person me-1"></i>{{ userName }}
+        </p>
+      </div>
+    </div>
+    <div class="page-header-right">
+      <div class="total-badge">
+        <i class="bi bi-file-earmark me-1"></i>
+        {{ documents.length }} Documents
+      </div>
+      <button class="btn-add" (click)="openUploadModal()">
+        <i class="bi bi-cloud-upload me-1"></i>Upload Document
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-wrap" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status"></div>
+    <span>Loading documents…</span>
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card" *ngIf="!loading">
+
+    <div class="table-card-header">
+      <div class="table-title">
+        <i class="bi bi-files me-2"></i>All Documents
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="docs-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Document Name</th>
+            <th>Type</th>
+            <th>Uploaded Date</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of documents; let i = index">
+            <td><span class="row-num">{{ i + 1 }}</span></td>
+            <td>
+              <div class="doc-name-cell">
+                <div class="doc-icon">
+                  <i class="bi bi-file-earmark-text"></i>
+                </div>
+                <span>{{ doc.DocumentName }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="doc-type-badge">{{ doc.DocumentType }}</span>
+            </td>
+            <td>
+              <span class="date-cell">
+                <i class="bi bi-calendar3 me-1"></i>
+                {{ doc.UploadedDate ? (doc.UploadedDate | date:'dd MMM yyyy') : '—' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <span class="status-badge" [class.verified]="doc.IsVerified" [class.pending]="!doc.IsVerified">
+                <i class="bi" [class.bi-check-circle-fill]="doc.IsVerified" [class.bi-clock]="!doc.IsVerified"></i>
+                {{ doc.IsVerified ? 'Verified' : 'Pending' }}
+              </span>
+            </td>
+            <td>
+              <div class="action-btns">
+                <button class="btn-view-icon" (click)="openViewModal(doc)" title="View">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn-edit-icon" (click)="openEditModal(doc)" title="Edit">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn-delete-icon" (click)="openDeleteModal(doc.DocumentId)" title="Delete">
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr *ngIf="documents.length === 0">
+            <td colspan="6" class="empty-row">
+              <i class="bi bi-folder-x fs-2 d-block mb-2"></i>
+              No documents uploaded yet.
+              <br>
+              <button class="btn-add mt-3" (click)="openUploadModal()">
+                <i class="bi bi-cloud-upload me-1"></i>Upload First Document
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══ UPLOAD DOCUMENT MODAL ═══ -->
+<div class="modal fade" id="uploadDocModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal">
+
+      <div class="custom-modal-header">
+        <div class="modal-icon-wrap upload-icon-wrap">
+          <i class="bi bi-cloud-upload"></i>
+        </div>
+        <div>
+          <h5 class="modal-heading">Upload Document</h5>
+          <p class="modal-subtext">Select a file and fill in the details</p>
+        </div>
+        <button class="modal-x" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="custom-modal-body">
+
+        <div class="modal-field">
+          <label>Document Type <span class="required">*</span></label>
+          <div class="modal-input-wrap">
+            <i class="bi bi-tag"></i>
+            <select class="modal-input" [(ngModel)]="uploadDocType">
+              <option value="">Select document type</option>
+              <option *ngFor="let t of docTypes" [value]="t">{{ t }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-field">
+          <label>Document Name <span class="required">*</span></label>
+          <div class="modal-input-wrap">
+            <i class="bi bi-file-earmark-text"></i>
+            <input class="modal-input" [(ngModel)]="uploadDocName" placeholder="e.g. Aadhar Front Side" />
+          </div>
+        </div>
+
+        <div class="modal-field">
+          <label>Choose File <span class="required">*</span></label>
+          <div class="file-upload-zone" (click)="fileInput.click()">
+            <input #fileInput id="fileInput" type="file" class="d-none"
+              accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+              (change)="onFileSelected($event)" />
+            <div *ngIf="!selectedFile" class="file-upload-placeholder">
+              <i class="bi bi-cloud-upload fs-3 text-primary mb-2"></i>
+              <p class="mb-0">Click to browse or drag & drop</p>
+              <small class="text-muted">JPG, PNG, PDF, DOC up to 10MB</small>
+            </div>
+            <div *ngIf="selectedFile" class="file-selected">
+              <i class="bi bi-file-earmark-check text-success fs-4 me-2"></i>
+              <span>{{ selectedFile.name }}</span>
+              <small class="text-muted ms-2">({{ (selectedFile.size / 1024).toFixed(1) }} KB)</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="custom-modal-footer">
+        <button class="modal-btn-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button class="modal-btn-save"
+          [disabled]="!selectedFile || !uploadDocType || !uploadDocName || uploading"
+          (click)="uploadDocument()">
+          <span *ngIf="uploading" class="spinner-border spinner-border-sm me-1"></span>
+          <i *ngIf="!uploading" class="bi bi-cloud-upload me-1"></i>
+          {{ uploading ? 'Uploading…' : 'Upload' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ EDIT DOCUMENT MODAL ═══ -->
+<div class="modal fade" id="editDocModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content custom-modal">
+
+      <div class="custom-modal-header">
+        <div class="modal-icon-wrap edit-icon-wrap">
+          <i class="bi bi-pencil-square"></i>
+        </div>
+        <div>
+          <h5 class="modal-heading">Edit Document</h5>
+          <p class="modal-subtext">Update document details</p>
+        </div>
+        <button class="modal-x" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="custom-modal-body">
+        <div class="modal-field">
+          <label>Document Name</label>
+          <div class="modal-input-wrap">
+            <i class="bi bi-file-earmark-text"></i>
+            <input class="modal-input" [(ngModel)]="editDoc.DocumentName" placeholder="Document name" />
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Document Type</label>
+          <div class="modal-input-wrap">
+            <i class="bi bi-tag"></i>
+            <select class="modal-input" [(ngModel)]="editDoc.DocumentType">
+              <option *ngFor="let t of docTypes" [value]="t">{{ t }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Verification Status</label>
+          <div class="modal-input-wrap">
+            <i class="bi bi-shield-check"></i>
+            <select class="modal-input" [(ngModel)]="editDoc.IsVerified">
+              <option [ngValue]="false">Pending</option>
+              <option [ngValue]="true">Verified</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="custom-modal-footer">
+        <button class="modal-btn-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button class="modal-btn-save" (click)="saveEdit()">
+          <i class="bi bi-check-lg me-1"></i>Save Changes
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ VIEW DOCUMENT MODAL ═══ -->
+<div class="modal fade" id="viewDocModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content custom-modal" *ngIf="viewDoc">
+
+      <div class="custom-modal-header">
+        <div class="modal-icon-wrap view-icon-wrap">
+          <i class="bi bi-eye"></i>
+        </div>
+        <div>
+          <h5 class="modal-heading">{{ viewDoc.DocumentName }}</h5>
+          <p class="modal-subtext">{{ viewDoc.DocumentType }}</p>
+        </div>
+        <button class="modal-x" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="custom-modal-body">
+        <div class="doc-details-grid">
+          <div class="doc-detail-item">
+            <span class="detail-label">Document Name</span>
+            <span class="detail-value">{{ viewDoc.DocumentName }}</span>
+          </div>
+          <div class="doc-detail-item">
+            <span class="detail-label">Document Type</span>
+            <span class="detail-value">{{ viewDoc.DocumentType }}</span>
+          </div>
+          <div class="doc-detail-item">
+            <span class="detail-label">Uploaded Date</span>
+            <span class="detail-value">{{ viewDoc.UploadedDate ? (viewDoc.UploadedDate | date:'dd MMM yyyy') : '—' }}</span>
+          </div>
+          <div class="doc-detail-item">
+            <span class="detail-label">Status</span>
+            <span class="status-badge" [class.verified]="viewDoc.IsVerified" [class.pending]="!viewDoc.IsVerified">
+              <i class="bi" [class.bi-check-circle-fill]="viewDoc.IsVerified" [class.bi-clock]="!viewDoc.IsVerified"></i>
+              {{ viewDoc.IsVerified ? 'Verified' : 'Pending' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- File Preview -->
+        <div class="doc-preview-area" *ngIf="viewDoc.FileUrl">
+          <img *ngIf="isImage(viewDoc.FileUrl)" [src]="viewDoc.FileUrl" alt="Document Preview" class="doc-preview-img" />
+          <iframe *ngIf="isPdf(viewDoc.FileUrl)" [src]="viewDoc.FileUrl" class="doc-preview-pdf"></iframe>
+          <div *ngIf="!isImage(viewDoc.FileUrl) && !isPdf(viewDoc.FileUrl)" class="doc-preview-other">
+            <i class="bi bi-file-earmark-text fs-1 text-primary"></i>
+            <p class="mt-2">Preview not available</p>
+            <a [href]="viewDoc.FileUrl" target="_blank" class="btn-add mt-2">
+              <i class="bi bi-download me-1"></i>Download File
+            </a>
+          </div>
+        </div>
+        <div class="doc-no-preview" *ngIf="!viewDoc.FileUrl">
+          <i class="bi bi-file-earmark fs-1 text-muted"></i>
+          <p class="text-muted mt-2">No file available</p>
+        </div>
+      </div>
+
+      <div class="custom-modal-footer">
+        <button class="modal-btn-cancel" data-bs-dismiss="modal">Close</button>
+        <a *ngIf="viewDoc.FileUrl" [href]="viewDoc.FileUrl" target="_blank" class="modal-btn-save">
+          <i class="bi bi-download me-1"></i>Download
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ CONFIRM DELETE MODAL ═══ -->
+<div class="modal fade" id="confirmDeleteDocModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content custom-modal">
+
+      <div class="confirm-modal-body">
+        <div class="confirm-icon confirm-icon-red">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+        <h5 class="confirm-title">Delete Document</h5>
+        <p class="confirm-text">This will permanently delete the document. Are you sure?</p>
+      </div>
+
+      <div class="custom-modal-footer justify-content-center">
+        <button class="modal-btn-cancel" data-bs-dismiss="modal">No, Keep</button>
+        <button class="modal-btn-danger" (click)="confirmDelete()">
+          <i class="bi bi-trash3 me-1"></i>Yes, Delete
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="docToast" class="toast align-items-center border-0"
+    [class.bg-success]="toastType === 'success'"
+    [class.bg-danger]="toastType === 'danger'"
+    [class.text-white]="true" role="alert">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="bi" [class.bi-check-circle-fill]="toastType === 'success'"
+          [class.bi-x-circle-fill]="toastType === 'danger'" class="me-2"></i>
+        {{ toastMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>

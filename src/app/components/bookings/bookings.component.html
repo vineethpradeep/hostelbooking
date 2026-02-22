@@ -1,6 +1,6 @@
 <div class="bookings-page">
 
-  <!-- Page Header -->
+  <!-- ── Page Header ──────────────────────────── -->
   <div class="page-header">
     <div class="page-header-left">
       <div class="page-icon">
@@ -8,84 +8,196 @@
       </div>
       <div>
         <h1 class="page-title">Bookings</h1>
-        <p class="page-subtitle">View and manage all booking records</p>
+        <p class="page-subtitle">Track and manage all booking records</p>
       </div>
     </div>
     <div class="page-header-right">
       <div class="total-badge">
         <i class="bi bi-journal-check me-1"></i>
-        {{ filteredBookings.length }} Bookings
+        {{ BookingList.length }} Bookings
       </div>
     </div>
   </div>
 
-  <!-- Table Card -->
+  <!-- ── User context banner ──────────────────── -->
+  <div class="user-context-banner" *ngIf="selectedUserName">
+    <i class="bi bi-person-circle me-2"></i>
+    Showing bookings for <strong>{{ selectedUserName }}</strong>
+    <span class="user-id-pill">ID #{{ selectedUserId }}</span>
+  </div>
+
+  <!-- ── Summary Cards ────────────────────────── -->
+  <div class="stats-grid">
+
+    <div class="stat-card stat-total">
+      <div class="stat-icon-wrap">
+        <i class="bi bi-journal-text"></i>
+      </div>
+      <div class="stat-body">
+        <p class="stat-label">Total Bookings</p>
+        <h3 class="stat-value">{{ BookingList.length }}</h3>
+        <span class="stat-sub">All records</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-confirmed">
+      <div class="stat-icon-wrap">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <div class="stat-body">
+        <p class="stat-label">Confirmed</p>
+        <h3 class="stat-value">{{ confirmedCount }}</h3>
+        <span class="stat-sub">Active stays</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-pending">
+      <div class="stat-icon-wrap">
+        <i class="bi bi-clock-fill"></i>
+      </div>
+      <div class="stat-body">
+        <p class="stat-label">Pending</p>
+        <h3 class="stat-value">{{ pendingCount }}</h3>
+        <span class="stat-sub">Awaiting confirmation</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-cancelled">
+      <div class="stat-icon-wrap">
+        <i class="bi bi-x-circle-fill"></i>
+      </div>
+      <div class="stat-body">
+        <p class="stat-label">Cancelled</p>
+        <h3 class="stat-value">{{ cancelledCount }}</h3>
+        <span class="stat-sub">Cancelled bookings</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Table Card ───────────────────────────── -->
   <div class="table-card">
 
     <div class="table-card-header">
       <div class="table-title">
-        <i class="bi bi-table me-2"></i>All Bookings
+        <i class="bi bi-list-ul me-2"></i>All Bookings
       </div>
-      <!-- Search -->
-      <div class="search-wrap">
-        <i class="bi bi-search search-icon"></i>
-        <input
-          class="search-input"
-          type="text"
-          placeholder="Search by booking no or status…"
-          [(ngModel)]="searchTerm"
-          (ngModelChange)="onSearchChange()" />
-        <button *ngIf="searchTerm" class="search-clear" (click)="searchTerm=''; onSearchChange()">
-          <i class="bi bi-x-lg"></i>
-        </button>
+      <div class="header-actions">
+        <!-- Status Filter -->
+        <div class="filter-wrap">
+          <i class="bi bi-funnel filter-icon"></i>
+          <select class="filter-select" [(ngModel)]="statusFilter" (ngModelChange)="onSearchChange()">
+            <option value="">All Status</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Pending">Pending</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <!-- Search -->
+        <div class="search-wrap">
+          <i class="bi bi-search search-icon"></i>
+          <input
+            class="search-input"
+            type="text"
+            placeholder="Search booking, tenant, room…"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchChange()" />
+          <button *ngIf="searchTerm" class="search-clear" (click)="searchTerm=''; onSearchChange()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="table-responsive">
+    <!-- Loading -->
+    <div class="loading-row" *ngIf="loading">
+      <div class="spinner-border spinner-border-sm text-success me-2"></div>
+      Loading bookings…
+    </div>
+
+    <div class="table-responsive" *ngIf="!loading">
       <table class="bookings-table">
         <thead>
           <tr>
             <th>#</th>
             <th>Booking No</th>
+            <th>Tenant</th>
+            <th>Property / Room</th>
             <th>Check-In</th>
             <th>Check-Out</th>
+            <th>Duration</th>
             <th class="text-center">Status</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let b of pagedBookings; let i = index">
+
+            <td><span class="row-num">{{ startIndex + i }}</span></td>
+
             <td>
-              <span class="row-num">{{ startIndex + i }}</span>
-            </td>
-            <td>
-              <div class="booking-num-cell">
-                <i class="bi bi-hash text-muted me-1"></i>
-                <span class="fw-600">{{ b.BookingNumber }}</span>
+              <div class="booking-cell">
+                <div class="booking-icon"><i class="bi bi-receipt"></i></div>
+                <span class="booking-ref">{{ b.BookingNumber || '—' }}</span>
               </div>
             </td>
+
             <td>
-              <span class="date-cell">
-                <i class="bi bi-calendar-event me-1"></i>{{ b.CheckInDate | date:'dd MMM yyyy' }}
-              </span>
+              <div class="tenant-cell">
+                <div class="tenant-avatar">{{ (b.TenantName || '?').charAt(0) | uppercase }}</div>
+                <span class="tenant-name">{{ b.TenantName || '—' }}</span>
+              </div>
             </td>
+
             <td>
-              <span class="date-cell">
-                <i class="bi bi-calendar2-check me-1"></i>{{ b.CheckOutDate | date:'dd MMM yyyy' }}
-              </span>
+              <div class="property-cell">
+                <span class="property-name">{{ b.PropertyName || '—' }}</span>
+                <span class="room-chip" *ngIf="b.RoomNumber">
+                  <i class="bi bi-door-closed me-1"></i>{{ b.RoomNumber }}
+                </span>
+              </div>
             </td>
+
+            <td>
+              <div class="date-chip checkin-chip">
+                <i class="bi bi-box-arrow-in-right"></i>
+                {{ b.CheckInDate | date:'dd MMM yy' }}
+              </div>
+            </td>
+
+            <td>
+              <div class="date-chip checkout-chip">
+                <i class="bi bi-box-arrow-right"></i>
+                {{ b.CheckOutDate | date:'dd MMM yy' }}
+              </div>
+            </td>
+
+            <td>
+              <span class="nights-pill" *ngIf="b.CheckInDate && b.CheckOutDate">
+                {{ getNights(b.CheckInDate, b.CheckOutDate) }} nights
+              </span>
+              <span class="text-muted" *ngIf="!b.CheckInDate || !b.CheckOutDate">—</span>
+            </td>
+
             <td class="text-center">
               <span class="status-badge"
                 [class.status-confirmed]="b.Status === 'Confirmed'"
                 [class.status-pending]="b.Status === 'Pending'"
                 [class.status-cancelled]="b.Status === 'Cancelled'">
-                {{ b.Status }}
+                <i class="bi"
+                  [class.bi-check-circle-fill]="b.Status === 'Confirmed'"
+                  [class.bi-clock-fill]="b.Status === 'Pending'"
+                  [class.bi-x-circle-fill]="b.Status === 'Cancelled'">
+                </i>
+                {{ b.Status || '—' }}
               </span>
             </td>
+
           </tr>
+
           <tr *ngIf="filteredBookings.length === 0">
-            <td colspan="5" class="empty-row">
-              <i class="bi bi-inbox fs-2 d-block mb-2"></i>
-              {{ searchTerm ? 'No results for "' + searchTerm + '"' : 'No bookings found' }}
+            <td colspan="8" class="empty-row">
+              <i class="bi bi-calendar-x fs-2 d-block mb-2 text-muted"></i>
+              {{ searchTerm || statusFilter ? 'No results found' : 'No bookings found' }}
             </td>
           </tr>
         </tbody>
@@ -95,7 +207,8 @@
     <!-- Pagination Footer -->
     <div class="pagination-footer" *ngIf="filteredBookings.length > 0">
       <span class="pagination-info">
-        Showing <strong>{{ startIndex }}–{{ endIndex }}</strong> of <strong>{{ filteredBookings.length }}</strong> bookings
+        Showing <strong>{{ startIndex }}–{{ endIndex }}</strong> of
+        <strong>{{ filteredBookings.length }}</strong> bookings
       </span>
       <div class="pagination-controls">
         <button class="page-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">

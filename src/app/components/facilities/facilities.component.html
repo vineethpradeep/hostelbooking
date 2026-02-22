@@ -1,24 +1,52 @@
-<section class="services-section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <div class="section-title">
-          <h2>Facilities & Amenities</h2>
-          <p class="subtitle">Everything you need for a comfortable stay</p>
-        </div>
+<div class="fac-page">
+
+  <!-- Page Header -->
+  <div class="fac-header mb-4">
+    <div class="fac-header-left">
+      <div class="fac-header-icon">
+        <i class="bi bi-stars"></i>
+      </div>
+      <div>
+        <h2 class="fac-title">Facilities & Amenities</h2>
+        <p class="fac-sub">Everything you need for a comfortable stay at Karthick PG</p>
       </div>
     </div>
+    <span class="fac-count-badge">
+      <i class="bi bi-grid-fill me-1"></i>{{ services.length }} Facilities
+    </span>
+  </div>
 
-    <div class="row g-4">
-      <div class="col-lg-4 col-sm-6" *ngFor="let service of services">
-        <div class="service-item">
-          <div class="icon-wrapper">
+  <!-- Facility Cards -->
+  <div class="row g-3">
+    <div class="col-lg-4 col-md-6" *ngFor="let service of services; let i = index">
+      <div class="fac-card" [ngClass]="service.colorClass">
+        <div class="fac-card-top">
+          <div class="fac-icon-wrap">
             <i class="{{ service.icon }}"></i>
           </div>
-          <h4>{{ service.title }}</h4>
-          <p>{{ service.description }}</p>
+          <span class="fac-card-num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+        </div>
+        <h4 class="fac-card-title">{{ service.title }}</h4>
+        <p class="fac-card-desc">{{ service.description }}</p>
+        <div class="fac-card-footer">
+          <span class="fac-avail-chip">
+            <i class="{{ service.chipIcon }} me-1"></i>Active
+          </span>
+          <span class="fac-incl-chip">Included</span>
         </div>
       </div>
     </div>
   </div>
-</section>
+
+  <!-- Bottom Info Strip -->
+  <div class="fac-info-strip mt-4">
+    <div class="fac-strip-icon">
+      <i class="bi bi-info-circle-fill"></i>
+    </div>
+    <p class="fac-strip-text">
+      All facilities are included in your monthly rent. For any maintenance requests or issues,
+      please contact the hostel management or raise a request from your dashboard.
+    </p>
+  </div>
+
+</div>

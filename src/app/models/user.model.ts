@@ -27,4 +27,10 @@ export interface UserDto {
   CreatedBy?: string;
   LastModifiedDate?: string;
   LastModifiedBy?: string;
+  // Onboarded user fields
+  BookingId?: number;
+  RoomNumber?: string;
+  RentAmount?: number;
+  CheckInDate?: string;
+  IsOnboarded?: boolean;
 }

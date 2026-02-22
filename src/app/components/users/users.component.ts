@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { UsersService } from '../../services/user.service';
+import { PaymentService } from '../../services/payments.service';
 import { ApiResponse } from '../../models/api-response.model';
 import { UserDto } from '../../models/user.model';
 
@@ -17,52 +19,98 @@ declare var bootstrap: any;
 })
 export class UsersComponent implements OnInit {
 
-  users: UserDto[] = [];
+  // ── Tab ──────────────────────────────────────
+  activeTab: 'registered' | 'onboarded' = 'registered';
+
+  // ── Data ─────────────────────────────────────
+  users: UserDto[] = [];           // registered
+  onboardedUsers: UserDto[] = [];  // onboarded
   selectedPropertyId = 3;
   selectedUserType = 'Tenant';
 
+  // ── Edit / Delete ─────────────────────────────
   selectedUser: UserDto = {} as UserDto;
+  newUser: UserDto = this.emptyUser();
   deleteUserId?: number;
 
-  // Search
+  // ── Search ────────────────────────────────────
   searchTerm = '';
 
-  // Pagination
+  // ── Pagination ────────────────────────────────
   currentPage = 1;
   readonly pageSize = 5;
 
-  constructor(private usersService: UsersService) {}
+  // ── Payment ───────────────────────────────────
+  paymentUser: UserDto | null = null;
+  paymentForm = { paymentMethod: 'Cash', amount: 0 };
+  paymentProcessing = false;
+  paymentMethods = ['Cash', 'UPI', 'Card', 'Bank Transfer', 'Cheque'];
+
+  // ── Toast ─────────────────────────────────────
+  toastMessage = '';
+  toastType: 'success' | 'danger' = 'success';
+
+  constructor(
+    private usersService: UsersService,
+    private paymentService: PaymentService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadUsers();
+    this.loadOnboardedUsers();
   }
 
-  // ================= LOAD USERS =================
+  // ── Load Registered Users ─────────────────────
   loadUsers() {
     this.usersService
       .getUsers(this.selectedPropertyId, this.selectedUserType)
       .subscribe({
         next: (res: ApiResponse<UserDto[]>) => {
           this.users = res.Data || [];
-          this.currentPage = 1;
+          if (this.activeTab === 'registered') this.currentPage = 1;
         },
-        error: err => console.error('API ERROR:', err)
+        error: err => console.error('Load users error:', err)
       });
   }
 
-  // ── Filtered list ──
+  // ── Load Onboarded Users ──────────────────────
+  loadOnboardedUsers() {
+    this.usersService.getOnboardedUsers(this.selectedPropertyId).subscribe({
+      next: (res: ApiResponse<UserDto[]>) => {
+        this.onboardedUsers = res.Data || [];
+        if (this.activeTab === 'onboarded') this.currentPage = 1;
+      },
+      error: err => console.error('Load onboarded error:', err)
+    });
+  }
+
+  // ── Tab Switch ────────────────────────────────
+  switchTab(tab: 'registered' | 'onboarded') {
+    this.activeTab = tab;
+    this.searchTerm = '';
+    this.currentPage = 1;
+  }
+
+  // ── Active source list ────────────────────────
+  private get activeList(): UserDto[] {
+    return this.activeTab === 'registered' ? this.users : this.onboardedUsers;
+  }
+
+  // ── Filtered list ─────────────────────────────
   get filteredUsers(): UserDto[] {
     const term = this.searchTerm.trim().toLowerCase();
-    if (!term) return this.users;
-    return this.users.filter(u =>
+    if (!term) return this.activeList;
+    return this.activeList.filter(u =>
       u.FirstName?.toLowerCase().includes(term) ||
       u.LastName?.toLowerCase().includes(term) ||
       u.EmailAddress?.toLowerCase().includes(term) ||
-      u.PhoneNumber?.toLowerCase().includes(term)
+      u.PhoneNumber?.toLowerCase().includes(term) ||
+      u.RoomNumber?.toLowerCase().includes(term)
     );
   }
 
-  // ── Current page slice ──
+  // ── Paged slice ───────────────────────────────
   get pagedUsers(): UserDto[] {
     const start = (this.currentPage - 1) * this.pageSize;
     return this.filteredUsers.slice(start, start + this.pageSize);
@@ -84,72 +132,143 @@ export class UsersComponent implements OnInit {
     return Math.min(this.currentPage * this.pageSize, this.filteredUsers.length);
   }
 
-  onSearchChange(): void {
-    this.currentPage = 1;
-  }
+  onSearchChange(): void { this.currentPage = 1; }
 
   goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
+    if (page >= 1 && page <= this.totalPages) this.currentPage = page;
   }
 
-  // ================= OPEN EDIT MODAL =================
+  // ── Empty user factory ────────────────────────
+  emptyUser(): UserDto {
+    return {
+      PropertyId: this.selectedPropertyId,
+      UserType: 'Tenant',
+      FirstName: '', LastName: '',
+      EmailAddress: '', PhoneNumber: '',
+      IsActive: true, CreatedDate: '',
+      PropertyName: '', Roles: [], RoleIds: []
+    };
+  }
+
+  // ── Add User ──────────────────────────────────
+  openAddModal() {
+    this.newUser = this.emptyUser();
+    new bootstrap.Modal(document.getElementById('addUserModal')).show();
+  }
+
+  createUser() {
+    this.usersService.createUser(this.newUser).subscribe({
+      next: () => {
+        this.loadUsers();
+        bootstrap.Modal.getInstance(document.getElementById('addUserModal'))?.hide();
+      },
+      error: err => console.error('Create Error:', err)
+    });
+  }
+
+  // ── Edit User ─────────────────────────────────
   editUser(user: UserDto) {
     this.selectedUser = { ...user };
-    new bootstrap.Modal(
-      document.getElementById('editUserModal')
-    ).show();
+    new bootstrap.Modal(document.getElementById('editUserModal')).show();
   }
 
-  // ================= OPEN CONFIRM UPDATE MODAL =================
   openConfirmUpdateModal() {
-    new bootstrap.Modal(
-      document.getElementById('confirmUserUpdateModal')
-    ).show();
+    new bootstrap.Modal(document.getElementById('confirmUserUpdateModal')).show();
   }
 
-  // ================= CONFIRM UPDATE =================
   confirmSaveUser() {
     this.usersService.updateUser(this.selectedUser).subscribe({
       next: () => {
         this.loadUsers();
-
-        bootstrap.Modal.getInstance(
-          document.getElementById('confirmUserUpdateModal')
-        )?.hide();
-
-        bootstrap.Modal.getInstance(
-          document.getElementById('editUserModal')
-        )?.hide();
+        this.loadOnboardedUsers();
+        bootstrap.Modal.getInstance(document.getElementById('confirmUserUpdateModal'))?.hide();
+        bootstrap.Modal.getInstance(document.getElementById('editUserModal'))?.hide();
       },
       error: err => console.error('Update Error:', err)
     });
   }
 
-  // ================= OPEN CONFIRM DELETE MODAL =================
+  // ── Delete User ───────────────────────────────
   openConfirmDeleteModal(userId?: number) {
     if (!userId) return;
     this.deleteUserId = userId;
-
-    new bootstrap.Modal(
-      document.getElementById('confirmUserDeleteModal')
-    ).show();
+    new bootstrap.Modal(document.getElementById('confirmUserDeleteModal')).show();
   }
 
-  // ================= CONFIRM DELETE =================
   confirmDeleteUser() {
     if (!this.deleteUserId) return;
-
     this.usersService.deleteUserById(this.deleteUserId).subscribe({
       next: () => {
         this.loadUsers();
-
-        bootstrap.Modal.getInstance(
-          document.getElementById('confirmUserDeleteModal')
-        )?.hide();
+        this.loadOnboardedUsers();
+        bootstrap.Modal.getInstance(document.getElementById('confirmUserDeleteModal'))?.hide();
       },
       error: err => console.error('Delete Error:', err)
     });
+  }
+
+  // ── Navigate ──────────────────────────────────
+  addBooking(user: UserDto) {
+    this.router.navigate(['/dashboard/bookings'], {
+      queryParams: { userId: user.UserId, userName: user.FirstName + ' ' + user.LastName }
+    });
+  }
+
+  viewDocuments(user: UserDto) {
+    this.router.navigate(['/dashboard/users', user.UserId, 'documents'], {
+      queryParams: { userName: user.FirstName + ' ' + user.LastName }
+    });
+  }
+
+  viewProfile(user: UserDto) {
+    this.router.navigate(['/dashboard/users', user.UserId, 'profile'], {
+      state: { user }
+    });
+  }
+
+  // ── Payment ───────────────────────────────────
+  openPaymentModal(user: UserDto) {
+    this.paymentUser = user;
+    this.paymentForm = {
+      paymentMethod: 'Cash',
+      amount: user.RentAmount ?? 0
+    };
+    this.paymentProcessing = false;
+    new bootstrap.Modal(document.getElementById('paymentModal')).show();
+  }
+
+  confirmPayment() {
+    if (!this.paymentUser || !this.paymentForm.amount) return;
+    this.paymentProcessing = true;
+
+    const payload = {
+      bookingId: this.paymentUser.BookingId ?? 0,
+      paymentMethod: this.paymentForm.paymentMethod,
+      totalAmount: this.paymentForm.amount
+    };
+
+    this.paymentService.createPayment(payload).subscribe({
+      next: () => {
+        this.paymentProcessing = false;
+        bootstrap.Modal.getInstance(document.getElementById('paymentModal'))?.hide();
+        this.showToast(
+          `Payment of ₹${this.paymentForm.amount} collected from ${this.paymentUser?.FirstName}!`,
+          'success'
+        );
+      },
+      error: err => {
+        console.error('Payment error:', err);
+        this.paymentProcessing = false;
+        this.showToast('Payment failed. Please try again.', 'danger');
+      }
+    });
+  }
+
+  // ── Toast ─────────────────────────────────────
+  showToast(msg: string, type: 'success' | 'danger') {
+    this.toastMessage = msg;
+    this.toastType = type;
+    const el = document.getElementById('usersToast');
+    if (el) new bootstrap.Toast(el, { delay: 3500 }).show();
   }
 }

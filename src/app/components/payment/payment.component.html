@@ -1,6 +1,6 @@
 <div class="payments-page">
 
-  <!-- Page Header -->
+  <!-- ── Page Header ───────────────────────────── -->
   <div class="page-header">
     <div class="page-header-left">
       <div class="page-icon">
@@ -8,40 +8,116 @@
       </div>
       <div>
         <h1 class="page-title">Payments</h1>
-        <p class="page-subtitle">View all payment transactions</p>
+        <p class="page-subtitle">Track and manage all payment transactions</p>
       </div>
     </div>
     <div class="page-header-right">
       <div class="total-badge">
         <i class="bi bi-receipt me-1"></i>
-        {{ filteredPayments.length }} Transactions
+        {{ paymentList.length }} Transactions
       </div>
     </div>
   </div>
 
-  <!-- Table Card -->
+  <!-- ── Summary Cards ─────────────────────────── -->
+  <div class="stats-grid">
+
+    <div class="stat-card stat-total">
+      <div class="stat-icon-wrap">
+        <i class="bi bi-wallet2"></i>
+      </div>
+      <div class="stat-body">
+        <p class="stat-label">Total Revenue</p>
+        <h3 class="stat-value">
+          <i class="bi bi-currency-rupee"></i>{{ totalRevenue | number:'1.2-2' }}
+        </h3>
+        <span class="stat-sub">{{ paymentList.length }} transactions</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-paid">
+      <div class="stat-icon-wrap">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <div class="stat-body">
+        <p class="stat-label">Paid</p>
+        <h3 class="stat-value">
+          <i class="bi bi-currency-rupee"></i>{{ paidRevenue | number:'1.2-2' }}
+        </h3>
+        <span class="stat-sub">{{ paidCount }} payments</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-pending">
+      <div class="stat-icon-wrap">
+        <i class="bi bi-clock-fill"></i>
+      </div>
+      <div class="stat-body">
+        <p class="stat-label">Pending</p>
+        <h3 class="stat-value">
+          <i class="bi bi-currency-rupee"></i>{{ pendingRevenue | number:'1.2-2' }}
+        </h3>
+        <span class="stat-sub">{{ pendingCount }} payments</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-failed">
+      <div class="stat-icon-wrap">
+        <i class="bi bi-x-circle-fill"></i>
+      </div>
+      <div class="stat-body">
+        <p class="stat-label">Failed</p>
+        <h3 class="stat-value">
+          <i class="bi bi-currency-rupee"></i>{{ failedRevenue | number:'1.2-2' }}
+        </h3>
+        <span class="stat-sub">{{ failedCount }} payments</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Table Card ─────────────────────────────── -->
   <div class="table-card">
 
     <div class="table-card-header">
       <div class="table-title">
-        <i class="bi bi-table me-2"></i>All Transactions
+        <i class="bi bi-list-ul me-2"></i>All Transactions
       </div>
-      <!-- Search -->
-      <div class="search-wrap">
-        <i class="bi bi-search search-icon"></i>
-        <input
-          class="search-input"
-          type="text"
-          placeholder="Search by booking no, txn ID, status…"
-          [(ngModel)]="searchTerm"
-          (ngModelChange)="onSearchChange()" />
-        <button *ngIf="searchTerm" class="search-clear" (click)="searchTerm=''; onSearchChange()">
-          <i class="bi bi-x-lg"></i>
-        </button>
+      <div class="header-actions">
+        <!-- Status Filter -->
+        <div class="filter-wrap">
+          <i class="bi bi-funnel filter-icon"></i>
+          <select class="filter-select" [(ngModel)]="statusFilter" (ngModelChange)="onSearchChange()">
+            <option value="">All Status</option>
+            <option value="Success">Success</option>
+            <option value="Paid">Paid</option>
+            <option value="Pending">Pending</option>
+            <option value="Failed">Failed</option>
+          </select>
+        </div>
+        <!-- Search -->
+        <div class="search-wrap">
+          <i class="bi bi-search search-icon"></i>
+          <input
+            class="search-input"
+            type="text"
+            placeholder="Search booking, txn ID, phone…"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchChange()" />
+          <button *ngIf="searchTerm" class="search-clear" (click)="searchTerm=''; onSearchChange()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="table-responsive">
+    <!-- Loading State -->
+    <div class="loading-row" *ngIf="loading">
+      <div class="spinner-border spinner-border-sm text-primary me-2"></div>
+      Loading transactions…
+    </div>
+
+    <div class="table-responsive" *ngIf="!loading">
       <table class="payments-table">
         <thead>
           <tr>
@@ -55,29 +131,34 @@
         </thead>
         <tbody>
           <tr *ngFor="let p of pagedPayments; let i = index">
+
+            <td><span class="row-num">{{ startIndex + i }}</span></td>
+
             <td>
-              <span class="row-num">{{ startIndex + i }}</span>
+              <div class="booking-cell">
+                <div class="booking-icon"><i class="bi bi-receipt"></i></div>
+                <span class="booking-ref">{{ p.bookingNumber || '—' }}</span>
+              </div>
             </td>
+
             <td>
-              <span class="booking-ref">
-                <i class="bi bi-hash text-muted me-1"></i>{{ p.bookingNumber }}
+              <span class="txn-id" [title]="p.transactionId">
+                {{ p.transactionId || '—' }}
               </span>
             </td>
-            <td>
-              <span class="txn-id">
-                <i class="bi bi-tag me-1"></i>{{ p.transactionId }}
-              </span>
-            </td>
+
             <td>
               <span class="phone-cell">
                 <i class="bi bi-telephone me-1"></i>{{ p.phone || '—' }}
               </span>
             </td>
+
             <td>
-              <span class="amount-cell">
+              <span class="amount-pill">
                 <i class="bi bi-currency-rupee"></i>{{ p.amount | number:'1.2-2' }}
               </span>
             </td>
+
             <td class="text-center">
               <span class="status-badge"
                 [class.status-success]="p.status === 'Success' || p.status === 'Paid'"
@@ -91,11 +172,13 @@
                 {{ p.status }}
               </span>
             </td>
+
           </tr>
+
           <tr *ngIf="filteredPayments.length === 0">
             <td colspan="6" class="empty-row">
-              <i class="bi bi-inbox fs-2 d-block mb-2"></i>
-              {{ searchTerm ? 'No results for "' + searchTerm + '"' : 'No transactions found' }}
+              <i class="bi bi-inbox fs-2 d-block mb-2 text-muted"></i>
+              {{ searchTerm || statusFilter ? 'No results found' : 'No transactions yet' }}
             </td>
           </tr>
         </tbody>
@@ -105,7 +188,8 @@
     <!-- Pagination Footer -->
     <div class="pagination-footer" *ngIf="filteredPayments.length > 0">
       <span class="pagination-info">
-        Showing <strong>{{ startIndex }}–{{ endIndex }}</strong> of <strong>{{ filteredPayments.length }}</strong> transactions
+        Showing <strong>{{ startIndex }}–{{ endIndex }}</strong> of
+        <strong>{{ filteredPayments.length }}</strong> transactions
       </span>
       <div class="pagination-controls">
         <button class="page-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">

@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
 import { DashboardService, SystemOverview } from '../../../services/dashboard.service';
 
@@ -8,7 +9,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard-home.component.html',
   styleUrls: ['./dashboard-home.component.css']
 })
@@ -78,7 +79,14 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
         },
         options: {
           responsive: true,
-          plugins: { legend: { display: false } }
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: { ticks: { font: { size: 10 } } },
+            y: { ticks: { font: { size: 10 } } }
+          }
         }
       });
     }
@@ -90,13 +98,19 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
         data: {
           labels: ['Admin','Staff','Customers'],
           datasets: [{
-            data: [8,24,68], // later from API
+            data: [8,24,68],
             backgroundColor: ['#0d6efd','#ff6384','#ffb400']
           }]
         },
         options: {
           responsive: true,
-          plugins: { legend: { position: 'bottom' } }
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { font: { size: 10 }, boxWidth: 10, padding: 8 }
+            }
+          }
         }
       });
     }

@@ -1,177 +1,243 @@
-<section class="register-page">
+<section class="reg-page">
 
-  <!-- Animated background blobs -->
-  <div class="bg-blob bg-blob-1"></div>
-  <div class="bg-blob bg-blob-2"></div>
-  <div class="bg-blob bg-blob-3"></div>
+  <!-- ══ LEFT — Brand Panel ══ -->
+  <div class="reg-left">
 
-  <div class="register-card">
+    <!-- Decorative circles -->
+    <div class="reg-circle reg-circle-1"></div>
+    <div class="reg-circle reg-circle-2"></div>
+    <div class="reg-circle reg-circle-3"></div>
 
-    <!-- Card top banner -->
-    <div class="card-banner">
-      <a routerLink="/" class="back-link">
-        <i class="bi bi-arrow-left"></i> Back to Home
-      </a>
-      <div class="banner-logo">
-        <img src="assets/img/logo.png" alt="Karthick PG" />
-      </div>
-      <h1>Create Your Account</h1>
-      <p>Join thousands of happy residents at Karthick PG</p>
-    </div>
+    <div class="reg-left-inner">
 
-    <!-- Feature strip -->
-    <div class="feature-strip">
-      <div class="feature-pill">
-        <i class="bi bi-wifi"></i><span>Free Wi-Fi</span>
-      </div>
-      <div class="feature-pill">
-        <i class="bi bi-shield-check"></i><span>24/7 Security</span>
-      </div>
-      <div class="feature-pill">
-        <i class="bi bi-cup-hot"></i><span>Meals Included</span>
-      </div>
-      <div class="feature-pill">
-        <i class="bi bi-geo-alt"></i><span>Prime Location</span>
-      </div>
-    </div>
-
-    <!-- Form -->
-    <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate class="reg-form">
-
-      <!-- Name row -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">First Name <span class="required">*</span></label>
-          <div class="input-wrap">
-            <i class="bi bi-person field-icon"></i>
-            <input
-              type="text"
-              formControlName="firstName"
-              class="field-input"
-              [class.input-error]="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid"
-              placeholder="First name"
-            />
-          </div>
-          <span class="err-msg" *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid">
-            First name is required.
-          </span>
-        </div>
-
-        <div class="field-group">
-          <label class="field-label">Last Name <span class="required">*</span></label>
-          <div class="input-wrap">
-            <i class="bi bi-person field-icon"></i>
-            <input
-              type="text"
-              formControlName="lastName"
-              class="field-input"
-              [class.input-error]="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid"
-              placeholder="Last name"
-            />
-          </div>
-          <span class="err-msg" *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid">
-            Last name is required.
-          </span>
-        </div>
+      <!-- Logo -->
+      <div class="reg-logo-wrap">
+        <img src="assets/img/logo.png" alt="Karthick PG" class="reg-logo" />
       </div>
 
-      <!-- Email & Phone row -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">Email Address <span class="required">*</span></label>
-          <div class="input-wrap">
-            <i class="bi bi-envelope field-icon"></i>
-            <input
-              type="email"
-              formControlName="emailAddress"
-              class="field-input"
-              [class.input-error]="registerForm.get('emailAddress')?.touched && registerForm.get('emailAddress')?.invalid"
-              placeholder="you@example.com"
-            />
-          </div>
-          <span class="err-msg" *ngIf="registerForm.get('emailAddress')?.touched && registerForm.get('emailAddress')?.invalid">
-            <ng-container *ngIf="registerForm.get('emailAddress')?.errors?.['required']">Email is required.</ng-container>
-            <ng-container *ngIf="registerForm.get('emailAddress')?.errors?.['email']">Enter a valid email.</ng-container>
-          </span>
-        </div>
-
-        <div class="field-group">
-          <label class="field-label">Phone Number</label>
-          <div class="input-wrap">
-            <i class="bi bi-telephone field-icon"></i>
-            <input
-              type="text"
-              formControlName="phoneNumber"
-              class="field-input"
-              [class.input-error]="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid"
-              placeholder="+91 98765 43210"
-            />
-          </div>
-          <span class="err-msg" *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid">
-            Enter a valid phone number.
-          </span>
-        </div>
-      </div>
-
-      <!-- Password row -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">Password <span class="required">*</span></label>
-          <div class="input-wrap">
-            <i class="bi bi-lock field-icon"></i>
-            <input
-              type="password"
-              formControlName="password"
-              class="field-input"
-              [class.input-error]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
-              placeholder="Min. 8 characters"
-            />
-          </div>
-          <span class="err-msg" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
-            <ng-container *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</ng-container>
-            <ng-container *ngIf="registerForm.get('password')?.errors?.['minlength']">Minimum 8 characters.</ng-container>
-          </span>
-        </div>
-
-        <div class="field-group">
-          <label class="field-label">Confirm Password <span class="required">*</span></label>
-          <div class="input-wrap">
-            <i class="bi bi-lock-fill field-icon"></i>
-            <input
-              type="password"
-              formControlName="confirmPassword"
-              class="field-input"
-              [class.input-error]="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched"
-              placeholder="Repeat your password"
-            />
-          </div>
-          <span class="err-msg" *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
-            Passwords do not match.
-          </span>
-        </div>
-      </div>
-
-      <!-- API error -->
-      <div class="api-error" *ngIf="error">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
-      </div>
-
-      <!-- Submit -->
-      <button type="submit" class="submit-btn" [disabled]="submitting || registerForm.invalid">
-        <ng-container *ngIf="!submitting">
-          <i class="bi bi-person-check me-2"></i>Create Account
-        </ng-container>
-        <ng-container *ngIf="submitting">
-          <span class="spinner"></span> Creating Account…
-        </ng-container>
-      </button>
-
-      <p class="signin-hint">
-        Already have an account?
-        <a routerLink="/auth/login" class="signin-link">Sign in</a>
+      <!-- Headline -->
+      <h1 class="reg-brand-title">Your Home,<br/>Away from Home</h1>
+      <p class="reg-brand-sub">
+        Join 200+ residents who trust Karthick PG for comfortable, safe,
+        and affordable living in Coimbatore.
       </p>
 
-    </form>
+      <!-- Feature list -->
+      <div class="reg-features">
+        <div class="reg-feat-item">
+          <div class="reg-feat-icon"><i class="bi bi-wifi"></i></div>
+          <div class="reg-feat-text">
+            <div class="reg-feat-title">High-Speed WiFi</div>
+            <div class="reg-feat-sub">Unlimited, free throughout the property</div>
+          </div>
+        </div>
+        <div class="reg-feat-item">
+          <div class="reg-feat-icon"><i class="bi bi-shield-check"></i></div>
+          <div class="reg-feat-text">
+            <div class="reg-feat-title">24/7 Security</div>
+            <div class="reg-feat-sub">CCTV surveillance & secure access</div>
+          </div>
+        </div>
+        <div class="reg-feat-item">
+          <div class="reg-feat-icon"><i class="bi bi-egg-fried"></i></div>
+          <div class="reg-feat-text">
+            <div class="reg-feat-title">Meals Included</div>
+            <div class="reg-feat-sub">Breakfast, lunch & dinner daily</div>
+          </div>
+        </div>
+        <div class="reg-feat-item">
+          <div class="reg-feat-icon"><i class="bi bi-lightning-charge"></i></div>
+          <div class="reg-feat-text">
+            <div class="reg-feat-title">Power Backup</div>
+            <div class="reg-feat-sub">Uninterrupted 24/7 electricity</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="reg-stats">
+        <div class="reg-stat">
+          <span class="reg-stat-val">200+</span>
+          <span class="reg-stat-lbl">Residents</span>
+        </div>
+        <div class="reg-stat-divider"></div>
+        <div class="reg-stat">
+          <span class="reg-stat-val">5+</span>
+          <span class="reg-stat-lbl">Years</span>
+        </div>
+        <div class="reg-stat-divider"></div>
+        <div class="reg-stat">
+          <span class="reg-stat-val">4.8★</span>
+          <span class="reg-stat-lbl">Rating</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ RIGHT — Form Panel ══ -->
+  <div class="reg-right">
+
+    <!-- Top nav -->
+    <div class="reg-topnav">
+      <a routerLink="/" class="reg-back-link">
+        <i class="bi bi-arrow-left me-1"></i>Back to Home
+      </a>
+      <span class="reg-have-account">
+        Already have an account?
+        <a routerLink="/auth/login" class="reg-signin-link">Sign in</a>
+      </span>
+    </div>
+
+    <!-- Form wrapper -->
+    <div class="reg-form-wrap">
+
+      <div class="reg-form-header">
+        <div class="reg-form-icon"><i class="bi bi-person-plus-fill"></i></div>
+        <h2 class="reg-form-title">Create Account</h2>
+        <p class="reg-form-sub">Fill in your details to get started</p>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate class="reg-form">
+
+        <!-- Name row -->
+        <div class="rg-row">
+          <div class="rg-field">
+            <label class="rg-label">First Name <span class="rg-req">*</span></label>
+            <div class="rg-input-wrap">
+              <i class="bi bi-person rg-icon"></i>
+              <input
+                type="text"
+                formControlName="firstName"
+                class="rg-input"
+                [class.rg-input-err]="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid"
+                placeholder="First name"
+              />
+            </div>
+            <span class="rg-err" *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid">
+              First name is required.
+            </span>
+          </div>
+
+          <div class="rg-field">
+            <label class="rg-label">Last Name <span class="rg-req">*</span></label>
+            <div class="rg-input-wrap">
+              <i class="bi bi-person rg-icon"></i>
+              <input
+                type="text"
+                formControlName="lastName"
+                class="rg-input"
+                [class.rg-input-err]="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid"
+                placeholder="Last name"
+              />
+            </div>
+            <span class="rg-err" *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid">
+              Last name is required.
+            </span>
+          </div>
+        </div>
+
+        <!-- Email & Phone row -->
+        <div class="rg-row">
+          <div class="rg-field">
+            <label class="rg-label">Email Address <span class="rg-req">*</span></label>
+            <div class="rg-input-wrap">
+              <i class="bi bi-envelope rg-icon"></i>
+              <input
+                type="email"
+                formControlName="emailAddress"
+                class="rg-input"
+                [class.rg-input-err]="registerForm.get('emailAddress')?.touched && registerForm.get('emailAddress')?.invalid"
+                placeholder="you@example.com"
+              />
+            </div>
+            <span class="rg-err" *ngIf="registerForm.get('emailAddress')?.touched && registerForm.get('emailAddress')?.invalid">
+              <ng-container *ngIf="registerForm.get('emailAddress')?.errors?.['required']">Email is required.</ng-container>
+              <ng-container *ngIf="registerForm.get('emailAddress')?.errors?.['email']">Enter a valid email.</ng-container>
+            </span>
+          </div>
+
+          <div class="rg-field">
+            <label class="rg-label">Phone Number</label>
+            <div class="rg-input-wrap">
+              <i class="bi bi-telephone rg-icon"></i>
+              <input
+                type="text"
+                formControlName="phoneNumber"
+                class="rg-input"
+                [class.rg-input-err]="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid"
+                placeholder="+91 98765 43210"
+              />
+            </div>
+            <span class="rg-err" *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid">
+              Enter a valid phone number.
+            </span>
+          </div>
+        </div>
+
+        <!-- Password row -->
+        <div class="rg-row">
+          <div class="rg-field">
+            <label class="rg-label">Password <span class="rg-req">*</span></label>
+            <div class="rg-input-wrap">
+              <i class="bi bi-lock rg-icon"></i>
+              <input
+                type="password"
+                formControlName="password"
+                class="rg-input"
+                [class.rg-input-err]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
+                placeholder="Min. 8 characters"
+              />
+            </div>
+            <span class="rg-err" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+              <ng-container *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</ng-container>
+              <ng-container *ngIf="registerForm.get('password')?.errors?.['minlength']">Minimum 8 characters.</ng-container>
+            </span>
+          </div>
+
+          <div class="rg-field">
+            <label class="rg-label">Confirm Password <span class="rg-req">*</span></label>
+            <div class="rg-input-wrap">
+              <i class="bi bi-lock-fill rg-icon"></i>
+              <input
+                type="password"
+                formControlName="confirmPassword"
+                class="rg-input"
+                [class.rg-input-err]="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched"
+                placeholder="Repeat your password"
+              />
+            </div>
+            <span class="rg-err" *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+              Passwords do not match.
+            </span>
+          </div>
+        </div>
+
+        <!-- API error -->
+        <div class="rg-api-error" *ngIf="error">
+          <i class="bi bi-exclamation-circle-fill me-2"></i>{{ error }}
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="rg-submit" [disabled]="submitting || registerForm.invalid">
+          <ng-container *ngIf="!submitting">
+            <i class="bi bi-person-check-fill me-2"></i>Create My Account
+          </ng-container>
+          <ng-container *ngIf="submitting">
+            <span class="rg-spinner"></span>Creating Account…
+          </ng-container>
+        </button>
+
+        <!-- Terms note -->
+        <p class="rg-terms">
+          By registering, you agree to our
+          <a href="#" class="rg-terms-link">Terms of Service</a> &amp;
+          <a href="#" class="rg-terms-link">Privacy Policy</a>.
+        </p>
+
+      </form>
+    </div>
+
   </div>
 
 </section>

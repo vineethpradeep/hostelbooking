@@ -1,92 +1,259 @@
-/* ── Facilities & Amenities ── */
-.services-section {
-    padding: 5rem 0;
-    background: #f8fafc;
+/* ══════════════════════════════════════════
+   FACILITIES PAGE — Compact Modern Design
+══════════════════════════════════════════ */
+
+.fac-page {
+    padding: 1rem 1.25rem;
+    background: #f1f5f9;
+    min-height: 100vh;
     font-family: "Inter", sans-serif;
+    animation: fadeUp 0.4s ease forwards;
 }
 
-.services-section .section-title {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.services-section .section-title h2 {
-    font-family: "Lora", Georgia, serif;
-    font-size: clamp(1.75rem, 3vw, 2.25rem);
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 0.5rem;
-}
-
-.services-section .section-title .subtitle {
-    font-size: 0.95rem;
-    color: #64748b;
-    margin: 0;
-}
-
-/* Service cards */
-.service-item {
-    text-align: center;
-    padding: 2.25rem 1.5rem;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 18px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    height: 100%;
+/* ── Page Header ── */
+.fac-header {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.65rem;
 }
 
-.service-item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
-    border-color: #bfdbfe;
+.fac-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
-/* Icon circle */
-.icon-wrapper {
-    width: 68px;
-    height: 68px;
-    margin: 0 auto 1.25rem;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+.fac-header-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.25s, background 0.25s;
+    color: #fff;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
+}
+
+.fac-title {
+    font-family: "Lora", serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.fac-sub {
+    font-size: 0.7rem;
+    color: #64748b;
+    margin: 0.1rem 0 0;
+}
+
+.fac-count-badge {
+    display: inline-flex;
+    align-items: center;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.28rem 0.7rem;
+}
+
+/* ══════════════════════════════════════════
+   FACILITY CARDS
+══════════════════════════════════════════ */
+
+.fac-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    border-top: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.fac-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+}
+
+.fac-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Card Top Row ── */
+.fac-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fac-icon-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #fff;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+}
+
+.fac-card:hover .fac-icon-wrap {
+    transform: scale(1.08) rotate(-4deg);
+}
+
+.fac-card-num {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #e2e8f0;
+    line-height: 1;
+    font-family: "Inter", sans-serif;
+}
+
+/* ── Card Content ── */
+.fac-card-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0.15rem 0 0;
+    font-family: "Inter", sans-serif;
+}
+
+.fac-card-desc {
+    font-size: 0.72rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+}
+
+/* ── Card Footer ── */
+.fac-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+}
+
+.fac-avail-chip {
+    display: inline-flex;
+    align-items: center;
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+    border-radius: 20px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.18rem 0.5rem;
+}
+
+.fac-incl-chip {
+    display: inline-flex;
+    align-items: center;
+    background: #f8fafc;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 0.18rem 0.5rem;
+}
+
+/* ══════════════════════════════════════════
+   COLOR VARIANTS
+══════════════════════════════════════════ */
+
+/* Blue — WiFi */
+.fac-blue::before { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+.fac-blue:hover   { border-color: #bfdbfe; }
+.fac-blue .fac-icon-wrap { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+.fac-blue .fac-card-title { color: #1e3a5f; }
+
+/* Orange — Meals */
+.fac-orange::before { background: linear-gradient(90deg, #ea580c, #f97316); }
+.fac-orange:hover   { border-color: #fed7aa; }
+.fac-orange .fac-icon-wrap { background: linear-gradient(135deg, #ea580c, #f97316); }
+.fac-orange .fac-card-title { color: #431407; }
+
+/* Red — Security */
+.fac-red::before { background: linear-gradient(90deg, #dc2626, #ef4444); }
+.fac-red:hover   { border-color: #fecaca; }
+.fac-red .fac-icon-wrap { background: linear-gradient(135deg, #dc2626, #ef4444); }
+.fac-red .fac-card-title { color: #450a0a; }
+
+/* Purple — Common Areas */
+.fac-purple::before { background: linear-gradient(90deg, #7c3aed, #a855f7); }
+.fac-purple:hover   { border-color: #e9d5ff; }
+.fac-purple .fac-icon-wrap { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+.fac-purple .fac-card-title { color: #2e1065; }
+
+/* Cyan — Housekeeping */
+.fac-cyan::before { background: linear-gradient(90deg, #0891b2, #06b6d4); }
+.fac-cyan:hover   { border-color: #a5f3fc; }
+.fac-cyan .fac-icon-wrap { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+.fac-cyan .fac-card-title { color: #083344; }
+
+/* Amber — Power */
+.fac-amber::before { background: linear-gradient(90deg, #d97706, #f59e0b); }
+.fac-amber:hover   { border-color: #fde68a; }
+.fac-amber .fac-icon-wrap { background: linear-gradient(135deg, #d97706, #f59e0b); }
+.fac-amber .fac-card-title { color: #451a03; }
+
+/* ══════════════════════════════════════════
+   BOTTOM INFO STRIP
+══════════════════════════════════════════ */
+
+.fac-info-strip {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+}
+
+.fac-strip-icon {
+    color: #2563eb;
+    font-size: 0.95rem;
+    margin-top: 0.05rem;
     flex-shrink: 0;
 }
 
-.service-item:hover .icon-wrapper {
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    transform: scale(1.08);
-}
-
-.service-item i {
-    font-size: 1.75rem;
-    color: #2563eb;
-    transition: color 0.25s;
-}
-
-.service-item:hover i {
-    color: #ffffff;
-}
-
-.service-item h4 {
-    font-family: "Inter", sans-serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 0.65rem;
-    transition: color 0.25s;
-}
-
-.service-item p {
-    font-size: 0.875rem;
-    color: #64748b;
-    line-height: 1.65;
+.fac-strip-text {
+    font-size: 0.72rem;
+    color: #1e40af;
     margin: 0;
-    transition: color 0.25s;
+    line-height: 1.6;
+}
+
+/* ── Animation ── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .fac-page { padding: 0.75rem; }
+    .fac-count-badge { display: none; }
 }

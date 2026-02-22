@@ -23,10 +23,10 @@ export class PaymentComponent implements OnInit {
 
   paymentList: PaymentDetails[] = [];
   loading = false;
-  errorMessage = '';
 
-  // Search
+  // Search & filter
   searchTerm = '';
+  statusFilter = '';
 
   // Pagination
   currentPage = 1;
@@ -40,7 +40,6 @@ export class PaymentComponent implements OnInit {
 
   loadPayments() {
     this.loading = true;
-
     this.paymentService.getPaymentDetails().subscribe({
       next: (data: any[]) => {
         this.paymentList = data.map(p => ({
@@ -54,25 +53,30 @@ export class PaymentComponent implements OnInit {
         this.currentPage = 1;
       },
       error: () => {
-        console.error('Failed to load payments');
         this.loading = false;
       }
     });
   }
 
-  // ── Filtered list ──
+  // ── Filtered list ──────────────────────────────
   get filteredPayments(): PaymentDetails[] {
+    let list = this.paymentList;
+    if (this.statusFilter) {
+      list = list.filter(p => p.status === this.statusFilter);
+    }
     const term = this.searchTerm.trim().toLowerCase();
-    if (!term) return this.paymentList;
-    return this.paymentList.filter(p =>
-      p.bookingNumber?.toLowerCase().includes(term) ||
-      p.transactionId?.toLowerCase().includes(term) ||
-      p.phone?.toLowerCase().includes(term) ||
-      p.status?.toLowerCase().includes(term)
-    );
+    if (term) {
+      list = list.filter(p =>
+        p.bookingNumber?.toLowerCase().includes(term) ||
+        p.transactionId?.toLowerCase().includes(term) ||
+        p.phone?.toLowerCase().includes(term) ||
+        p.status?.toLowerCase().includes(term)
+      );
+    }
+    return list;
   }
 
-  // ── Current page slice ──
+  // ── Paged slice ───────────────────────────────
   get pagedPayments(): PaymentDetails[] {
     const start = (this.currentPage - 1) * this.pageSize;
     return this.filteredPayments.slice(start, start + this.pageSize);
@@ -104,12 +108,36 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  getStatusClass(status: string): string {
-    switch (status.toLowerCase()) {
-      case 'success': return 'badge-success';
-      case 'pending': return 'badge-warning';
-      case 'failed': return 'badge-danger';
-      default: return 'badge-secondary';
-    }
+  // ── Summary Stats ─────────────────────────────
+  private isPaid(p: PaymentDetails): boolean {
+    return p.status === 'Success' || p.status === 'Paid';
+  }
+
+  get totalRevenue(): number {
+    return this.paymentList.reduce((s, p) => s + (p.amount || 0), 0);
+  }
+
+  get paidRevenue(): number {
+    return this.paymentList.filter(p => this.isPaid(p)).reduce((s, p) => s + (p.amount || 0), 0);
+  }
+
+  get paidCount(): number {
+    return this.paymentList.filter(p => this.isPaid(p)).length;
+  }
+
+  get pendingRevenue(): number {
+    return this.paymentList.filter(p => p.status === 'Pending').reduce((s, p) => s + (p.amount || 0), 0);
+  }
+
+  get pendingCount(): number {
+    return this.paymentList.filter(p => p.status === 'Pending').length;
+  }
+
+  get failedRevenue(): number {
+    return this.paymentList.filter(p => p.status === 'Failed').reduce((s, p) => s + (p.amount || 0), 0);
+  }
+
+  get failedCount(): number {
+    return this.paymentList.filter(p => p.status === 'Failed').length;
   }
 }

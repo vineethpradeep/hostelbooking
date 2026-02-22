@@ -1,200 +1,246 @@
-<div class="container py-4">
+<div class="dash-wrapper">
 
-  <!-- Page Header -->
-  <div class="mb-4">
-    <h2 class="fw-bold" style="font-family:'Lora',serif;color:#0f172a;">
-      Admin Dashboard
-    </h2>
-    <p class="text-muted" style="font-size:0.9rem;">Complete system overview and management</p>
+  <!-- ── PAGE HEADER ── -->
+  <div class="dash-header mb-3">
+    <div>
+      <h2 class="dash-title">Admin Dashboard</h2>
+      <p class="dash-subtitle">Complete system overview &amp; management</p>
+    </div>
+    <div class="dash-live-badge">
+      <span class="live-dot"></span>
+      Live
+    </div>
   </div>
 
-  <!-- ── TOP METRICS ── -->
-  <div class="row g-4">
+  <!-- ── ROW 1: COMPACT METRIC CARDS ── -->
+  <div class="row g-2 mb-3">
 
-    <!-- Total Properties -->
     <div class="col-xl-3 col-md-6">
-      <div class="metric-card border-blue-accent">
-        <div class="metric-icon bg-blue-soft">
-          <i class="bi bi-building"></i>
+      <a routerLink="/dashboard/properties" class="cmc cmc-blue cmc-link">
+        <div class="cmc-top">
+          <span class="cmc-label">Total Properties</span>
+          <i class="bi bi-building cmc-icon"></i>
         </div>
-        <div class="metric-info">
-          <div class="metric-value">{{ summary?.TotalProperties?.Value }}</div>
-          <div class="metric-label">Total Properties</div>
-          <span class="badge bg-success mt-1">
-            +{{ summary?.TotalProperties?.GrowthPercentage }}% this month
-          </span>
+        <div class="cmc-value">{{ summary?.TotalProperties?.Value ?? '—' }}</div>
+        <div class="cmc-badge cmc-badge-blue">
+          <i class="bi bi-arrow-up-short"></i>+{{ summary?.TotalProperties?.GrowthPercentage ?? 0 }}% this month
+        </div>
+      </a>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+      <a routerLink="/dashboard/users" class="cmc cmc-green cmc-link">
+        <div class="cmc-top">
+          <span class="cmc-label">Total Users</span>
+          <i class="bi bi-people cmc-icon"></i>
+        </div>
+        <div class="cmc-value">{{ summary?.TotalUsers?.Value ?? '—' }}</div>
+        <div class="cmc-badge cmc-badge-green">
+          <i class="bi bi-arrow-up-short"></i>+{{ summary?.TotalUsers?.GrowthPercentage ?? 0 }}% this month
+        </div>
+      </a>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+      <div class="cmc cmc-purple">
+        <div class="cmc-top">
+          <span class="cmc-label">Active Tenants</span>
+          <i class="bi bi-person-check cmc-icon"></i>
+        </div>
+        <div class="cmc-value">{{ summary?.ActiveTenants?.Value ?? '—' }}</div>
+        <div class="cmc-badge cmc-badge-purple">
+          <i class="bi bi-arrow-up-short"></i>+{{ summary?.ActiveTenants?.GrowthPercentage ?? 0 }}% this month
         </div>
       </div>
     </div>
 
-    <!-- Total Users -->
     <div class="col-xl-3 col-md-6">
-      <div class="metric-card border-green-accent">
-        <div class="metric-icon bg-green-soft">
-          <i class="bi bi-people"></i>
+      <div class="cmc cmc-orange">
+        <div class="cmc-top">
+          <span class="cmc-label">Monthly Revenue</span>
+          <i class="bi bi-currency-rupee cmc-icon"></i>
         </div>
-        <div class="metric-info">
-          <div class="metric-value">{{ summary?.TotalUsers?.Value }}</div>
-          <div class="metric-label">Total Users</div>
-          <span class="badge bg-primary mt-1">
-            +{{ summary?.TotalUsers?.GrowthPercentage }}% this month
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Active Tenants -->
-    <div class="col-xl-3 col-md-6">
-      <div class="metric-card border-purple-accent">
-        <div class="metric-icon bg-purple-soft">
-          <i class="bi bi-person-check"></i>
-        </div>
-        <div class="metric-info">
-          <div class="metric-value">{{ summary?.ActiveTenants?.Value }}</div>
-          <div class="metric-label">Active Tenants</div>
-          <span class="badge bg-warning mt-1">
-            +{{ summary?.ActiveTenants?.GrowthPercentage }}% this month
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Monthly Revenue -->
-    <div class="col-xl-3 col-md-6">
-      <div class="metric-card border-orange-accent">
-        <div class="metric-icon bg-orange-soft">
-          <i class="bi bi-currency-rupee"></i>
-        </div>
-        <div class="metric-info">
-          <div class="metric-value">₹{{ summary?.MonthlyRevenue?.Value | number }}</div>
-          <div class="metric-label">Monthly Revenue</div>
-          <span class="badge bg-danger mt-1">
-            +{{ summary?.MonthlyRevenue?.GrowthPercentage }}% this month
-          </span>
+        <div class="cmc-value">₹{{ summary?.MonthlyRevenue?.Value | number }}</div>
+        <div class="cmc-badge cmc-badge-orange">
+          <i class="bi bi-arrow-up-short"></i>+{{ summary?.MonthlyRevenue?.GrowthPercentage ?? 0 }}% this month
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- ── SYSTEM OVERVIEW & RECENT BOOKINGS ── -->
-  <div class="row mt-4 g-4">
+  <!-- ── ROW 2: SYSTEM OVERVIEW MINI-BOXES ── -->
+  <div class="mini-section-header mb-1">
+    <i class="bi bi-grid-1x2 me-1"></i>System Overview
+  </div>
+  <div class="row g-2 mb-3">
 
-    <!-- System Overview -->
-    <div class="col-lg-5">
-      <div class="card border-0 h-100">
-        <div class="card-header bg-white border-0 px-4 py-3">
-          <h5 class="fw-bold mb-0">System Overview</h5>
-        </div>
-        <div class="card-body px-4 py-2">
-          <ul class="list-group list-group-flush elegant-list">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Total Properties</span>
-              <strong>{{ systemOverview?.TotalProperties }}</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Active Properties</span>
-              <strong>{{ systemOverview?.ActiveProperties }}</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Total Rooms</span>
-              <strong>{{ systemOverview?.TotalRooms }}</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Occupied Rooms</span>
-              <strong>{{ systemOverview?.OccupiedRooms }} ({{ systemOverview?.OccupancyPercentage }}%)</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Available Rooms</span>
-              <strong>{{ systemOverview?.AvailableRooms }}</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Total Revenue</span>
-              <strong>₹{{ systemOverview?.TotalRevenue | number }}</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Pending Payments</span>
-              <strong>{{ systemOverview?.PendingPayments }}</strong>
-            </li>
-          </ul>
-        </div>
+    <div class="col-xl-3 col-md-6 col-6">
+      <div class="mini-box mb-blue">
+        <i class="bi bi-buildings mini-icon"></i>
+        <div class="mini-value">{{ systemOverview?.TotalProperties ?? '—' }}</div>
+        <div class="mini-label">Total Properties</div>
       </div>
     </div>
 
-    <!-- Recent Bookings -->
+    <div class="col-xl-3 col-md-6 col-6">
+      <div class="mini-box mb-teal">
+        <i class="bi bi-check-circle mini-icon"></i>
+        <div class="mini-value">{{ systemOverview?.ActiveProperties ?? '—' }}</div>
+        <div class="mini-label">Active Properties</div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 col-6">
+      <div class="mini-box mb-indigo">
+        <i class="bi bi-door-open mini-icon"></i>
+        <div class="mini-value">{{ systemOverview?.TotalRooms ?? '—' }}</div>
+        <div class="mini-label">Total Rooms</div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 col-6">
+      <div class="mini-box mb-orange">
+        <i class="bi bi-house-fill mini-icon"></i>
+        <div class="mini-value">{{ systemOverview?.OccupiedRooms ?? '—' }}</div>
+        <div class="mini-label">Occupied Rooms</div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 col-6">
+      <div class="mini-box mb-green">
+        <i class="bi bi-house mini-icon"></i>
+        <div class="mini-value">{{ systemOverview?.AvailableRooms ?? '—' }}</div>
+        <div class="mini-label">Available Rooms</div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 col-6">
+      <div class="mini-box mb-purple">
+        <i class="bi bi-percent mini-icon"></i>
+        <div class="mini-value">{{ systemOverview?.OccupancyPercentage ?? '—' }}%</div>
+        <div class="mini-label">Occupancy Rate</div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 col-6">
+      <div class="mini-box mb-yellow">
+        <i class="bi bi-clock mini-icon"></i>
+        <div class="mini-value">{{ systemOverview?.PendingBookings ?? '—' }}</div>
+        <div class="mini-label">Pending Bookings</div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 col-6">
+      <div class="mini-box mb-red">
+        <i class="bi bi-cash-stack mini-icon"></i>
+        <div class="mini-value">₹{{ systemOverview?.TotalRevenue | number }}</div>
+        <div class="mini-label">Total Revenue</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── ROW 3: CHARTS ── -->
+  <div class="row g-2 mb-3">
+
     <div class="col-lg-7">
-      <div class="card border-0 h-100">
-        <div class="card-header bg-white border-0 px-4 py-3">
-          <h5 class="fw-bold mb-0">Recent Bookings</h5>
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <i class="bi bi-bar-chart me-2"></i>Bookings Trend
+          <span class="chart-subtitle">Last 6 months</span>
         </div>
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table table-hover align-middle elegant-table mb-0">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Tenant</th>
-                  <th>Property</th>
-                  <th>Room</th>
-                  <th>Move-In</th>
-                  <th>Rent</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let b of recentBookings">
-                  <td><span class="fw-600">#{{ b.BookingNumber }}</span></td>
-                  <td>{{ b.TenantName }}</td>
-                  <td>{{ b.PropertyName }}</td>
-                  <td>{{ b.RoomNumber }}</td>
-                  <td>{{ b.MoveInDate | date:'mediumDate' }}</td>
-                  <td>₹{{ b.Rent }}</td>
-                </tr>
-                <tr *ngIf="recentBookings?.length === 0">
-                  <td colspan="6" class="text-center text-muted py-4">No recent bookings</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="chart-body">
+          <canvas id="adminBarChart" height="110"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <i class="bi bi-pie-chart me-2"></i>User Distribution
+        </div>
+        <div class="chart-body">
+          <canvas id="adminDoughnut" height="110"></canvas>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- ── RECENT PAYMENTS ── -->
-  <div class="mt-4">
-    <div class="card border-0">
-      <div class="card-header bg-white border-0 px-4 py-3">
-        <h5 class="fw-bold mb-0">Recent Payments</h5>
+  <!-- ── ROW 4: RECENT BOOKINGS ── -->
+  <div class="card dash-card mb-2">
+    <div class="dash-card-header">
+      <i class="bi bi-calendar-check me-2"></i>Recent Bookings
+      <span class="dash-card-badge">Last 5</span>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle dash-table mb-0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tenant</th>
+              <th>Property</th>
+              <th>Room</th>
+              <th>Move-In</th>
+              <th>Rent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of recentBookings">
+              <td><span class="id-chip">#{{ b.BookingNumber }}</span></td>
+              <td>{{ b.TenantName }}</td>
+              <td>{{ b.PropertyName }}</td>
+              <td>{{ b.RoomNumber }}</td>
+              <td>{{ b.MoveInDate | date:'mediumDate' }}</td>
+              <td><span class="amt-chip">₹{{ b.Rent }}</span></td>
+            </tr>
+            <tr *ngIf="!recentBookings?.length">
+              <td colspan="6" class="text-center text-muted py-4">No recent bookings</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover align-middle elegant-table mb-0">
-            <thead>
-              <tr>
-                <th>Payment ID</th>
-                <th>Tenant</th>
-                <th>Property</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let p of recentPayments">
-                <td><span class="fw-600">#{{ p.PaymentNumber }}</span></td>
-                <td>{{ p.TenantName }}</td>
-                <td>{{ p.PropertyName }}</td>
-                <td>{{ p.PaymentType }}</td>
-                <td>₹{{ p.Amount }}</td>
-                <td>{{ p.PaymentDate | date:'mediumDate' }}</td>
-              </tr>
-              <tr *ngIf="recentPayments?.length === 0">
-                <td colspan="6" class="text-center text-muted py-4">No recent payments</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    </div>
+  </div>
+
+  <!-- ── ROW 5: RECENT PAYMENTS ── -->
+  <div class="card dash-card">
+    <div class="dash-card-header">
+      <i class="bi bi-credit-card me-2"></i>Recent Payments
+      <span class="dash-card-badge">Last 5</span>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle dash-table mb-0">
+          <thead>
+            <tr>
+              <th>Payment ID</th>
+              <th>Tenant</th>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of recentPayments">
+              <td><span class="id-chip">#{{ p.PaymentNumber }}</span></td>
+              <td>{{ p.TenantName }}</td>
+              <td>{{ p.PropertyName }}</td>
+              <td>
+                <span class="type-badge">{{ p.PaymentType }}</span>
+              </td>
+              <td><span class="amt-chip">₹{{ p.Amount }}</span></td>
+              <td>{{ p.PaymentDate | date:'mediumDate' }}</td>
+            </tr>
+            <tr *ngIf="!recentPayments?.length">
+              <td colspan="6" class="text-center text-muted py-4">No recent payments</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

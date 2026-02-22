@@ -1,49 +1,117 @@
-<section class="room-details-section" *ngIf="room">
-  <div class="container">
-    <div class="row g-4">
+<div class="rdet-wrapper" *ngIf="room">
 
-      <!-- Room Info Card -->
-      <div class="col-lg-4">
-        <div class="room-details-item">
-          <div class="room-image">
-            <img [src]="room.Image" [alt]="room.Name" />
-          </div>
-
-          <div class="rd-text">
-            <h3 class="room-name mb-1">{{ room.Name }}</h3>
-
-            <div class="room-price text-primary fw-bold mb-3">
-              ₹{{ room.RentPerBed }} <span class="text-muted">/Month</span>
-            </div>
-
-            <div class="room-size d-flex align-items-center flex-wrap mb-3">
-              <span><i class="bi bi-bed text-primary"></i> {{ room.Size }}</span>
-              <span class="ms-3">
-                <i class="bi bi-people-fill text-primary"></i> {{ room.Capacity }} Person
-              </span>
-            </div>
-
-            <ul class="room-features mb-3">
-              <li><i class="bi bi-snow text-info"></i> AC</li>
-              <li><i class="bi bi-droplet text-primary"></i> Bathroom</li>
-              <li><i class="bi bi-book text-warning"></i> Study Table</li>
-              <li><i class="bi bi-box text-secondary"></i> Wardrobe</li>
-            </ul>
-
-            <p class="text-muted small">
-              {{ room.Description || "Perfect stay with all amenities included." }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Booking Form -->
-      <div class="col-lg-8">
-        <div class="room-booking">
-          <app-edit-booking [monthlyRent]="room.RentPerBed"></app-edit-booking>
-        </div>
-      </div>
-
+  <!-- ── Header Strip ── -->
+  <div class="rdet-header mb-3">
+    <div>
+      <h2 class="rdet-title">{{ room.Name }}</h2>
+      <p class="rdet-subtitle">
+        <i class="bi bi-hash me-1"></i>Room {{ room.RoomId }}
+        &nbsp;·&nbsp;
+        <i class="bi bi-house-fill me-1"></i>{{ room.TotalBeds }} Bed{{ room.TotalBeds > 1 ? 's' : '' }}
+        &nbsp;·&nbsp;
+        <i class="bi bi-people-fill me-1"></i>{{ room.Capacity }} Person Capacity
+      </p>
+    </div>
+    <div class="rdet-price-pill">
+      <span class="rdet-price">₹{{ room.RentPerBed | number }}</span>
+      <span class="rdet-price-label">/month</span>
     </div>
   </div>
-</section>
+
+  <!-- ── Main Layout ── -->
+  <div class="row g-3">
+
+    <!-- ── Left: Room Info Card ── -->
+    <div class="col-lg-4">
+      <div class="rdet-info-card">
+
+        <!-- Image with gradient overlay -->
+        <div class="rdet-image-wrap">
+          <img [src]="room.Image" [alt]="room.Name" />
+          <div class="rdet-img-overlay">
+            <span class="rdet-img-price">₹{{ room.RentPerBed | number }}<small>/mo</small></span>
+          </div>
+          <div class="rdet-img-badge">
+            <i class="bi bi-patch-check-fill me-1"></i>Available
+          </div>
+        </div>
+
+        <!-- Quick Stats Row -->
+        <div class="rdet-stats">
+          <div class="rdet-stat">
+            <i class="bi bi-bed-fill"></i>
+            <span>{{ room.TotalBeds }} Bed{{ room.TotalBeds > 1 ? 's' : '' }}</span>
+          </div>
+          <div class="rdet-stat-divider"></div>
+          <div class="rdet-stat">
+            <i class="bi bi-people-fill"></i>
+            <span>{{ room.Capacity }} Person</span>
+          </div>
+          <div class="rdet-stat-divider"></div>
+          <div class="rdet-stat">
+            <i class="bi bi-rulers"></i>
+            <span>{{ room.Size || '120 sq ft' }}</span>
+          </div>
+        </div>
+
+        <!-- Amenity Chips -->
+        <div class="rdet-section">
+          <div class="rdet-section-label">Amenities</div>
+          <div class="rdet-features">
+            <span class="rdet-feat rdet-feat-blue"><i class="bi bi-snow"></i> AC</span>
+            <span class="rdet-feat rdet-feat-cyan"><i class="bi bi-droplet-fill"></i> Bathroom</span>
+            <span class="rdet-feat rdet-feat-amber"><i class="bi bi-book-fill"></i> Study Table</span>
+            <span class="rdet-feat rdet-feat-slate"><i class="bi bi-box-fill"></i> Wardrobe</span>
+            <span class="rdet-feat rdet-feat-green"><i class="bi bi-wifi"></i> WiFi</span>
+            <span class="rdet-feat rdet-feat-purple"><i class="bi bi-shield-check"></i> Security</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="rdet-section">
+          <div class="rdet-section-label">About this Room</div>
+          <p class="rdet-desc">
+            {{ room.Description || "Modern, comfortable, and fully furnished room with all essential amenities. Perfect for students and working professionals." }}
+          </p>
+        </div>
+
+        <!-- Price Summary Box -->
+        <div class="rdet-price-summary">
+          <div class="rdet-price-row">
+            <span>Monthly Rent</span>
+            <span class="rdet-price-val">₹{{ room.RentPerBed | number }}</span>
+          </div>
+          <div class="rdet-price-row">
+            <span>Security Deposit</span>
+            <span class="rdet-price-val">₹2,000</span>
+          </div>
+          <div class="rdet-price-row rdet-price-total">
+            <span>Total (1st Month)</span>
+            <span>₹{{ (room.RentPerBed + 2000) | number }}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Right: Booking Form ── -->
+    <div class="col-lg-8">
+      <div class="rdet-booking-wrap">
+        <div class="rdet-booking-header">
+          <div>
+            <div class="rdet-booking-title">
+              <i class="bi bi-calendar-check-fill me-2 text-primary"></i>Book This Room
+            </div>
+            <div class="rdet-booking-sub">Fill in the details below to complete your booking</div>
+          </div>
+          <span class="rdet-avail-badge">
+            <span class="live-dot"></span> Available Now
+          </span>
+        </div>
+        <app-edit-booking [monthlyRent]="room.RentPerBed"></app-edit-booking>
+      </div>
+    </div>
+
+  </div>
+
+</div>

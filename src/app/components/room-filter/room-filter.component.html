@@ -1,30 +1,69 @@
-<div class="room-filter">
-  <h6>Filter Rooms</h6>
-<!--   <input
-    type="text"
-    class="form-control"
-    placeholder="Search by name..."
-    [(ngModel)]="filters.search"
-  /> -->
-  <input
-    type="number"
-    class="form-control"
-    placeholder="Min Price"
-    [(ngModel)]="filters.minPrice"
-  />
-  <input
-    type="number"
-    class="form-control"
-    placeholder="Max Price"
-    [(ngModel)]="filters.maxPrice"
-  />
-  <input
-    type="number"
-    class="form-control"
-    placeholder="Capacity"
-    [(ngModel)]="filters.capacity"
-  />
-  <button class="btn" (click)="applyFilters()">Apply Filters</button>
+<div class="rf-card">
+
+  <!-- Header -->
+  <div class="rf-header">
+    <div class="rf-header-icon">
+      <i class="bi bi-funnel-fill"></i>
+    </div>
+    <div>
+      <div class="rf-title">Filter Rooms</div>
+      <div class="rf-sub">Narrow by price & capacity</div>
+    </div>
+  </div>
+
+  <!-- Min Price -->
+  <div class="rf-field">
+    <label class="rf-label">
+      <i class="bi bi-currency-rupee"></i> Min Price
+    </label>
+    <div class="rf-input-wrap">
+      <input
+        type="number"
+        class="rf-input"
+        placeholder="e.g. 3000"
+        [(ngModel)]="filters.minPrice"
+      />
+    </div>
+  </div>
+
+  <!-- Max Price -->
+  <div class="rf-field">
+    <label class="rf-label">
+      <i class="bi bi-currency-rupee"></i> Max Price
+    </label>
+    <div class="rf-input-wrap">
+      <input
+        type="number"
+        class="rf-input"
+        placeholder="e.g. 15000"
+        [(ngModel)]="filters.maxPrice"
+      />
+    </div>
+  </div>
+
+  <!-- Capacity -->
+  <div class="rf-field">
+    <label class="rf-label">
+      <i class="bi bi-people-fill"></i> Capacity
+    </label>
+    <div class="rf-input-wrap">
+      <input
+        type="number"
+        class="rf-input"
+        placeholder="e.g. 2"
+        [(ngModel)]="filters.capacity"
+      />
+    </div>
+  </div>
+
+  <!-- Apply -->
+  <button class="rf-apply-btn" (click)="applyFilters()">
+    <i class="bi bi-search me-1"></i> Apply Filters
+  </button>
+
+  <!-- Reset -->
+  <button class="rf-reset-btn" (click)="resetFilters()">
+    <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+  </button>
+
 </div>
-
-
