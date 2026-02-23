@@ -42,7 +42,7 @@ export class RoomDetailsComponent implements OnInit {
   @ViewChild(EditBookingComponent)
   bookingFormCmp!: EditBookingComponent;
 
-    monthlyRentAmount: number = 8000;
+    //monthlyRentAmount: number = 8000;
    
   newReview: Partial<Review> = {
     name: '',
@@ -60,7 +60,7 @@ export class RoomDetailsComponent implements OnInit {
   // INIT
   // =============================
   ngOnInit(): void {
-    //debugger;
+    
     const propertyId = Number(this.route.snapshot.paramMap.get('propertyId'));
     const roomId = Number(this.route.snapshot.paramMap.get('roomId'));
 
@@ -71,7 +71,7 @@ export class RoomDetailsComponent implements OnInit {
           return;
         }
 
-        //debugger;
+        
         this.room = room;
 
         // ⭐ Create Rating locally (NO API)

@@ -51,7 +51,7 @@ rooms: Rooms[] = [];
    this.roomService.getRoomsByProperty(propertyId).subscribe({
     next: (data) => {
         this.rooms = data;   // ✅ display copy
-        debugger;
+    
       },
       error: (err) => console.error('API Error:', err)
     });
