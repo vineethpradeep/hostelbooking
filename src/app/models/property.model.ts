@@ -1,13 +1,16 @@
 export interface PropertyDto {
-  PropertyId?: number;
+  PropertyId: number;
   PropertyName: string;
+  PropertyCode: string; 
   Address: string;
   City: string;
   State: string;
-  PinCode: string;
+  Country: string;  
+  PostalCode: string;
   ContactNumber: string;
-  Email: string;
+  EmailAddress: string;
   TotalRooms: number;
+  PropertyType: string;  
   IsActive: boolean;
   Description?: string;
 }

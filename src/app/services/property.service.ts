@@ -17,12 +17,13 @@ export class PropertyService {
     return { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) };
   }
 
-  getAll(): Observable<ApiResponse<PropertyDto[]>> {
-    return this.http.get<ApiResponse<PropertyDto[]>>(this.baseUrl, this.getAuthHeaders());
+  getAll(): Observable<PropertyDto[]> {
+    return this.http.get<PropertyDto[]>(this.baseUrl, this.getAuthHeaders());
   }
+ 
 
-  create(property: PropertyDto): Observable<ApiResponse<PropertyDto>> {
-    return this.http.post<ApiResponse<PropertyDto>>(this.baseUrl, property, this.getAuthHeaders());
+  create(property: PropertyDto): Observable<PropertyDto> {
+    return this.http.post<PropertyDto>(this.baseUrl, property, this.getAuthHeaders());
   }
 
   update(property: PropertyDto): Observable<any> {

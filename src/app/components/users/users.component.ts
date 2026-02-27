@@ -156,11 +156,21 @@ export class UsersComponent implements OnInit {
     new bootstrap.Modal(document.getElementById('addUserModal')).show();
   }
 
-  createUser() {
+  createUser(form: any) {
+
+      if (form.invalid) {
+
+    Object.values(form.controls).forEach((control: any) => {
+      control.markAsTouched();
+    });
+
+    return;  // stop API call
+  }
     this.usersService.createUser(this.newUser).subscribe({
       next: () => {
         this.loadUsers();
         bootstrap.Modal.getInstance(document.getElementById('addUserModal'))?.hide();
+        form.resetForm();
       },
       error: err => console.error('Create Error:', err)
     });

@@ -243,64 +243,146 @@
 <div class="modal fade" id="addUserModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content custom-modal">
+
+      <!-- Header -->
       <div class="custom-modal-header">
-        <div class="modal-icon-wrap add-icon-wrap"><i class="bi bi-person-plus"></i></div>
+        <div class="modal-icon-wrap add-icon-wrap">
+          <i class="bi bi-person-plus"></i>
+        </div>
         <div>
           <h5 class="modal-heading">Add New User</h5>
           <p class="modal-subtext">Fill in the details to create a user</p>
         </div>
-        <button class="modal-x" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
-      </div>
-      <div class="custom-modal-body">
-        <div class="modal-field">
-          <label>First Name</label>
-          <div class="modal-input-wrap">
-            <i class="bi bi-person"></i>
-            <input class="modal-input" [(ngModel)]="newUser.FirstName" placeholder="First name" />
-          </div>
-        </div>
-        <div class="modal-field">
-          <label>Last Name</label>
-          <div class="modal-input-wrap">
-            <i class="bi bi-person"></i>
-            <input class="modal-input" [(ngModel)]="newUser.LastName" placeholder="Last name" />
-          </div>
-        </div>
-        <div class="modal-field">
-          <label>Email Address</label>
-          <div class="modal-input-wrap">
-            <i class="bi bi-envelope"></i>
-            <input class="modal-input" type="email" [(ngModel)]="newUser.EmailAddress" placeholder="Email" />
-          </div>
-        </div>
-        <div class="modal-field">
-          <label>Phone Number</label>
-          <div class="modal-input-wrap">
-            <i class="bi bi-telephone"></i>
-            <input class="modal-input" [(ngModel)]="newUser.PhoneNumber" placeholder="Phone" />
-          </div>
-        </div>
-        <div class="modal-field">
-          <label>User Type</label>
-          <div class="modal-input-wrap">
-            <i class="bi bi-person-badge"></i>
-            <select class="modal-input" [(ngModel)]="newUser.UserType">
-              <option value="Tenant">Tenant</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="custom-modal-footer">
-        <button class="modal-btn-cancel" data-bs-dismiss="modal">Cancel</button>
-        <button class="modal-btn-save" (click)="createUser()">
-          <i class="bi bi-person-plus me-1"></i>Add User
+        <button type="button" class="modal-x" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i>
         </button>
       </div>
+
+      <!-- FORM START -->
+      <form #userForm="ngForm" (ngSubmit)="createUser(userForm)">
+
+        <div class="custom-modal-body">
+
+          <!-- First Name -->
+          <div class="modal-field">
+            <label>First Name</label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-person"></i>
+              <input class="modal-input"
+                     name="FirstName"
+                     required
+                     minlength="3"
+                     [(ngModel)]="newUser.FirstName"
+                     #firstName="ngModel"
+                     placeholder="First name" />
+            </div>
+            <div class="text-danger"
+                 *ngIf="firstName.invalid && firstName.touched">
+              First name is required 
+            </div>
+          </div>
+
+          <!-- Last Name -->
+          <div class="modal-field">
+            <label>Last Name</label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-person"></i>
+              <input class="modal-input"
+                     name="LastName"
+                     required
+                     minlength="3"
+                     [(ngModel)]="newUser.LastName"
+                     #lastName="ngModel"
+                     placeholder="Last name" />
+            </div>
+            <div class="text-danger"
+                 *ngIf="lastName.invalid && lastName.touched">
+              Last name is required 
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="modal-field">
+            <label>Email Address</label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-envelope"></i>
+              <input type="email"
+                     class="modal-input"
+                     name="EmailAddress"
+                     required
+                     email
+                     [(ngModel)]="newUser.EmailAddress"
+                     #email="ngModel"
+                     placeholder="Email" />
+            </div>
+            <div class="text-danger"
+                 *ngIf="email.invalid && email.touched">
+              Email address is required
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="modal-field">
+            <label>Phone Number</label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-telephone"></i>
+              <input class="modal-input"
+                     name="PhoneNumber"
+                     required
+                     pattern="^[0-9]{10}$"
+                     [(ngModel)]="newUser.PhoneNumber"
+                     #phone="ngModel"
+                     placeholder="Phone" />
+            </div>
+            <div class="text-danger"
+                 *ngIf="phone.invalid && phone.touched">
+              Phone number is required
+            </div>
+          </div>
+
+          <!-- User Type -->
+          <div class="modal-field">
+            <label>User Type</label>
+            <div class="modal-input-wrap">
+              <i class="bi bi-person-badge"></i>
+              <select class="modal-input"
+                      name="UserType"
+                      required
+                      [(ngModel)]="newUser.UserType"
+                      #userType="ngModel">
+                <option value="">Select user type</option>
+                <option value="Tenant">Tenant</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+            <div class="text-danger"
+                 *ngIf="userType.invalid && userType.touched">
+              Please select user type
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="custom-modal-footer">
+          <button type="button"
+                  class="modal-btn-cancel"
+                  data-bs-dismiss="modal">
+            Cancel
+          </button>
+
+          <button type="submit"
+                  class="modal-btn-save">
+            <i class="bi bi-person-plus me-1"></i>Add User
+          </button>
+        </div>
+
+      </form>
+      <!-- FORM END -->
+
     </div>
   </div>
 </div>
-
 
 <!-- ═══ EDIT USER MODAL ═══ -->
 <div class="modal fade" id="editUserModal" tabindex="-1">
