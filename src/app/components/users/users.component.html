@@ -339,7 +339,67 @@
               Phone number is required
             </div>
           </div>
+            
+            <!-- PASSWORD -->
+<div class="modal-field">
+  <label>Password <span class="text-danger">*</span></label>
 
+  <div class="modal-input-wrap">
+    <i class="bi bi-lock"></i>
+    <input
+      type="password"
+      name="Password"
+      required
+      minlength="8"
+      [(ngModel)]="newUser.Password"
+      #password="ngModel"
+      class="modal-input"
+      placeholder="Minimum 8 characters" />
+  </div>
+
+  <div class="text-danger"
+       *ngIf="password.invalid && password.touched">
+
+    <span *ngIf="password.errors?.['required']">
+      Password is required
+    </span>
+
+    <span *ngIf="password.errors?.['minlength']">
+      Minimum 8 characters required
+    </span>
+  </div>
+</div>
+
+
+
+<!-- CONFIRM PASSWORD -->
+<div class="modal-field">
+  <label>Confirm Password <span class="text-danger">*</span></label>
+
+  <div class="modal-input-wrap">
+    <i class="bi bi-lock-fill"></i>
+    <input
+      type="password"
+      name="ConfirmPassword"
+      required
+      [(ngModel)]="newUser.ConfirmPassword"
+      #confirmPassword="ngModel"
+      class="modal-input"
+      placeholder="Repeat password" />
+  </div>
+
+  <div class="text-danger"
+       *ngIf="confirmPassword.touched">
+
+    <span *ngIf="confirmPassword.errors?.['required']">
+      Confirm password is required
+    </span>
+
+    <span *ngIf="newUser.Password !== newUser.ConfirmPassword">
+      Passwords do not match
+    </span>
+  </div>
+</div>
           <!-- User Type -->
           <div class="modal-field">
             <label>User Type</label>

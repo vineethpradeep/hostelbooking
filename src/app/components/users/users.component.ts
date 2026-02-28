@@ -27,12 +27,13 @@ export class UsersComponent implements OnInit {
   onboardedUsers: UserDto[] = [];  // onboarded
   selectedPropertyId = 3;
   selectedUserType = 'Tenant';
+  currentUserRole: string = '';
 
   // ── Edit / Delete ─────────────────────────────
   selectedUser: UserDto = {} as UserDto;
   newUser: UserDto = this.emptyUser();
   deleteUserId?: number;
-
+  
   // ── Search ────────────────────────────────────
   searchTerm = '';
 
@@ -57,8 +58,11 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+      this.currentUserRole = localStorage.getItem('app_role') || '';
     this.loadUsers();
     this.loadOnboardedUsers();
+  
+
   }
 
   // ── Load Registered Users ─────────────────────
@@ -145,6 +149,7 @@ export class UsersComponent implements OnInit {
       UserType: 'Tenant',
       FirstName: '', LastName: '',
       EmailAddress: '', PhoneNumber: '',
+      Password:'', ConfirmPassword:'',
       IsActive: true, CreatedDate: '',
       PropertyName: '', Roles: [], RoleIds: []
     };

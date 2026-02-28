@@ -33,4 +33,6 @@ export interface UserDto {
   RentAmount?: number;
   CheckInDate?: string;
   IsOnboarded?: boolean;
+  Password:string;
+  ConfirmPassword:string;
 }

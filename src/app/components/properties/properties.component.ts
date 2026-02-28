@@ -21,6 +21,12 @@ export class PropertiesComponent implements OnInit {
   readonly pageSize = 6;
   editingPropertyId?: number;
   @ViewChild('deleteModal') deleteModal!: ElementRef;
+  @ViewChild('formModal') formModal!: ElementRef;
+
+
+  private deleteModalInstance: any;
+  private formModalInstance: any;
+
 
   // Add / Edit form model
   formMode: 'add' | 'edit' = 'add';
@@ -37,6 +43,12 @@ export class PropertiesComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.loadProperties();
+  }
+  ngAfterViewInit(): void {
+    this.deleteModalInstance = new bootstrap.Modal(this.deleteModal.nativeElement);
+    this.formModalInstance = new bootstrap.Modal(
+      document.getElementById('propertyFormModal')
+    );
   }
   initForm() {
   this.propertyForm = this.fb.group({
@@ -113,32 +125,21 @@ export class PropertiesComponent implements OnInit {
   goToPage(p: number): void { if (p >= 1 && p <= this.totalPages) this.currentPage = p; }
 
   // ── Open Add Modal ─────────────────────────────────
-  openAddModal(): void {
+ openAddModal(): void {
     this.formMode = 'add';
-    //this.formData = this.emptyForm();
     this.submitted = false;
     this.propertyForm.reset({ IsActive: true });
-     const formModalEl = document.getElementById('propertyFormModal');
-  const formModal = bootstrap.Modal.getOrCreateInstance(formModalEl);
-  formModal.show();
+    this.formModalInstance.show();
   }
 
   // ── Open Edit Modal ────────────────────────────────
- openEditModal(prop: PropertyDto): void {
-
-  this.formMode = 'edit';
-  this.submitted = false;
-  this.editingPropertyId = prop.PropertyId;
-  this.propertyForm.patchValue(prop);
-
-  // 🔥 Close delete modal if open
-  const deleteModalEl = document.getElementById('confirmDeleteModal');
-  bootstrap.Modal.getInstance(deleteModalEl)?.hide();
-
-  const formModalEl = document.getElementById('propertyFormModal');
-  const formModal = bootstrap.Modal.getOrCreateInstance(formModalEl);
-  formModal.show();
-}
+  openEditModal(prop: PropertyDto): void {
+    this.formMode = 'edit';
+    this.submitted = false;
+    this.editingPropertyId = prop.PropertyId;
+    this.propertyForm.patchValue(prop);
+    this.formModalInstance.show();
+  }
 
   // ── Save (Add or Edit) ─────────────────────────────
 saveProperty() {
@@ -199,26 +200,27 @@ saveProperty() {
 }
 
   // ── Open Delete Confirm ────────────────────────────
-openDeleteModal(id: number) {
-  this.deletePropertyId = id;
-  const modal = new bootstrap.Modal(this.deleteModal.nativeElement);
-  modal.show();
-}
+  openDeleteModal(id: number) {
+    this.deletePropertyId = id;
+    this.deleteModalInstance.show();
+  }
   // ── Confirm Delete ─────────────────────────────────
-confirmDelete() {
-  debugger;
-  console.log("Confirm:", this.deletePropertyId);
+ confirmDelete() {
 
-  if (this.deletePropertyId == null) return;
+    if (this.deletePropertyId == null) return;
 
-  this.propertyService.delete(this.deletePropertyId).subscribe({
-    next: () => {
-      this.loadProperties();
-      this.hideModal('confirmDeleteModal');
-      this.deletePropertyId = null;
-    }
-  });
-}
+    this.propertyService.delete(this.deletePropertyId).subscribe({
+      next: () => {
+        this.loadProperties();
+        this.deleteModalInstance.hide();
+        this.deletePropertyId = null;
+        this.showToast('Property deleted successfully!', 'success');
+      },
+      error: () => {
+        this.showToast('Delete failed.', 'danger');
+      }
+    });
+  }
 
   // ── Helpers ───────────────────────────────────────
   private hideModal(id: string): void {

@@ -36,8 +36,7 @@
           placeholder="Search by name, city, state, email…"
           [(ngModel)]="searchTerm"
           (ngModelChange)="onSearchChange()" />
-        <button *ngIf="searchTerm" class="search-clear"
-          (click)="searchTerm=''; onSearchChange()">
+        <button *ngIf="searchTerm" class="search-clear" (click)="searchTerm=''; onSearchChange()">
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
@@ -62,9 +61,7 @@
             <td><span class="row-num">{{ startIndex + i }}</span></td>
             <td>
               <div class="prop-name-cell">
-                <div class="prop-avatar">
-                  {{ p.PropertyName?.charAt(0) | uppercase }}
-                </div>
+                <div class="prop-avatar">{{ p.PropertyName?.charAt(0) | uppercase }}</div>
                 <div>
                   <div class="prop-name">{{ p.PropertyName }}</div>
                   <div class="prop-email">{{ p.EmailAddress }}</div>
@@ -81,48 +78,36 @@
             </td>
             <td>
               <span class="contact-cell">
-                <i class="bi bi-telephone me-1"></i>
-                {{ p.ContactNumber || '—' }}
+                <i class="bi bi-telephone me-1"></i>{{ p.ContactNumber || '—' }}
               </span>
             </td>
             <td>
               <span class="rooms-chip">
-                <i class="bi bi-door-open me-1"></i>
-                {{ p.TotalRooms }}
+                <i class="bi bi-door-open me-1"></i>{{ p.TotalRooms }}
               </span>
             </td>
             <td>
-              <span class="status-badge"
-                [class.active-badge]="p.IsActive"
-                [class.inactive-badge]="!p.IsActive">
+              <span class="status-badge" [class.active-badge]="p.IsActive" [class.inactive-badge]="!p.IsActive">
                 {{ p.IsActive ? 'Active' : 'Inactive' }}
               </span>
             </td>
             <td>
               <div class="action-btns">
-                <button class="btn-edit-icon"
-                        (click)="openEditModal(p)"
-                        title="Edit">
+                <button class="btn-edit-icon" (click)="openEditModal(p)" title="Edit">
                   <i class="bi bi-pencil-square"></i>
                 </button>
-                <button class="btn-delete-icon"
-                        (click)="openDeleteModal(p.PropertyId)"
-                        title="Delete">
+                <button class="btn-delete-icon" (click)="openDeleteModal(p.PropertyId)" title="Delete">
                   <i class="bi bi-trash3"></i>
                 </button>
               </div>
             </td>
           </tr>
-
           <tr *ngIf="filtered.length === 0">
             <td colspan="8" class="empty-row">
               <i class="bi bi-inbox fs-2 d-block mb-2"></i>
-              {{ searchTerm
-                ? 'No results for "' + searchTerm + '"'
-                : 'No properties found. Click "Add Property" to get started.' }}
+              {{ searchTerm ? 'No results for "' + searchTerm + '"' : 'No properties found. Click "Add Property" to get started.' }}
             </td>
           </tr>
-
         </tbody>
       </table>
     </div>
@@ -130,27 +115,20 @@
     <!-- Pagination -->
     <div class="pagination-footer" *ngIf="filtered.length > 0">
       <span class="pagination-info">
-        Showing <strong>{{ startIndex }}–{{ endIndex }}</strong>
-        of <strong>{{ filtered.length }}</strong> properties
+        Showing <strong>{{ startIndex }}–{{ endIndex }}</strong> of <strong>{{ filtered.length }}</strong> properties
       </span>
-
       <div class="pagination-controls">
-        <button class="page-btn"
-                (click)="goToPage(currentPage - 1)"
-                [disabled]="currentPage === 1">
+        <button class="page-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
           <i class="bi bi-chevron-left"></i>
         </button>
-
-        <button *ngFor="let p of pageNumbers"
-                class="page-btn"
-                [class.active]="p === currentPage"
-                (click)="goToPage(p)">
+        <button
+          *ngFor="let p of pageNumbers"
+          class="page-btn"
+          [class.active]="p === currentPage"
+          (click)="goToPage(p)">
           {{ p }}
         </button>
-
-        <button class="page-btn"
-                (click)="goToPage(currentPage + 1)"
-                [disabled]="currentPage === totalPages">
+        <button class="page-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
           <i class="bi bi-chevron-right"></i>
         </button>
       </div>
@@ -159,25 +137,288 @@
   </div>
 </div>
 
-<!-- ========================= -->
-<!-- ADD / EDIT MODAL -->
-<!-- ========================= -->
 
+<!-- ══════════════════════════════════════════
+     ADD / EDIT MODAL
+══════════════════════════════════════════ -->
 <div class="modal fade" id="propertyFormModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content custom-modal">
 
-      <!-- YOUR FULL FORM CONTENT REMAINS EXACTLY SAME HERE -->
+      <div class="custom-modal-header">
+        <div class="modal-icon-wrap"
+             [class.edit-icon-wrap]="formMode==='edit'"
+             [class.add-icon-wrap]="formMode==='add'">
+          <i class="bi"
+             [class.bi-plus-lg]="formMode==='add'"
+             [class.bi-pencil-square]="formMode==='edit'"></i>
+        </div>
+
+        <div>
+          <h5 class="modal-heading">
+            {{ formMode === 'add' ? 'Add New Property' : 'Edit Property' }}
+          </h5>
+          <p class="modal-subtext">
+            {{ formMode === 'add'
+              ? 'Fill in the details to add a property'
+              : 'Update the property information' }}
+          </p>
+        </div>
+
+        <button class="modal-x" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+    <!-- FORM -->
+<form [formGroup]="propertyForm" (ngSubmit)="saveProperty()">
+
+<div class="custom-modal-body">
+  <div class="row g-3">
+
+    <!-- Property Name -->
+    <div class="col-md-6">
+      <label>
+        Property Name <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-building input-icon"></i>
+        <input class="modal-input"
+               placeholder="Enter property name"
+               formControlName="PropertyName" />
+      </div>
+      <small class="error-text"
+        *ngIf="(f['PropertyName']?.touched || submitted) && f['PropertyName']?.invalid">
+        <span *ngIf="f['PropertyName']?.errors?.['required']">
+          Property Name is required
+        </span>
+        <span *ngIf="f['PropertyName']?.errors?.['minlength']">
+          Minimum 3 characters required
+        </span>
+      </small>
+    </div>
+
+    <!-- Email -->
+    <div class="col-md-6">
+      <label>
+        Email Address <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-envelope-fill input-icon"></i>
+        <input type="email"
+               class="modal-input"
+               placeholder="example@property.com"
+               formControlName="EmailAddress" />
+      </div>
+      <small class="error-text"
+        *ngIf="(f['EmailAddress']?.touched || submitted) && f['EmailAddress']?.invalid">
+        <span *ngIf="f['EmailAddress']?.errors?.['required']">
+          Email is required
+        </span>
+        <span *ngIf="f['EmailAddress']?.errors?.['email']">
+          Enter valid email address
+        </span>
+      </small>
+    </div>
+
+    <!-- Address -->
+    <div class="col-12">
+      <label>
+        Address <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-geo-alt-fill input-icon"></i>
+        <input class="modal-input"
+               placeholder="Street address"
+               formControlName="Address" />
+      </div>
+      <small class="error-text"
+        *ngIf="(f['Address']?.touched || submitted) && f['Address']?.invalid">
+        Address is required
+      </small>
+    </div>
+
+    <!-- City -->
+    <div class="col-md-4">
+      <label>
+        City <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-map input-icon"></i>
+        <input class="modal-input"
+               placeholder="Enter city"
+               formControlName="City" />
+      </div>
+      <small class="error-text"
+        *ngIf="(f['City']?.touched|| submitted)&& f['City']?.invalid">
+        City is required
+      </small>
+    </div>
+
+    <!-- State -->
+    <div class="col-md-4">
+      <label>
+        State <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-map-fill input-icon"></i>
+        <input class="modal-input"
+               placeholder="Enter state"
+               formControlName="State" />
+      </div>
+      <small class="error-text"
+        *ngIf="(f['State']?.touched || submitted) && f['State']?.invalid">
+        State is required
+      </small>
+    </div>
+
+    <!-- Country -->
+    <div class="col-md-4">
+      <label>
+        Country <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-globe input-icon"></i>
+        <input class="modal-input"
+               placeholder="Enter country"
+               formControlName="Country" />
+      </div>
+      <small class="error-text"
+        *ngIf="(f['Country']?.touched || submitted) && f['Country']?.invalid">
+        Country is required
+      </small>
+    </div>
+
+    <!-- PIN -->
+    <div class="col-md-4">
+      <label>
+        PIN Code <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-pin-map-fill input-icon"></i>
+        <input class="modal-input"
+               placeholder="6 digit PIN"
+               formControlName="PostalCode" />
+      </div>
+      <small class="error-text"
+        *ngIf="(f['PostalCode']?.touched || submitted) && f['PostalCode']?.invalid">
+        Enter valid 6 digit PIN
+      </small>
+    </div>
+
+    <!-- Contact -->
+    <div class="col-md-4">
+      <label>
+        Contact Number <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-telephone-fill input-icon"></i>
+        <input class="modal-input"
+               placeholder="10 digit number"
+               formControlName="ContactNumber" />
+      </div>
+      <small class="error-text"
+        *ngIf="(f['ContactNumber']?.touched || submitted) && f['ContactNumber']?.invalid">
+        Enter valid contact number
+      </small>
+    </div>
+
+    <!-- Total Rooms -->
+    <div class="col-md-4">
+      <label>
+        Total Rooms <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-door-open-fill input-icon"></i>
+        <input type="number"
+               class="modal-input"
+               placeholder="Enter number of rooms"
+               formControlName="TotalRooms" />
+      </div>
+      <small class="error-text"
+        *ngIf="(f['TotalRooms']?.touched|| submitted)  && f['TotalRooms']?.invalid">
+        Minimum 1 room required
+      </small>
+    </div>
+
+    <!-- Property Type -->
+    <div class="col-md-4">
+      <label>
+        Property Type <span class="req">*</span>
+      </label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-houses-fill input-icon"></i>
+        <select class="modal-input" formControlName="PropertyType">
+          <option value="Select Type">Select Type</option>
+          <option value="PayingGuest">Paying Guest</option>
+          <option value="Hostel">Hostel</option>
+          <option value="Apartment">Apartment</option>
+        </select>
+      </div>
+      <small class="error-text"
+        *ngIf="(f['PropertyType']?.touched || submitted) && f['PropertyType']?.invalid">
+        Select property type
+      </small>
+    </div>
+
+    <!-- Status -->
+    <div class="col-md-4">
+      <label>Status</label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-toggle-on input-icon"></i>
+        <select class="modal-input" formControlName="IsActive">
+          <option [ngValue]="true">Active</option>
+          <option [ngValue]="false">Inactive</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="col-12">
+      <label>Description (Optional)</label>
+      <div class="modal-input-wrap">
+        <i class="bi bi-card-text input-icon"></i>
+        <textarea rows="2"
+                  class="modal-input"
+                  placeholder="Enter description"
+                  formControlName="Description"></textarea>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+ <div class="custom-modal-footer">
+          <button type="button"
+                  class="modal-btn-cancel"
+                  data-bs-dismiss="modal">
+            Cancel
+          </button>
+
+          <button type="submit"
+                  class="modal-btn-save">
+            {{ formMode === 'add' ? 'Add Property' : 'Save Changes' }}
+          </button>
+        </div>
+
+      </form>
 
     </div>
   </div>
 </div>
+<!-- ══════════════════════════════════════════
+     CONFIRM DELETE MODAL
+══════════════════════════════════════════ -->
+<!-- ===================================================== -->
+<!-- CONFIRM DELETE MODAL (NOW COMPLETELY SEPARATE) -->
+<!-- ===================================================== -->
 
-<!-- ========================= -->
-<!-- CONFIRM DELETE MODAL (FIXED POSITION) -->
-<!-- ========================= -->
+<!-- CONFIRM DELETE MODAL -->
+<div #deleteModal
+     class="modal fade"
+     id="confirmDeleteModal"
+     tabindex="-1">
 
-<div #deleteModal class="modal fade" id="confirmDeleteModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content custom-modal">
 
@@ -185,6 +426,7 @@
         <div class="confirm-icon confirm-icon-red">
           <i class="bi bi-exclamation-triangle-fill"></i>
         </div>
+
         <h5 class="confirm-title">Delete Property</h5>
         <p class="confirm-text">
           This action cannot be undone.
@@ -198,10 +440,12 @@
                 data-bs-dismiss="modal">
           No, Keep
         </button>
+
         <button type="button"
                 class="modal-btn-danger"
                 (click)="confirmDelete()">
-          <i class="bi bi-trash3 me-1"></i>Yes, Delete
+          <i class="bi bi-trash3 me-1"></i>
+          Yes, Delete
         </button>
       </div>
 
@@ -209,28 +453,21 @@
   </div>
 </div>
 
-<!-- ========================= -->
-<!-- TOAST -->
-<!-- ========================= -->
 
-<!-- <div class="toast-container position-fixed bottom-0 end-0 p-3"
-     style="z-index:9999">
-  <div id="propToast"
-       class="toast align-items-center border-0"
-       [class.text-bg-success]="toastType==='success'"
-       [class.text-bg-danger]="toastType==='danger'"
-       role="alert">
+<!-- ══════════════════════════════════════════
+     TOAST NOTIFICATION
+══════════════════════════════════════════ -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="propToast" class="toast align-items-center border-0"
+    [class.text-bg-success]="toastType==='success'"
+    [class.text-bg-danger]="toastType==='danger'"
+    role="alert">
     <div class="d-flex">
       <div class="toast-body fw-semibold">
-        <i class="bi me-2"
-           [class.bi-check-circle]="toastType==='success'"
-           [class.bi-x-circle]="toastType==='danger'"></i>
-        {{ toastMessage }}    
+        <i class="bi me-2" [class.bi-check-circle]="toastType==='success'" [class.bi-x-circle]="toastType==='danger'"></i>
+        {{ toastMessage }}
       </div>
-      <button type="button"
-              class="btn-close btn-close-white me-2 m-auto"
-              data-bs-dismiss="toast">
-      </button>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
     </div>
   </div>
-</div> -->
+</div>    
