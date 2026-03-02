@@ -28,11 +28,17 @@ export class UsersComponent implements OnInit {
   selectedPropertyId = 3;
   selectedUserType = 'Tenant';
   currentUserRole: string = '';
+ 
+
 
   // ── Edit / Delete ─────────────────────────────
   selectedUser: UserDto = {} as UserDto;
   newUser: UserDto = this.emptyUser();
   deleteUserId?: number;
+  
+  // ── Errors ────────────────────────────────────
+  emailError: string = ''; // ✅ Email error for create form
+
   
   // ── Search ────────────────────────────────────
   searchTerm = '';
@@ -158,29 +164,42 @@ export class UsersComponent implements OnInit {
   // ── Add User ──────────────────────────────────
   openAddModal() {
     this.newUser = this.emptyUser();
+    this.emailError = '';
     new bootstrap.Modal(document.getElementById('addUserModal')).show();
   }
 
-  createUser(form: any) {
+createUser(form: any) {
 
-      if (form.invalid) {
-
-    Object.values(form.controls).forEach((control: any) => {
-      control.markAsTouched();
-    });
-
-    return;  // stop API call
-  }
-    this.usersService.createUser(this.newUser).subscribe({
-      next: () => {
-        this.loadUsers();
-        bootstrap.Modal.getInstance(document.getElementById('addUserModal'))?.hide();
-        form.resetForm();
-      },
-      error: err => console.error('Create Error:', err)
-    });
+  if (form.invalid) {
+    Object.values(form.controls).forEach((c: any) => c.markAsTouched());
+    return;
   }
 
+  this.emailError = '';
+
+  this.usersService.createUser(this.newUser).subscribe({
+    next: (res: ApiResponse<UserDto>) => {
+
+      if (!res.Success) {
+        // ✅ Single error message handling
+        this.emailError = res.Errors?.[0] || 'This email address is already registered.';
+        return;
+      }
+
+      // ✅ Success
+      this.loadUsers();
+      bootstrap.Modal
+        .getInstance(document.getElementById('addUserModal'))
+        ?.hide();
+      form.resetForm();
+    },
+
+    error: () => {
+      // ✅ Same single message for HTTP error
+      this.emailError = 'This email address is already registered.';
+    }
+  });
+}
   // ── Edit User ─────────────────────────────────
   editUser(user: UserDto) {
     this.selectedUser = { ...user };

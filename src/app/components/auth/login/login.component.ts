@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 
         const token = res.Data.AccessToken;
         const user = res.Data.User;
-        const role = user.Roles[0];
+        const role      = user?.Roles?.[0] ?? ''; 
         const firstName = user.FirstName;
         const userId = user.UserId;
 

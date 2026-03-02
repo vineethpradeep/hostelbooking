@@ -313,12 +313,19 @@
                      email
                      [(ngModel)]="newUser.EmailAddress"
                      #email="ngModel"
-                     placeholder="Email" />
+                     placeholder="Email" 
+                     (input)="emailError = ''" />
             </div>
             <div class="text-danger"
                  *ngIf="email.invalid && email.touched">
               Email address is required
             </div>
+          <!-- Backend duplicate error -->
+  <div class="text-danger"
+       *ngIf="emailError">
+    {{ emailError }}
+  </div>
+
           </div>
 
           <!-- Phone -->
